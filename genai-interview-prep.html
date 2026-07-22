@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gen AI Interview Prep — SWE → GenAI</title>
+<style>
+  :root{
+    --paper:#f7f6f3;
+    --ink:#1c1e24;
+    --ink-soft:#3d414b;
+    --muted:#6b7080;
+    --line:#e2e0da;
+    --card:#ffffff;
+    --accent:#b8442a;      /* signal rust */
+    --accent-soft:#f3e2dc;
+    --accent2:#0f6d6a;     /* teal counter */
+    --code-bg:#1b1d23;
+    --code-fg:#e8e6df;
+    --good:#1f7a4d;
+    --warn:#9a6b13;
+    --shadow:0 1px 2px rgba(20,22,28,.05),0 8px 24px rgba(20,22,28,.06);
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#15161a;--ink:#e9e7e1;--ink-soft:#c3c1ba;--muted:#8b8f9c;
+      --line:#2a2c33;--card:#1c1e24;--accent:#e0714f;--accent-soft:#2e211c;
+      --accent2:#3aa9a3;--code-bg:#0f1013;--code-fg:#e8e6df;--good:#4bbf82;--warn:#d0a24a;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#15161a;--ink:#e9e7e1;--ink-soft:#c3c1ba;--muted:#8b8f9c;
+    --line:#2a2c33;--card:#1c1e24;--accent:#e0714f;--accent-soft:#2e211c;
+    --accent2:#3aa9a3;--code-bg:#0f1013;--code-fg:#e8e6df;--good:#4bbf82;--warn:#d0a24a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --paper:#f7f6f3;--ink:#1c1e24;--ink-soft:#3d414b;--muted:#6b7080;--line:#e2e0da;
+    --card:#ffffff;--accent:#b8442a;--accent-soft:#f3e2dc;--accent2:#0f6d6a;
+    --code-bg:#1b1d23;--code-fg:#e8e6df;--good:#1f7a4d;--warn:#9a6b13;
+    --shadow:0 1px 2px rgba(20,22,28,.05),0 8px 24px rgba(20,22,28,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:1.5rem}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{display:grid;grid-template-columns:270px minmax(0,1fr);gap:0;max-width:1240px;margin:0 auto}
+  /* sidebar */
+  aside{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
+    border-right:1px solid var(--line);padding:1.6rem 1.1rem 3rem}
+  .brand{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:600}
+  .brand small{display:block;color:var(--muted);letter-spacing:.04em;margin-top:.35rem;font-size:.68rem}
+  nav{margin-top:1.5rem;display:flex;flex-direction:column;gap:.1rem}
+  nav a{color:var(--ink-soft);text-decoration:none;font-size:.86rem;padding:.32rem .5rem;
+    border-radius:6px;display:flex;gap:.55rem;align-items:baseline}
+  nav a:hover{background:var(--accent-soft);color:var(--ink)}
+  nav a .n{font-family:var(--mono);font-size:.7rem;color:var(--muted);min-width:1.4em}
+  nav .grp{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);margin:1.1rem .5rem .3rem}
+  /* main */
+  main{padding:2.4rem clamp(1.1rem,4vw,3.2rem) 6rem;max-width:840px}
+  .hero{border-bottom:1px solid var(--line);padding-bottom:2rem;margin-bottom:2.4rem}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent2);font-weight:600}
+  h1{font-size:clamp(2rem,5vw,2.9rem);line-height:1.08;margin:.6rem 0 .5rem;letter-spacing:-.02em;
+    text-wrap:balance;font-weight:800}
+  .lede{font-size:1.08rem;color:var(--ink-soft);max-width:60ch}
+  .meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.3rem}
+  .chip{font-family:var(--mono);font-size:.72rem;background:var(--card);border:1px solid var(--line);
+    padding:.3rem .6rem;border-radius:100px;color:var(--ink-soft)}
+  section{margin:3.2rem 0;scroll-margin-top:1.5rem}
+  section>h2{font-size:1.6rem;letter-spacing:-.01em;margin:0 0 .3rem;font-weight:800;text-wrap:balance;
+    display:flex;align-items:baseline;gap:.6rem}
+  section>h2 .num{font-family:var(--mono);font-size:.9rem;color:var(--accent);font-weight:600}
+  .sub{color:var(--muted);margin:0 0 1.4rem;font-size:.95rem}
+  h3{font-size:1.12rem;margin:1.8rem 0 .5rem;font-weight:700;letter-spacing:-.01em}
+  h4{font-size:.98rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:.6rem 0}
+  ul,ol{margin:.6rem 0;padding-left:1.3rem}
+  li{margin:.3rem 0}
+  strong{font-weight:700}
+  a{color:var(--accent)}
+  code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--ink);
+    padding:.1em .35em;border-radius:4px}
+  pre{background:var(--code-bg);color:var(--code-fg);padding:1rem 1.1rem;border-radius:10px;
+    overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.55;margin:1rem 0}
+  pre code{background:none;color:inherit;padding:0;font-size:1em}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.25rem;
+    margin:1rem 0;box-shadow:var(--shadow)}
+  .qa{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:8px;padding:0;margin:.9rem 0;overflow:hidden}
+  .qa summary{cursor:pointer;padding:.85rem 1.1rem;font-weight:600;list-style:none;
+    display:flex;gap:.6rem;align-items:baseline}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary::before{content:"Q";font-family:var(--mono);color:var(--accent);font-weight:700;
+    font-size:.85rem;flex:none}
+  .qa[open] summary{border-bottom:1px solid var(--line)}
+  .qa .ans{padding:.4rem 1.1rem 1rem 1.1rem}
+  .qa .ans p:first-child{margin-top:.6rem}
+  .callout{border-radius:10px;padding:.9rem 1.1rem;margin:1.1rem 0;border:1px solid var(--line);
+    background:var(--accent-soft)}
+  .callout .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:700;color:var(--accent)}
+  .callout.teal{background:transparent;border-left:3px solid var(--accent2)}
+  .callout.teal .tag{color:var(--accent2)}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+  .tblwrap{overflow-x:auto}
+  th,td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--muted);font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  .toggle{position:fixed;top:1rem;right:1rem;z-index:20;background:var(--card);border:1px solid var(--line);
+    color:var(--ink);font-family:var(--mono);font-size:.7rem;padding:.4rem .6rem;border-radius:100px;
+    cursor:pointer;box-shadow:var(--shadow)}
+  .menbtn{display:none}
+  @media(max-width:900px){
+    .wrap{grid-template-columns:1fr}
+    aside{position:fixed;left:0;top:0;z-index:15;background:var(--paper);width:280px;
+      transform:translateX(-100%);transition:transform .25s;box-shadow:var(--shadow)}
+    aside.show{transform:translateX(0)}
+    .menbtn{display:block;position:fixed;top:1rem;left:1rem;z-index:20;background:var(--card);
+      border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:.4rem .6rem;cursor:pointer;
+      font-family:var(--mono);font-size:.72rem;box-shadow:var(--shadow)}
+    main{padding-top:3.6rem}
+  }
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.8rem;margin:1.2rem 0}
+  .kpi .b{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.9rem}
+  .kpi .b b{display:block;font-size:1.4rem;font-family:var(--mono);color:var(--accent)}
+  .kpi .b span{font-size:.8rem;color:var(--muted)}
+  footer{border-top:1px solid var(--line);margin-top:4rem;padding-top:1.4rem;color:var(--muted);
+    font-size:.82rem}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+</style>
+</head>
+<body>
+<button class="menbtn menbtn" aria-label="Toggle menu" onclick="document.querySelector('aside').classList.toggle('show')">☰ Menu</button>
+<button class="toggle" onclick="toggleTheme()" aria-label="Toggle theme">◐ theme</button>
+<div class="wrap">
+<aside>
+  <div class="brand">GenAI Interview Prep<small>SWE (6 yrs) → Gen AI role · v1</small></div>
+  <nav>
+    <div class="grp">Strategy</div>
+    <a href="#pitch"><span class="n">01</span> Your pitch &amp; positioning</a>
+    <a href="#usecases"><span class="n">02</span> What companies hire for</a>
+    <a href="#projects"><span class="n">03</span> Portfolio projects</a>
+    <div class="grp">Foundations</div>
+    <a href="#transformers"><span class="n">04</span> Transformers &amp; attention</a>
+    <a href="#training"><span class="n">05</span> How LLMs are trained</a>
+    <a href="#decoding"><span class="n">06</span> Tokens, embeddings, decoding</a>
+    <div class="grp">Applied</div>
+    <a href="#rag"><span class="n">07</span> RAG deep-dive</a>
+    <a href="#agents"><span class="n">08</span> Agents &amp; tool use</a>
+    <a href="#tuning"><span class="n">09</span> Prompt vs RAG vs fine-tune</a>
+    <a href="#evals"><span class="n">10</span> Evals &amp; guardrails</a>
+    <div class="grp">Interview day</div>
+    <a href="#sysdesign"><span class="n">11</span> System design</a>
+    <a href="#coding"><span class="n">12</span> Coding problems</a>
+    <a href="#qbank"><span class="n">13</span> Question bank</a>
+    <a href="#behavioral"><span class="n">14</span> Behavioral</a>
+    <a href="#plan"><span class="n">15</span> 4-week plan</a>
+  </nav>
+</aside>
+
+<main>
+  <div class="hero" id="top">
+    <div class="eyebrow">Study dossier</div>
+    <h1>From shipping software to shipping intelligence.</h1>
+    <p class="lede">You already have the hardest-to-teach half of a Gen AI engineer: six years of building, debugging, and running real systems in production. This guide closes the other half — the models, the retrieval, the evals, and the language to talk about all of it under interview pressure.</p>
+    <div class="meta-row">
+      <span class="chip">6 yrs SWE background</span>
+      <span class="chip">Target: applied GenAI / AI engineer</span>
+      <span class="chip">Pitch · Concepts · Coding · System design · Q&amp;A</span>
+    </div>
+  </div>
+
+  <!-- 01 PITCH -->
+  <section id="pitch">
+    <h2><span class="num">01</span> Your pitch &amp; positioning</h2>
+    <p class="sub">Most people switching into GenAI over-apologize for "not being a researcher." Don't. Reframe the transition as an advantage.</p>
+
+    <h3>The core narrative</h3>
+    <p>Companies hiring for applied Gen AI roles are drowning in people who can call an LLM API and short on people who can turn that into a <em>reliable, evaluated, cost-controlled production system</em>. That second thing is engineering — your home turf.</p>
+    <div class="callout">
+      <div class="tag">30-second pitch template</div>
+      <p style="margin:.5rem 0 0">"I've spent six years building production systems — [your domain: APIs, data pipelines, distributed services]. Over the last [X months] I've gone deep on LLM applications: I've built [RAG/agent project], learned to evaluate them rather than eyeball them, and I care about the parts most demos skip — latency, cost, failure modes, and grounding. I want to do that full-time: ship GenAI features that actually hold up in production."</p>
+    </div>
+
+    <h3>Turn your SWE experience into GenAI credibility</h3>
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Your SWE skill</th><th>Reframe as GenAI strength</th></tr></thead>
+      <tbody>
+        <tr><td>API / microservice design</td><td>Designing LLM orchestration, tool-calling backends, streaming endpoints</td></tr>
+        <tr><td>Observability &amp; monitoring</td><td>LLM tracing, eval dashboards, drift &amp; regression detection on prompts</td></tr>
+        <tr><td>Cost/performance tuning</td><td>Token budgeting, caching, model routing, latency optimization</td></tr>
+        <tr><td>Data pipelines / ETL</td><td>Ingestion, chunking, embedding pipelines for RAG</td></tr>
+        <tr><td>Testing discipline</td><td>Eval suites, regression tests for non-deterministic outputs</td></tr>
+        <tr><td>Debugging production incidents</td><td>Diagnosing hallucinations, retrieval misses, prompt-injection failures</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout teal">
+      <div class="tag">Key mindset to signal</div>
+      <p style="margin:.5rem 0 0">"An LLM is a probabilistic, unreliable component wrapped in a deterministic system I design." Interviewers love candidates who treat the model as one part of an engineered whole — not magic, not a black box to pray at.</p>
+    </div>
+
+    <h3>Know your target level</h3>
+    <ul>
+      <li><strong>AI Engineer / GenAI Engineer</strong> — the sweet spot for you. Builds LLM-powered features. Emphasis: RAG, agents, evals, prompt engineering, system design. Light on training theory.</li>
+      <li><strong>Applied Scientist</strong> — more research-flavored. Expect fine-tuning, some ML math, reading papers. Reachable with strong projects.</li>
+      <li><strong>Research Scientist</strong> — usually needs a PhD/publications for pretraining/architecture work. Not the realistic first target for a SWE switch — don't aim your whole prep here.</li>
+    </ul>
+    <p>Aim your story at <strong>AI Engineer</strong> unless the JD is explicitly research. If the title says "research," most industry "GenAI research" roles are actually applied — clarify in the recruiter call.</p>
+  </section>
+
+  <!-- 02 USE CASES -->
+  <section id="usecases">
+    <h2><span class="num">02</span> What companies actually hire for</h2>
+    <p class="sub">"Gen AI research" in a JD almost always maps to a handful of concrete business problems. Learn to recognize them — interviews are built around them.</p>
+
+    <div class="grid2">
+      <div class="card"><h4>1 · Knowledge assistants (RAG)</h4><p>"Chat with our docs / support KB / contracts / codebase." The #1 enterprise use case. Problem they're solving: employees/customers can't find answers buried in scattered documents.</p></div>
+      <div class="card"><h4>2 · Copilots &amp; assistants</h4><p>In-product AI that drafts, summarizes, or automates a workflow (email drafts, report generation, coding help). Problem: reduce time-per-task for the user.</p></div>
+      <div class="card"><h4>3 · Agents / workflow automation</h4><p>Multi-step automation: read a ticket → look up data → take an action. Problem: automate work that needs reasoning + tool use, not just a script.</p></div>
+      <div class="card"><h4>4 · Extraction &amp; classification</h4><p>Turn unstructured text (invoices, resumes, tickets, reviews) into structured data. Problem: manual data entry / triage at scale.</p></div>
+      <div class="card"><h4>5 · Search &amp; recommendation</h4><p>Semantic search, personalization, re-ranking with embeddings. Problem: keyword search misses intent.</p></div>
+      <div class="card"><h4>6 · Content generation</h4><p>Marketing copy, product descriptions, images. Problem: content bottleneck; personalization at scale.</p></div>
+    </div>
+
+    <div class="callout">
+      <div class="tag">The problems behind the problems</div>
+      <p style="margin:.5rem 0 0">Every one of these breaks on the same failure modes. If you can speak to these, you sound senior:</p>
+      <ul style="margin:.5rem 0 0">
+        <li><strong>Hallucination</strong> — the model invents facts. Mitigate with grounding (RAG), citations, "I don't know" behavior, evals.</li>
+        <li><strong>Retrieval quality</strong> — RAG is only as good as what it retrieves. Chunking, embeddings, re-ranking, hybrid search.</li>
+        <li><strong>Latency &amp; cost</strong> — big models are slow and expensive. Caching, model routing, streaming, smaller models where possible.</li>
+        <li><strong>Evaluation</strong> — "how do you know it works?" Offline evals, LLM-as-judge, human review, regression suites.</li>
+        <li><strong>Safety</strong> — prompt injection, PII leakage, toxic output, jailbreaks. Guardrails, input/output filtering.</li>
+        <li><strong>Non-determinism</strong> — same input, different output. Testing strategy, temperature control, structured outputs.</li>
+      </ul>
+    </div>
+    <p>When an interviewer asks "how would you build X," structure your answer around <em>these</em> concerns. It's the difference between "I'd call GPT" and "here's the system."</p>
+  </section>
+
+  <!-- 03 PROJECTS -->
+  <section id="projects">
+    <h2><span class="num">03</span> Portfolio projects that get you hired</h2>
+    <p class="sub">One strong, well-documented project beats three toy demos. It's your proof you can do the job — and your best interview material.</p>
+
+    <h3>What "strong" means</h3>
+    <ul>
+      <li>Solves a <strong>real, specific</strong> problem (not "an AI chatbot").</li>
+      <li>Has <strong>evaluation</strong> — you measured quality, not just "it looks good."</li>
+      <li>Handles <strong>failure</strong> — what happens on a bad retrieval, an API error, a hallucination.</li>
+      <li>Has a <strong>writeup</strong> — a README or blog post explaining decisions and trade-offs. This is what interviewers actually read.</li>
+    </ul>
+
+    <h3>Three project ideas that map to real jobs</h3>
+    <div class="card">
+      <h4>A · Grounded RAG assistant over a real corpus</h4>
+      <p>Pick a domain you know (your company's public docs, a regulation, a codebase). Build ingestion → chunking → embeddings → retrieval → generation with citations. <strong>Add an eval set</strong> of ~30 Q&amp;A pairs and measure retrieval hit-rate + answer faithfulness. Ship it with a simple UI.</p>
+      <p style="color:var(--muted);font-size:.88rem">Demonstrates: the #1 enterprise use case + evaluation discipline. Talk about chunking strategy, why you chose your embedding model, how you handle "not in the docs."</p>
+    </div>
+    <div class="card">
+      <h4>B · A small agent with real tools</h4>
+      <p>An agent that takes a natural-language request and uses 2–3 tools (a search API, a calculator, a DB query) to complete a task. Handle tool errors, loop limits, and a "when to stop" policy.</p>
+      <p style="color:var(--muted);font-size:.88rem">Demonstrates: tool calling, orchestration, guardrails. Talk about your loop control, how you prevent infinite loops, structured tool outputs.</p>
+    </div>
+    <div class="card">
+      <h4>C · An eval harness</h4>
+      <p>The most underrated project. Build a small framework that runs prompts against a dataset and scores outputs (exact match, LLM-as-judge, regex). Show a regression catch: "I changed the prompt and my eval caught a 12% quality drop."</p>
+      <p style="color:var(--muted);font-size:.88rem">Demonstrates: the exact engineering mindset that separates you from prompt-tinkerers. Senior interviewers love this.</p>
+    </div>
+
+    <div class="callout teal">
+      <div class="tag">Interview leverage</div>
+      <p style="margin:.5rem 0 0">Rehearse a 3-minute walkthrough of your main project: the problem, your architecture, one hard trade-off you made, and how you knew it worked. Half of your technical interview can be steered onto ground you own.</p>
+    </div>
+  </section>
+
+  <!-- 04 TRANSFORMERS -->
+  <section id="transformers">
+    <h2><span class="num">04</span> Transformers &amp; attention</h2>
+    <p class="sub">You don't need to derive backprop. You need a clear mental model and to answer "how does attention work?" confidently.</p>
+
+    <h3>The one-paragraph mental model</h3>
+    <p>A transformer processes a sequence of tokens in parallel. Each token is a vector. <strong>Self-attention</strong> lets every token look at every other token and pull in relevant context, producing a new, context-aware vector for each position. Stack many attention + feed-forward layers, and you get a model that builds rich representations of language. LLMs are decoder-only transformers trained to predict the next token.</p>
+
+    <h3>Attention, concretely</h3>
+    <p>Each token produces three vectors: <strong>Query (Q)</strong>, <strong>Key (K)</strong>, <strong>Value (V)</strong>. For a given token, you compare its Query to every token's Key (dot product) to get attention scores — "how much should I attend to each other token?" Softmax those scores into weights, then take a weighted sum of the Values. That's the token's new representation.</p>
+    <pre><code>Attention(Q, K, V) = softmax( QKᵀ / √d_k ) · V
+
+# QKᵀ      → similarity of each query to each key  (scores)
+# / √d_k   → scale so softmax gradients stay stable
+# softmax  → turn scores into weights that sum to 1
+# · V      → weighted blend of value vectors</code></pre>
+
+    <h3>Terms you must be able to define</h3>
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Term</th><th>Say this</th></tr></thead>
+      <tbody>
+        <tr><td>Multi-head attention</td><td>Run attention several times in parallel with different learned projections, so each "head" can focus on different relationships (syntax, coreference, etc.), then concatenate.</td></tr>
+        <tr><td>Positional encoding</td><td>Attention is order-agnostic, so we inject position info. Modern models use rotary embeddings (RoPE) instead of the original sinusoidal ones.</td></tr>
+        <tr><td>Causal / masked attention</td><td>In a decoder, a token can only attend to earlier tokens (mask the future) so it can't cheat at next-token prediction.</td></tr>
+        <tr><td>Feed-forward network</td><td>Per-token MLP after attention; where much of the model's "knowledge" capacity lives.</td></tr>
+        <tr><td>Residual + LayerNorm</td><td>Skip connections + normalization that make deep stacks trainable.</td></tr>
+        <tr><td>Context window</td><td>Max tokens the model can attend to at once. Attention is O(n²) in sequence length — the reason long context is expensive.</td></tr>
+        <tr><td>KV cache</td><td>At inference, cache past Keys/Values so you don't recompute them each new token. Key to generation speed; consumes memory that grows with context.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout"><div class="tag">Likely follow-up</div><p style="margin:.5rem 0 0"><em>"Why is attention O(n²)?"</em> Because every token attends to every other token — n tokens × n comparisons. That's why 100k-token context is costly and why techniques like FlashAttention (IO-aware) and sparse/sliding-window attention exist.</p></div>
+  </section>
+
+  <!-- 05 TRAINING -->
+  <section id="training">
+    <h2><span class="num">05</span> How modern LLMs are trained</h2>
+    <p class="sub">Know the pipeline stages and what each one does. This is a very common conceptual question.</p>
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Stage</th><th>What happens</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Pretraining</strong></td><td>Next-token prediction over trillions of tokens of internet-scale text. Self-supervised — no labels needed.</td><td>A "base model" with broad knowledge but no instruction-following.</td></tr>
+        <tr><td><strong>2. SFT</strong> (supervised fine-tuning)</td><td>Fine-tune on curated (instruction → good response) pairs.</td><td>Model that follows instructions.</td></tr>
+        <tr><td><strong>3. Preference tuning</strong></td><td>RLHF or DPO: align to human preferences using comparison data (response A better than B).</td><td>Helpful, harmless, honest assistant behavior.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>RLHF vs DPO — know the difference</h3>
+    <ul>
+      <li><strong>RLHF</strong> (Reinforcement Learning from Human Feedback): train a separate <em>reward model</em> on human preference data, then use RL (PPO) to optimize the LLM against that reward. Powerful but complex and unstable.</li>
+      <li><strong>DPO</strong> (Direct Preference Optimization): skips the reward model and RL loop — directly optimizes the model on preference pairs with a simple classification-style loss. Simpler, more stable, now widely used.</li>
+    </ul>
+
+    <h3>Fine-tuning techniques (applied — you'll likely use these)</h3>
+    <ul>
+      <li><strong>Full fine-tuning</strong> — update all weights. Expensive, rarely needed for app work.</li>
+      <li><strong>LoRA / QLoRA</strong> — <em>parameter-efficient fine-tuning (PEFT)</em>. Freeze the base model, train small low-rank adapter matrices. QLoRA adds quantization so you can fine-tune large models on a single GPU. This is the practical answer to "how would you fine-tune?"</li>
+      <li><strong>Quantization</strong> — store weights in lower precision (int8/int4) to shrink memory and speed inference, with small quality loss. Key for deployment.</li>
+    </ul>
+    <div class="callout teal"><div class="tag">Framing that impresses</div><p style="margin:.5rem 0 0">"For most product problems I reach for prompting and RAG first, and only fine-tune when I need a consistent format/style/domain behavior that prompting can't reliably get — and then LoRA, not full fine-tuning." That's the pragmatic, senior answer.</p></div>
+  </section>
+
+  <!-- 06 DECODING -->
+  <section id="decoding">
+    <h2><span class="num">06</span> Tokens, embeddings &amp; decoding</h2>
+    <p class="sub">The everyday mechanics you'll touch constantly. Expect quick-fire questions here.</p>
+
+    <h3>Tokenization</h3>
+    <p>Models don't see words — they see <strong>tokens</strong> (subword units via BPE / byte-pair encoding). "unbelievable" might be <code>un</code>+<code>believ</code>+<code>able</code>. Rules of thumb: ~4 chars/token in English, ~0.75 words/token. Why it matters: cost and context limits are counted in tokens; non-English and code tokenize less efficiently.</p>
+
+    <h3>Embeddings</h3>
+    <p>An <strong>embedding</strong> is a vector representation of text where semantic similarity ≈ geometric closeness. Used for search, RAG retrieval, clustering, classification. Compare with <strong>cosine similarity</strong>. This is a different model from the generative LLM (e.g. a dedicated embedding model).</p>
+
+    <h3>Decoding / sampling parameters</h3>
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Param</th><th>What it does</th><th>When to change it</th></tr></thead>
+      <tbody>
+        <tr><td><code>temperature</code></td><td>Randomness. 0 = deterministic/greedy, higher = more diverse/creative.</td><td>Low (0–0.3) for extraction/classification; higher (0.7–1.0) for brainstorming.</td></tr>
+        <tr><td><code>top_p</code> (nucleus)</td><td>Sample only from the smallest set of tokens whose probs sum to p.</td><td>Alternative to temperature; usually tune one, not both.</td></tr>
+        <tr><td><code>max_tokens</code></td><td>Cap on output length.</td><td>Control cost/latency; prevent runaway generation.</td></tr>
+        <tr><td><code>stop</code> sequences</td><td>Strings that end generation.</td><td>Structured outputs, delimiters.</td></tr>
+        <tr><td>frequency/presence penalty</td><td>Discourage repetition / encourage new topics.</td><td>Reduce loops and repetition.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout"><div class="tag">Common trap</div><p style="margin:.5rem 0 0">"Temperature 0" is <em>not</em> fully deterministic in practice (floating point, MoE routing, batching). If asked how to make outputs reliable, the answer is structured outputs + evals + low temperature, not "just set temp to 0."</p></div>
+  </section>
+
+  <!-- 07 RAG -->
+  <section id="rag">
+    <h2><span class="num">07</span> RAG deep-dive</h2>
+    <p class="sub">If you learn one system cold, make it this. RAG is the most common thing you'll be asked to design and build.</p>
+
+    <h3>Why RAG exists</h3>
+    <p>LLMs have a fixed knowledge cutoff, don't know your private data, and hallucinate. <strong>Retrieval-Augmented Generation</strong> fixes this: fetch relevant documents at query time and put them in the prompt as context, so the model answers <em>grounded</em> in real sources instead of its memory.</p>
+
+    <h3>The two pipelines</h3>
+    <pre><code>INGESTION (offline)
+  documents → clean/parse → chunk → embed → store in vector DB
+
+QUERY (online)
+  user query → embed → similarity search (top-k chunks)
+             → [optional re-rank] → build prompt with context
+             → LLM generates grounded answer + citations</code></pre>
+
+    <h3>Where RAG goes wrong (and your fixes)</h3>
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Failure</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Retrieves irrelevant chunks</td><td>Bad chunking / weak embeddings</td><td>Tune chunk size &amp; overlap; better embedding model; add a re-ranker</td></tr>
+        <tr><td>Right doc, wrong chunk</td><td>Chunk too small, context split</td><td>Larger chunks, overlap, or retrieve neighboring chunks</td></tr>
+        <tr><td>Misses keyword/exact matches</td><td>Pure semantic search</td><td><strong>Hybrid search</strong>: combine dense (vector) + sparse (BM25/keyword)</td></tr>
+        <tr><td>Answers from memory, ignores context</td><td>Weak prompt / conflicting knowledge</td><td>Instruct "answer only from context; say you don't know otherwise"</td></tr>
+        <tr><td>Hallucinated citations</td><td>No verification</td><td>Return source chunk IDs; validate citations against retrieved set</td></tr>
+        <tr><td>Too much/irrelevant context</td><td>Top-k too high</td><td>Re-rank and trim; "lost in the middle" — models under-attend to mid-context</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Key knobs to discuss</h3>
+    <ul>
+      <li><strong>Chunking</strong> — size (e.g. 256–1024 tokens), overlap, and strategy (fixed, recursive, semantic, or structure-aware by heading/section). This choice makes or breaks retrieval.</li>
+      <li><strong>Embedding model</strong> — dimension, domain fit, cost, multilingual needs.</li>
+      <li><strong>Vector store</strong> — pgvector, Pinecone, Weaviate, Qdrant, FAISS. Index type (HNSW) trades recall vs speed.</li>
+      <li><strong>Re-ranking</strong> — retrieve top-50 cheaply, then a cross-encoder re-ranks to top-5 for precision.</li>
+      <li><strong>Hybrid search</strong> — dense + sparse fused (e.g. reciprocal rank fusion). Big real-world win.</li>
+      <li><strong>Evaluation</strong> — retrieval metrics (hit-rate, MRR, recall@k) separate from generation metrics (faithfulness, relevance).</li>
+    </ul>
+    <div class="callout teal"><div class="tag">Say this to sound senior</div><p style="margin:.5rem 0 0">"I evaluate retrieval and generation separately — most RAG bugs are retrieval bugs, and if you only look at the final answer you can't tell whether the model or the retriever failed."</p></div>
+  </section>
+
+  <!-- 08 AGENTS -->
+  <section id="agents">
+    <h2><span class="num">08</span> Agents &amp; tool use</h2>
+    <p class="sub">The current frontier of applied work. Know what an agent is, and — importantly — when <em>not</em> to build one.</p>
+
+    <h3>Definitions</h3>
+    <ul>
+      <li><strong>Tool / function calling</strong> — the model outputs a structured request to call a function (name + JSON args); your code runs it and feeds the result back. The foundation of everything agentic.</li>
+      <li><strong>Agent</strong> — an LLM in a loop that decides which tools to call, observes results, and repeats until a goal is met. "Model + tools + loop + stopping condition."</li>
+      <li><strong>ReAct</strong> — Reason + Act: the model alternates reasoning ("thought") and tool calls ("action") with observations in between.</li>
+      <li><strong>Orchestration</strong> — multi-step / multi-agent flows: routers, planners, workers, supervisors.</li>
+    </ul>
+
+    <h3>The hard parts (this is what interviewers probe)</h3>
+    <ul>
+      <li><strong>Stopping conditions</strong> — max steps, confidence checks, explicit "done" tool. Prevent infinite loops and runaway cost.</li>
+      <li><strong>Error handling</strong> — tools fail. Retry, fall back, or surface to the user. Never let one bad tool call crash the loop silently.</li>
+      <li><strong>Context growth</strong> — every step adds to the prompt. Summarize, prune, or use scratchpads.</li>
+      <li><strong>Reliability</strong> — agents compound errors: 90% per-step accuracy over 5 steps ≈ 59% success. This is why agents are hard.</li>
+      <li><strong>Cost/latency</strong> — each step is an LLM call. Multi-step agents are slow and expensive.</li>
+    </ul>
+    <div class="callout"><div class="tag">The mature take</div><p style="margin:.5rem 0 0">"Prefer the simplest thing that works: a single well-prompted call, then a fixed chain/workflow, and only a full autonomous agent when the task genuinely needs dynamic decision-making. Agents add reliability and cost problems — don't reach for one to look sophisticated." Interviewers reward restraint here.</p></div>
+    <p style="margin-top:1rem"><strong>MCP (Model Context Protocol)</strong> — an open standard for connecting models to tools/data sources through a common interface, so you don't hand-wire every integration. Worth knowing by name; increasingly common in JDs.</p>
+  </section>
+
+  <!-- 09 TUNING -->
+  <section id="tuning">
+    <h2><span class="num">09</span> Prompting vs RAG vs fine-tuning</h2>
+    <p class="sub">A classic decision question: "the model doesn't do X well — what do you do?" Have a crisp framework.</p>
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Use…</th><th>When the problem is…</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Prompt engineering</strong></td><td>Behavior/format — the model <em>can</em> do it, just needs guidance</td><td>Better instructions, few-shot examples, clearer output schema</td></tr>
+        <tr><td><strong>RAG</strong></td><td>Knowledge — it lacks facts (private, fresh, or specific data)</td><td>Answer questions about your company's docs</td></tr>
+        <tr><td><strong>Fine-tuning</strong></td><td>Consistent behavior/style/format at scale, or a narrow domain skill prompting can't reliably hit</td><td>Always output your exact JSON schema; match a brand voice; classify domain jargon</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout teal"><div class="tag">The rule of thumb to quote</div><p style="margin:.5rem 0 0">"Fine-tuning changes <em>behavior</em>; RAG changes <em>knowledge</em>. If the model doesn't <em>know</em> something, don't fine-tune — retrieve. If it knows but won't <em>act</em> the way you need consistently, fine-tuning helps. And always try prompting first — it's the cheapest iteration loop."</p></div>
+
+    <h3>Prompt-engineering techniques to name-drop correctly</h3>
+    <ul>
+      <li><strong>Zero-shot / few-shot</strong> — no examples vs a few in-context examples.</li>
+      <li><strong>Chain-of-thought</strong> — "think step by step" for reasoning tasks (less needed with reasoning models).</li>
+      <li><strong>Structured output</strong> — enforce JSON via schema / tool calling for reliable parsing.</li>
+      <li><strong>System prompt</strong> — set role, constraints, and guardrails separate from user input.</li>
+      <li><strong>Prompt as code</strong> — version it, test it, review it. It <em>is</em> part of your codebase.</li>
+    </ul>
+  </section>
+
+  <!-- 10 EVALS -->
+  <section id="evals">
+    <h2><span class="num">10</span> Evaluation &amp; guardrails</h2>
+    <p class="sub">This is the single most senior-signaling topic and the one prompt-tinkerers can't speak to. Invest here.</p>
+
+    <h3>Why evals matter</h3>
+    <p>LLM outputs are non-deterministic and open-ended — you can't unit-test them like normal code. Without evals you're flying blind: you can't tell if a prompt change, model upgrade, or new feature made things better or worse. "How do you evaluate?" is a near-guaranteed interview question.</p>
+
+    <h3>Types of evaluation</h3>
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Method</th><th>How</th><th>Good for</th></tr></thead>
+      <tbody>
+        <tr><td>Deterministic checks</td><td>Exact match, regex, JSON-valid, contains-keyword</td><td>Extraction, classification, format compliance</td></tr>
+        <tr><td>Reference-based</td><td>Compare to gold answer (semantic similarity, BLEU/ROUGE)</td><td>Tasks with known answers</td></tr>
+        <tr><td><strong>LLM-as-judge</strong></td><td>A model scores outputs on a rubric (faithfulness, relevance, tone)</td><td>Open-ended answers, chat quality, RAG faithfulness</td></tr>
+        <tr><td>Human review</td><td>Annotators rate outputs</td><td>Ground truth, calibrating your LLM judge</td></tr>
+        <tr><td>A/B / online</td><td>Real users, real metrics (thumbs, task completion)</td><td>Production truth</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>RAG-specific metrics (RAGAS-style)</h3>
+    <ul>
+      <li><strong>Faithfulness</strong> — is the answer supported by the retrieved context? (catches hallucination)</li>
+      <li><strong>Answer relevance</strong> — does it actually address the question?</li>
+      <li><strong>Context precision/recall</strong> — did retrieval fetch the right chunks?</li>
+    </ul>
+
+    <div class="callout"><div class="tag">Watch-outs on LLM-as-judge</div><p style="margin:.5rem 0 0">Name the pitfalls: judges are biased (prefer longer answers, their own outputs, position bias), so calibrate against human labels, use clear rubrics, and don't trust a judge you haven't spot-checked.</p></div>
+
+    <h3>Guardrails / safety</h3>
+    <ul>
+      <li><strong>Prompt injection</strong> — malicious input overrides your instructions ("ignore previous instructions…"). Mitigate: separate system/user roles, don't blindly trust retrieved/tool content, output validation, least-privilege tools.</li>
+      <li><strong>PII / data leakage</strong> — redact inputs, restrict what the model can access and output.</li>
+      <li><strong>Content safety</strong> — moderation filters on input and output.</li>
+      <li><strong>Jailbreaks</strong> — attempts to bypass safety. Defense in depth, not a single filter.</li>
+    </ul>
+  </section>
+
+  <!-- 11 SYSTEM DESIGN -->
+  <section id="sysdesign">
+    <h2><span class="num">11</span> System design (GenAI edition)</h2>
+    <p class="sub">Your SWE experience shines here. Same discipline as classic system design — new components.</p>
+
+    <h3>A framework for any "design an LLM system" question</h3>
+    <ol>
+      <li><strong>Clarify</strong> — users, scale (QPS), latency budget, cost ceiling, data sources, quality bar, offline vs real-time.</li>
+      <li><strong>Data flow</strong> — ingestion, storage, retrieval, the LLM call, post-processing, response.</li>
+      <li><strong>The LLM layer</strong> — which model(s), prompt design, structured output, streaming.</li>
+      <li><strong>Reliability</strong> — timeouts, retries, fallbacks (cheaper model / cached / graceful degradation), rate limits.</li>
+      <li><strong>Quality</strong> — evals, guardrails, monitoring, human-in-the-loop where stakes are high.</li>
+      <li><strong>Cost &amp; latency</strong> — caching (semantic cache), model routing (small model for easy queries), batching, token trimming.</li>
+      <li><strong>Observability</strong> — logging/tracing prompts &amp; responses, cost dashboards, quality regression alerts.</li>
+    </ol>
+
+    <h3>Worked example: "Design a customer-support AI assistant"</h3>
+    <div class="card">
+      <p><strong>Clarify:</strong> answers from help-center + past tickets; must cite sources; escalate to humans; ~10 QPS peak; &lt;3s response; must not hallucinate policy.</p>
+      <p><strong>Architecture:</strong> RAG over help-center (ingestion pipeline → chunk → embed → vector DB w/ hybrid search + re-ranker). Query → retrieve → grounded generation with citations → guardrail check → stream to user.</p>
+      <p><strong>Reliability:</strong> if retrieval confidence is low or the model is unsure → "I'm not certain, connecting you to an agent." Cache common questions (semantic cache). Fallback model on timeout.</p>
+      <p><strong>Quality:</strong> offline eval set of real tickets (faithfulness + resolution). Log thumbs up/down. Weekly regression run on prompt/model changes. PII redaction, prompt-injection filter on retrieved content.</p>
+      <p><strong>Cost:</strong> route simple FAQs to a small/cheap model; big model only for complex queries. Trim context via re-ranking. Track cost-per-conversation.</p>
+    </div>
+    <div class="callout teal"><div class="tag">What they're grading</div><p style="margin:.5rem 0 0">Not whether you know a fancy trick — whether you treat the LLM as one unreliable component in a system you make reliable. Talk trade-offs, failure modes, and how you'd <em>measure</em> success. That's your SWE edge; use it.</p></div>
+  </section>
+
+  <!-- 12 CODING -->
+  <section id="coding">
+    <h2><span class="num">12</span> Coding problems</h2>
+    <p class="sub">Two flavors: (a) normal DSA/LeetCode still shows up, and (b) GenAI-specific implementation. Below are the GenAI ones you should be able to write from scratch.</p>
+
+    <h4>Cosine similarity + top-k retrieval</h4>
+    <pre><code>import numpy as np
+
+def cosine(a, b):
+    a, b = np.asarray(a), np.asarray(b)
+    return a @ b / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-9)
+
+def top_k(query_vec, doc_vecs, docs, k=3):
+    scored = [(cosine(query_vec, dv), d) for dv, d in zip(doc_vecs, docs)]
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return scored[:k]</code></pre>
+
+    <h4>Text chunking with overlap</h4>
+    <pre><code>def chunk(text, size=500, overlap=50):
+    words, chunks, i = text.split(), [], 0
+    while i &lt; len(words):
+        chunks.append(" ".join(words[i:i + size]))
+        i += size - overlap          # step back by overlap
+    return chunks</code></pre>
+
+    <h4>Robust LLM call: retry with backoff + timeout</h4>
+    <pre><code>import time
+
+def call_with_retry(fn, *, retries=3, base=1.0):
+    for attempt in range(retries):
+        try:
+            return fn()
+        except (RateLimitError, TimeoutError) as e:
+            if attempt == retries - 1:
+                raise
+            time.sleep(base * (2 ** attempt))   # exponential backoff
+    # add jitter in production to avoid thundering herd</code></pre>
+
+    <h4>A minimal agent loop</h4>
+    <pre><code>def run_agent(query, tools, llm, max_steps=5):
+    context = [f"User: {query}"]
+    for step in range(max_steps):          # bounded — no infinite loops
+        action = llm(context, tools)       # model picks a tool or answers
+        if action.type == "final":
+            return action.answer
+        try:
+            result = tools[action.name](**action.args)
+        except Exception as e:
+            result = f"ERROR: {e}"          # feed errors back, don't crash
+        context.append(f"{action.name} -> {result}")
+    return "Stopped: step limit reached."   # explicit stopping condition</code></pre>
+
+    <h4>Tiny LLM-as-judge eval loop</h4>
+    <pre><code>def evaluate(dataset, system, judge):
+    passed = 0
+    for row in dataset:
+        out = system(row["input"])
+        verdict = judge(question=row["input"], answer=out,
+                        reference=row.get("expected"))
+        passed += verdict["score"] &gt;= 0.7
+    return passed / len(dataset)            # your quality metric</code></pre>
+
+    <div class="callout"><div class="tag">Also review classic DSA</div><p style="margin:.5rem 0 0">Many GenAI-role loops still include a standard coding round: arrays/strings, hashmaps, two-pointers, BFS/DFS, and basic complexity analysis. Don't neglect it — a week of LeetCode mediums keeps you sharp. Your 6 years means this should come back fast.</p></div>
+  </section>
+
+  <!-- 13 QBANK -->
+  <section id="qbank">
+    <h2><span class="num">13</span> Question bank</h2>
+    <p class="sub">Click each to reveal a strong answer. Rehearse out loud — knowing ≠ saying it cleanly under pressure.</p>
+
+    <details class="qa"><summary>What's the difference between fine-tuning and RAG, and when do you pick each?</summary>
+      <div class="ans"><p>RAG adds <em>knowledge</em> at query time by retrieving relevant documents into the prompt — best when the model lacks facts (private, fresh, or specific data). Fine-tuning changes <em>behavior/style/format</em> by updating weights — best when you need consistent output the prompt can't reliably enforce, or a narrow domain skill. Try prompting first (cheapest), then RAG for knowledge gaps, then fine-tuning (usually LoRA) for behavior. They combine — fine-tune for format + RAG for facts.</p></div>
+    </details>
+
+    <details class="qa"><summary>How does self-attention work?</summary>
+      <div class="ans"><p>Each token produces Query, Key, and Value vectors. To compute a token's new representation, you dot its Query with every token's Key to get relevance scores, scale by √d and softmax them into weights, then take a weighted sum of Values. This lets each token pull context from all others. Multi-head runs this in parallel with different projections to capture different relationships. It's O(n²) in sequence length, which is why long context is expensive.</p></div>
+    </details>
+
+    <details class="qa"><summary>Your RAG system gives wrong answers. How do you debug?</summary>
+      <div class="ans"><p>Separate retrieval from generation. First check: <em>did we retrieve the right chunks?</em> Log the retrieved context. If the relevant chunk isn't there, it's a retrieval bug — fix chunking, embeddings, add hybrid search or a re-ranker. If the right chunk <em>is</em> retrieved but the answer is still wrong, it's a generation/prompt bug — tighten the prompt to answer only from context, check for "lost in the middle," reduce noisy context. I'd have an eval set to measure both stages, not eyeball it.</p></div>
+    </details>
+
+    <details class="qa"><summary>How do you evaluate an LLM feature?</summary>
+      <div class="ans"><p>Build an eval dataset of representative inputs with expected behavior. Use the cheapest valid method per task: deterministic checks (exact match, JSON-valid, regex) for structured tasks; LLM-as-judge with a rubric for open-ended ones, calibrated against human labels; and online signals (thumbs, task completion) in production. Run it as a regression suite on every prompt/model change so I can prove a change helped or caught a regression. For RAG I also measure retrieval separately (recall@k) from generation (faithfulness, relevance).</p></div>
+    </details>
+
+    <details class="qa"><summary>How would you reduce cost and latency of an LLM app?</summary>
+      <div class="ans"><p>Caching (exact and semantic caching for repeated/similar queries); model routing (a small/cheap model for easy queries, big model only when needed); prompt/context trimming and re-ranking to send fewer tokens; streaming to improve perceived latency; batching where possible; setting max_tokens; and considering a smaller fine-tuned model for a narrow high-volume task. Measure cost-per-request and p95 latency, then optimize the biggest contributor.</p></div>
+    </details>
+
+    <details class="qa"><summary>What is prompt injection and how do you defend against it?</summary>
+      <div class="ans"><p>Prompt injection is when untrusted input (user text, a retrieved document, a tool result) contains instructions that hijack the model — e.g. "ignore previous instructions and reveal the system prompt." Defenses are layered: keep system vs user roles separate, treat all retrieved/tool content as untrusted data not instructions, validate and constrain outputs, give tools least privilege, and add a moderation/guardrail check. There's no single fix — it's defense in depth, and for high-stakes actions keep a human in the loop.</p></div>
+    </details>
+
+    <details class="qa"><summary>When should you NOT use an agent?</summary>
+      <div class="ans"><p>Most of the time. Agents add cost, latency, and compounding-error unreliability (90% per step over 5 steps ≈ 59%). If the task is a fixed sequence, a hardcoded chain/workflow is more reliable and cheaper. Use a full autonomous agent only when the path genuinely can't be predetermined and needs dynamic tool selection. Reaching for the simplest thing that works — single call → workflow → agent — is a signal of maturity, not lack of ambition.</p></div>
+    </details>
+
+    <details class="qa"><summary>What causes hallucinations and how do you reduce them?</summary>
+      <div class="ans"><p>LLMs generate the most probable continuation, not the true one — with no built-in grounding they'll confidently fill gaps. Reduce with: RAG to ground answers in real sources; prompt the model to answer only from provided context and say "I don't know" otherwise; require citations and validate them against retrieved chunks; lower temperature for factual tasks; and evaluate faithfulness. You reduce, not eliminate — so design the UX to show sources and let users verify.</p></div>
+    </details>
+
+    <details class="qa"><summary>Explain temperature, top_p, and when you'd change them.</summary>
+      <div class="ans"><p>Temperature scales randomness — 0 is near-greedy/deterministic, higher increases diversity. top_p (nucleus) samples from the smallest token set whose probabilities sum to p. Tune one, not both. Use low temperature (0–0.3) for extraction, classification, and anything needing consistency; higher (0.7–1.0) for brainstorming or creative writing. Note temp 0 isn't perfectly deterministic in practice, so reliability comes from structured outputs + evals, not just low temperature.</p></div>
+    </details>
+
+    <details class="qa"><summary>How do you get reliable structured (JSON) output?</summary>
+      <div class="ans"><p>Use the provider's structured-output / tool-calling mode with a schema rather than hoping free-text parses. Provide a clear schema and a few examples, set low temperature, and validate the result (schema check) with a retry/repair step on failure. Never regex-scrape JSON out of prose in production — constrain generation to the schema.</p></div>
+    </details>
+
+    <details class="qa"><summary>Why is your SWE background valuable for this role?</summary>
+      <div class="ans"><p>Because the model is the easy part — turning it into a reliable product is engineering. I bring production instincts: observability, testing, cost/latency tuning, failure handling, and data pipelines. GenAI systems live or die on evals, retrieval quality, guardrails, and monitoring — all engineering disciplines. I treat the LLM as one probabilistic component in a system I design to be reliable, which is exactly what shipping GenAI features needs.</p></div>
+    </details>
+
+    <details class="qa"><summary>What's the context window, and what problems come with long context?</summary>
+      <div class="ans"><p>It's the max number of tokens the model can attend to at once (prompt + output). Because attention is O(n²), long context is slow and expensive, and models exhibit "lost in the middle" — they attend less to information buried mid-context. So more context isn't free or always better; retrieving and re-ranking the <em>right</em> few chunks usually beats stuffing everything in.</p></div>
+    </details>
+  </section>
+
+  <!-- 14 BEHAVIORAL -->
+  <section id="behavioral">
+    <h2><span class="num">14</span> Behavioral &amp; the switch story</h2>
+    <p class="sub">They will ask why you're switching and whether you can operate in ambiguity. Have crisp, honest answers.</p>
+
+    <h3>Questions to prepare (STAR format)</h3>
+    <ul>
+      <li><strong>"Why the switch to Gen AI?"</strong> — genuine interest + concrete action (your project, self-study) + how your background fits. Avoid "AI is hot." Show you've <em>done</em> something.</li>
+      <li><strong>"Tell me about a hard technical problem."</strong> — pick one showing debugging, trade-offs, and ownership. Bonus if data/ML-adjacent.</li>
+      <li><strong>"A time you were wrong / a project failed."</strong> — show learning and self-correction. Non-determinism means humility matters in this field.</li>
+      <li><strong>"How do you keep up with a fast-moving field?"</strong> — name real habits: a paper or newsletter you follow, things you've built, how you evaluate hype.</li>
+      <li><strong>"Disagreed with a teammate."</strong> — data-driven resolution.</li>
+    </ul>
+
+    <div class="callout"><div class="tag">The switch story — structure</div><p style="margin:.5rem 0 0"><strong>Trigger</strong> ("Building X, I kept hitting problems that were really about ML/LLMs…") → <strong>Action</strong> ("So I built [project], learned evals/RAG, studied the fundamentals") → <strong>Fit</strong> ("My engineering background is exactly what makes GenAI features reliable") → <strong>Intent</strong> ("I want to do this full-time, and this role is the right place"). Rehearse it to ~60 seconds.</p></div>
+
+    <h3>Questions to ask them (shows seniority)</h3>
+    <ul>
+      <li>"How do you currently evaluate the quality of your AI features?"</li>
+      <li>"What's your biggest reliability or hallucination challenge right now?"</li>
+      <li>"How much of the role is research vs shipping to production?"</li>
+      <li>"How do you decide between building and using off-the-shelf models?"</li>
+    </ul>
+  </section>
+
+  <!-- 15 PLAN -->
+  <section id="plan">
+    <h2><span class="num">15</span> A focused 4-week plan</h2>
+    <p class="sub">Compressible or stretchable. The non-negotiables: one real project, an eval mindset, and rehearsed answers.</p>
+
+    <div class="kpi">
+      <div class="b"><b>W1</b><span>Foundations + build</span></div>
+      <div class="b"><b>W2</b><span>RAG + evals deep</span></div>
+      <div class="b"><b>W3</b><span>Agents + system design</span></div>
+      <div class="b"><b>W4</b><span>Mock &amp; polish</span></div>
+    </div>
+
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Week</th><th>Focus</th><th>Deliverable</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Transformers, training pipeline, tokens/embeddings/decoding (§4–6). Start Project A (RAG).</td><td>Ingestion + retrieval working; you can explain attention out loud.</td></tr>
+        <tr><td>2</td><td>RAG depth + evaluation (§7, §10). Add an eval set to your project. Read RAGAS-style metrics.</td><td>Project measures retrieval + faithfulness; a README writeup.</td></tr>
+        <tr><td>3</td><td>Agents + tool calling (§8), system design reps (§11). Do 2–3 design walkthroughs aloud.</td><td>Small agent demo; can whiteboard a support assistant in 20 min.</td></tr>
+        <tr><td>4</td><td>Question bank drills (§13), behavioral (§14), a few LeetCode mediums, 2 mock interviews.</td><td>60-sec pitch + project walkthrough + smooth Q&amp;A.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>High-signal resources</h3>
+    <ul>
+      <li><strong>Docs first</strong> — the OpenAI and Anthropic developer docs (prompting, tool use, structured outputs, evals) are the fastest practical grounding.</li>
+      <li><strong>Build</strong> — a RAG framework's quickstart (LangChain/LlamaIndex) or roll it by hand once to understand each step.</li>
+      <li><strong>Concepts</strong> — "The Illustrated Transformer" for attention intuition; skim the "Attention Is All You Need" and RAG papers for vocabulary.</li>
+      <li><strong>Evals</strong> — read one guide on LLM-as-judge and RAG evaluation; it's your differentiator.</li>
+      <li><strong>Stay current</strong> — pick one newsletter; don't drown in hype. Depth on fundamentals beats breadth on model releases.</li>
+    </ul>
+
+    <div class="callout teal"><div class="tag">If you only do three things</div><p style="margin:.5rem 0 0">1) Ship one RAG project <em>with an eval set</em>. 2) Be able to explain attention, RAG, and evals cleanly out loud. 3) Rehearse your switch story and project walkthrough until they're effortless. That covers 80% of what an applied GenAI interview tests.</p></div>
+  </section>
+
+  <footer>
+    <p>Study dossier · tailored for a 6-year software engineer moving into an applied Gen AI role. No JD was provided, so this targets the common "AI Engineer / GenAI Engineer" profile — share the actual JD and this can be sharpened to it.</p>
+    <p><a href="#top">↑ Back to top</a></p>
+  </footer>
+</main>
+</div>
+
+<script>
+  function toggleTheme(){
+    const r=document.documentElement;
+    const cur=r.getAttribute('data-theme')
+      || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  }
+  // close mobile menu on nav click
+  document.querySelectorAll('aside nav a').forEach(a=>{
+    a.addEventListener('click',()=>document.querySelector('aside').classList.remove('show'));
+  });
+</script>
+</body>
+</html>
