@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gen AI Interview Prep — SWE → GenAI</title>
 <style>
   :root{
@@ -43,14 +43,15 @@
     --code-bg:#1b1d23;--code-fg:#e8e6df;--good:#1f7a4d;--warn:#9a6b13;
     --shadow:0 1px 2px rgba(20,22,28,.05),0 8px 24px rgba(20,22,28,.06);
   }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth;scroll-padding-top:1.5rem}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  a,button,summary{touch-action:manipulation}
+  html{scroll-behavior:smooth;scroll-padding-top:1.5rem;-webkit-text-size-adjust:100%}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
     line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
   .wrap{display:grid;grid-template-columns:270px minmax(0,1fr);gap:0;max-width:1240px;margin:0 auto}
   /* sidebar */
-  aside{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
-    border-right:1px solid var(--line);padding:1.6rem 1.1rem 3rem}
+  aside{position:sticky;top:0;align-self:start;height:100vh;height:100dvh;overflow-y:auto;
+    -webkit-overflow-scrolling:touch;border-right:1px solid var(--line);padding:1.6rem 1.1rem 3rem}
   .brand{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
     color:var(--accent);font-weight:600}
   .brand small{display:block;color:var(--muted);letter-spacing:.04em;margin-top:.35rem;font-size:.68rem}
@@ -114,19 +115,22 @@
     color:var(--muted);font-weight:600}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
   @media(max-width:720px){.grid2{grid-template-columns:1fr}}
-  .toggle{position:fixed;top:1rem;right:1rem;z-index:20;background:var(--card);border:1px solid var(--line);
-    color:var(--ink);font-family:var(--mono);font-size:.7rem;padding:.4rem .6rem;border-radius:100px;
+  .toggle{position:fixed;top:max(1rem,env(safe-area-inset-top));right:max(1rem,env(safe-area-inset-right));
+    z-index:20;background:var(--card);border:1px solid var(--line);
+    color:var(--ink);font-family:var(--mono);font-size:.72rem;min-height:40px;padding:.5rem .75rem;border-radius:100px;
     cursor:pointer;box-shadow:var(--shadow)}
   .menbtn{display:none}
   @media(max-width:900px){
     .wrap{grid-template-columns:1fr}
-    aside{position:fixed;left:0;top:0;z-index:15;background:var(--paper);width:280px;
+    aside{position:fixed;left:0;top:0;z-index:15;background:var(--paper);width:280px;height:100dvh;
+      padding-top:max(1.6rem,env(safe-area-inset-top));
       transform:translateX(-100%);transition:transform .25s;box-shadow:var(--shadow)}
     aside.show{transform:translateX(0)}
-    .menbtn{display:block;position:fixed;top:1rem;left:1rem;z-index:20;background:var(--card);
-      border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:.4rem .6rem;cursor:pointer;
-      font-family:var(--mono);font-size:.72rem;box-shadow:var(--shadow)}
-    main{padding-top:3.6rem}
+    .menbtn{display:block;position:fixed;top:max(1rem,env(safe-area-inset-top));left:max(1rem,env(safe-area-inset-left));
+      z-index:20;background:var(--card);
+      border:1px solid var(--line);color:var(--ink);border-radius:8px;min-height:40px;padding:.5rem .75rem;cursor:pointer;
+      font-family:var(--mono);font-size:.74rem;box-shadow:var(--shadow)}
+    main{padding-top:max(3.6rem,calc(2.6rem + env(safe-area-inset-top)))}
   }
   .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.8rem;margin:1.2rem 0}
   .kpi .b{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.9rem}

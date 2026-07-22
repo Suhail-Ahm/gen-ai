@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>GenAI Prep · SWE → Applied Gen AI Engineer</title>
 <style>
   :root{
@@ -25,16 +25,19 @@
   :root[data-theme="light"]{--bg:#eef1f5;--grid:rgba(27,58,92,.05);--ink:#132133;--ink-soft:#3f5470;
     --muted:#6b7b90;--card:#ffffff;--line:#dfe4ec;--accent:#e0952a;--accent2:#0f8b86;
     --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);}
-  *{box-sizing:border-box}
-  body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.55;min-height:100vh;
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  a,button{touch-action:manipulation}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.55;min-height:100vh;min-height:100dvh;
     display:flex;flex-direction:column;
     background:
       linear-gradient(var(--grid) 1px,transparent 1px) 0 0/26px 26px,
       linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/26px 26px,
       var(--bg);
     -webkit-font-smoothing:antialiased}
-  .theme{position:fixed;top:1rem;right:1rem;background:var(--card);border:1px solid var(--line);
-    color:var(--ink);font-family:var(--mono);font-size:.7rem;padding:.4rem .6rem;border-radius:100px;
+  .theme{position:fixed;top:max(1rem,env(safe-area-inset-top));right:max(1rem,env(safe-area-inset-right));
+    background:var(--card);border:1px solid var(--line);
+    color:var(--ink);font-family:var(--mono);font-size:.72rem;min-height:40px;padding:.5rem .75rem;border-radius:100px;
     cursor:pointer;box-shadow:var(--shadow)}
   .wrap{max-width:980px;margin:0 auto;padding:clamp(2.5rem,7vw,5rem) clamp(1.1rem,4vw,2rem);flex:1}
   .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
