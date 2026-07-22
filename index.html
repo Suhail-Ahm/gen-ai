@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GenAI Prep · SWE → Applied Gen AI Engineer</title>
+<style>
+  :root{
+    --bg:#eef1f5; --grid:rgba(27,58,92,.05);
+    --ink:#132133; --ink-soft:#3f5470; --muted:#6b7b90;
+    --card:#ffffff; --line:#dfe4ec;
+    --accent:#e0952a; --accent2:#0f8b86;
+    --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;
+      --muted:#7f8ea3;--card:#12203a;--line:#22375a;--accent:#f2b134;--accent2:#2fc0b8;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);}
+  }
+  :root[data-theme="dark"]{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;
+    --muted:#7f8ea3;--card:#12203a;--line:#22375a;--accent:#f2b134;--accent2:#2fc0b8;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);}
+  :root[data-theme="light"]{--bg:#eef1f5;--grid:rgba(27,58,92,.05);--ink:#132133;--ink-soft:#3f5470;
+    --muted:#6b7b90;--card:#ffffff;--line:#dfe4ec;--accent:#e0952a;--accent2:#0f8b86;
+    --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.55;min-height:100vh;
+    display:flex;flex-direction:column;
+    background:
+      linear-gradient(var(--grid) 1px,transparent 1px) 0 0/26px 26px,
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/26px 26px,
+      var(--bg);
+    -webkit-font-smoothing:antialiased}
+  .theme{position:fixed;top:1rem;right:1rem;background:var(--card);border:1px solid var(--line);
+    color:var(--ink);font-family:var(--mono);font-size:.7rem;padding:.4rem .6rem;border-radius:100px;
+    cursor:pointer;box-shadow:var(--shadow)}
+  .wrap{max-width:980px;margin:0 auto;padding:clamp(2.5rem,7vw,5rem) clamp(1.1rem,4vw,2rem);flex:1}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:700}
+  h1{font-size:clamp(2rem,6vw,3.2rem);letter-spacing:-.025em;margin:.6rem 0 .6rem;font-weight:800;
+    text-wrap:balance;max-width:16ch;line-height:1.05}
+  .lede{font-size:1.1rem;color:var(--ink-soft);max-width:60ch}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:2.8rem 0 2rem}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}}
+  a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--card);
+    border:1px solid var(--line);border-radius:16px;padding:1.5rem 1.6rem;box-shadow:var(--shadow);
+    transition:transform .18s,border-color .18s;position:relative;overflow:hidden}
+  a.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+  a.card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--bar)}
+  .card .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--bar);font-weight:700}
+  .card h2{font-size:1.4rem;margin:.5rem 0 .4rem;letter-spacing:-.01em}
+  .card p{color:var(--ink-soft);font-size:.94rem;margin:0 0 1.1rem;flex:1}
+  .card .go{font-family:var(--mono);font-size:.8rem;color:var(--accent);font-weight:600}
+  .card ul{margin:.3rem 0 1.1rem;padding-left:1.1rem;color:var(--muted);font-size:.85rem}
+  .card li{margin:.15rem 0}
+  .path{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.3rem 1.5rem;
+    box-shadow:var(--shadow)}
+  .path h3{margin:0 0 .3rem;font-size:1.05rem}
+  .path p{margin:.2rem 0 .9rem;color:var(--muted);font-size:.9rem}
+  .steps{display:flex;flex-wrap:wrap;gap:.5rem;font-family:var(--mono);font-size:.76rem}
+  .steps span{background:transparent;border:1px solid var(--line);border-radius:100px;padding:.3rem .7rem;
+    color:var(--ink-soft)}
+  .steps span b{color:var(--accent)}
+  footer{max-width:980px;margin:0 auto;width:100%;padding:1.4rem clamp(1.1rem,4vw,2rem) 2.5rem;
+    color:var(--muted);font-size:.8rem;font-family:var(--mono)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+<button class="theme" onclick="var r=document.documentElement,c=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',c==='dark'?'light':'dark')">◐ theme</button>
+<div class="wrap">
+  <div class="eyebrow">Interview preparation</div>
+  <h1>Software Engineer → Applied Gen AI Engineer.</h1>
+  <p class="lede">Two companion resources for making the switch: a deep study guide with interview-ready answers, and an interactive roadmap that shows exactly what to learn, in what order, and why companies pay for it.</p>
+
+  <div class="cards">
+    <a class="card" href="/roadmap" style="--bar:var(--accent2)">
+      <span class="k">Start here · interactive</span>
+      <h2>The Roadmap</h2>
+      <p>A clickable, dependency-ordered skill tree. Track your progress, filter by essentials, and see how each skill maps to a real job.</p>
+      <ul>
+        <li>6 stages · Foundations → Portfolio</li>
+        <li>Click any node for the real use case</li>
+        <li>Progress saved in your browser</li>
+      </ul>
+      <span class="go">Open the roadmap →</span>
+    </a>
+    <a class="card" href="/prep" style="--bar:var(--accent)">
+      <span class="k">Deep dive · reference</span>
+      <h2>The Study Guide</h2>
+      <p>15 sections of concept deep-dives, system design, coding problems, a Q&amp;A bank with model answers, and your pitch.</p>
+      <ul>
+        <li>Transformers, RAG, agents, evals</li>
+        <li>System design + coding problems</li>
+        <li>12-question bank with answers</li>
+      </ul>
+      <span class="go">Open the guide →</span>
+    </a>
+  </div>
+
+  <div class="path">
+    <h3>How to use them together</h3>
+    <p>The roadmap tells you <em>what</em> to learn and in what order. The guide gives you the <em>depth</em> and the interview answers.</p>
+    <div class="steps">
+      <span><b>1</b> · Skim the roadmap, follow the ★ essentials</span>
+      <span><b>2</b> · Read the matching guide section</span>
+      <span><b>3</b> · Build one RAG project with evals</span>
+      <span><b>4</b> · Drill the question bank out loud</span>
+    </div>
+  </div>
+</div>
+<footer>gen-ai · a study project · pair the roadmap with the guide</footer>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GenAI Engineer Roadmap — Interactive</title>
+<style>
+  :root{
+    --bg:#eef1f5; --grid:rgba(27,58,92,.05);
+    --ink:#132133; --ink-soft:#3f5470; --muted:#6b7b90;
+    --card:#ffffff; --line:#dfe4ec; --rail:#c3ccd8;
+    --accent:#e0952a;           /* amber "you are here" */
+    --accent-ink:#7a4d08;
+    --s0:#5b6b82; --s1:#2f6fb0; --s2:#0f8b86; --s3:#7a5cc4; --s4:#d97b2f; --s5:#d6516a;
+    --good:#1f8a54;
+    --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0c1524; --grid:rgba(120,170,220,.06);
+      --ink:#e8eef6; --ink-soft:#b6c2d2; --muted:#7f8ea3;
+      --card:#12203a; --line:#22375a; --rail:#2a4162;
+      --accent:#f2b134; --accent-ink:#f2b134;
+      --s0:#8797ad; --s1:#5aa0e0; --s2:#2fc0b8; --s3:#a98cf0; --s4:#f0a052; --s5:#f0788e;
+      --good:#4bbf82;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c1524; --grid:rgba(120,170,220,.06);
+    --ink:#e8eef6; --ink-soft:#b6c2d2; --muted:#7f8ea3;
+    --card:#12203a; --line:#22375a; --rail:#2a4162;
+    --accent:#f2b134; --accent-ink:#f2b134;
+    --s0:#8797ad; --s1:#5aa0e0; --s2:#2fc0b8; --s3:#a98cf0; --s4:#f0a052; --s5:#f0788e;
+    --good:#4bbf82;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);
+  }
+  :root[data-theme="light"]{
+    --bg:#eef1f5; --grid:rgba(27,58,92,.05);
+    --ink:#132133; --ink-soft:#3f5470; --muted:#6b7b90;
+    --card:#ffffff; --line:#dfe4ec; --rail:#c3ccd8;
+    --accent:#e0952a; --accent-ink:#7a4d08;
+    --s0:#5b6b82; --s1:#2f6fb0; --s2:#0f8b86; --s3:#7a5cc4; --s4:#d97b2f; --s5:#d6516a;
+    --good:#1f8a54;
+    --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.55;
+    background:
+      linear-gradient(var(--grid) 1px,transparent 1px) 0 0/26px 26px,
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/26px 26px,
+      var(--bg);
+    -webkit-font-smoothing:antialiased}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:30;backdrop-filter:blur(10px);
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    border-bottom:1px solid var(--line)}
+  .bar{max-width:1180px;margin:0 auto;padding:.75rem clamp(1rem,3vw,2rem);
+    display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  .logo{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;line-height:1.3}
+  .logo b{display:block;color:var(--ink);font-size:.95rem;letter-spacing:-.01em;text-transform:none}
+  .spacer{flex:1}
+  .filters{display:flex;gap:.3rem;flex-wrap:wrap}
+  .filters button{font-family:var(--mono);font-size:.72rem;background:var(--card);
+    border:1px solid var(--line);color:var(--ink-soft);padding:.35rem .6rem;border-radius:100px;
+    cursor:pointer;transition:.18s}
+  .filters button:hover{border-color:var(--accent);color:var(--ink)}
+  .filters button.on{background:var(--accent);border-color:var(--accent);color:#1a1205;font-weight:600}
+  :root[data-theme="dark"] .filters button.on{color:#1a1205}
+  .prog{display:flex;align-items:center;gap:.6rem}
+  .ring{--pct:0;width:46px;height:46px;flex:none}
+  .ring .track{stroke:var(--line)}
+  .ring .fill{stroke:var(--accent);stroke-linecap:round;
+    transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1)}
+  .prog .txt{font-family:var(--mono);font-size:.72rem;color:var(--muted);line-height:1.2}
+  .prog .txt b{color:var(--ink);font-size:.95rem;display:block}
+  .minibtn{font-family:var(--mono);font-size:.68rem;background:none;border:1px solid var(--line);
+    color:var(--muted);padding:.3rem .5rem;border-radius:6px;cursor:pointer}
+  .minibtn:hover{color:var(--ink);border-color:var(--accent)}
+
+  /* ---------- hero ---------- */
+  .hero{max-width:1180px;margin:0 auto;padding:2.4rem clamp(1rem,3vw,2rem) 1rem}
+  .hero h1{font-size:clamp(1.8rem,4.5vw,2.7rem);letter-spacing:-.02em;margin:.2rem 0 .5rem;
+    font-weight:800;text-wrap:balance;max-width:20ch}
+  .hero p{color:var(--ink-soft);max-width:62ch;font-size:1.03rem}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:700}
+  .legend{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.3rem;font-family:var(--mono);
+    font-size:.72rem;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem}
+  .swatch{width:11px;height:11px;border-radius:3px;background:var(--accent)}
+  .swatch.tool{border-radius:50%}
+  .star{color:var(--accent)}
+
+  /* ---------- roadmap ---------- */
+  .road{max-width:1180px;margin:1rem auto 4rem;padding:0 clamp(1rem,3vw,2rem);
+    position:relative}
+  .stage{position:relative;padding:1.6rem 0 1.6rem 3.4rem;
+    opacity:0;transform:translateY(22px);transition:opacity .5s,transform .5s}
+  .stage.in{opacity:1;transform:none}
+  /* spine */
+  .stage::before{content:"";position:absolute;left:15px;top:0;bottom:-1.6rem;width:2px;
+    background:var(--rail)}
+  .stage:last-child::before{bottom:auto;height:2.2rem}
+  .stage .dot{position:absolute;left:6px;top:1.7rem;width:20px;height:20px;border-radius:50%;
+    background:var(--card);border:3px solid var(--sc);z-index:2;
+    box-shadow:0 0 0 4px var(--bg)}
+  .stage.done .dot{background:var(--sc)}
+  .stage .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--sc);
+    opacity:0;transform:scale(.4);transition:.3s}
+  .stage.done .dot::after{opacity:1;transform:scale(1)}
+  .st-head{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:.15rem}
+  .st-num{font-family:var(--mono);font-size:.74rem;font-weight:700;color:var(--sc);
+    border:1px solid var(--sc);border-radius:5px;padding:.05rem .4rem}
+  .st-head h2{font-size:1.3rem;margin:0;letter-spacing:-.01em;font-weight:800}
+  .st-tag{color:var(--muted);font-size:.9rem;margin:.1rem 0 1rem;max-width:58ch}
+  .st-prog{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-left:auto}
+
+  .nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:.65rem}
+  .node{position:relative;text-align:left;background:var(--card);border:1px solid var(--line);
+    border-left:3px solid var(--sc);border-radius:10px;padding:.7rem .8rem;cursor:pointer;
+    font-family:var(--sans);color:var(--ink);transition:transform .16s,box-shadow .16s,border-color .16s;
+    display:flex;flex-direction:column;gap:.3rem;min-height:82px}
+  .node:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--sc)}
+  .node:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .node .top{display:flex;align-items:center;gap:.4rem}
+  .node .tk{width:9px;height:9px;border-radius:2px;background:var(--sc);flex:none}
+  .node[data-type="tool"] .tk{border-radius:50%}
+  .node .lbl{font-weight:650;font-size:.92rem;line-height:1.2}
+  .node .star{margin-left:auto;font-size:.8rem;opacity:.9}
+  .node .meta{display:flex;align-items:center;gap:.5rem;margin-top:auto;
+    font-family:var(--mono);font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .diff{display:inline-flex;gap:2px}
+  .diff i{width:12px;height:3px;border-radius:2px;background:var(--line)}
+  .diff i.on{background:var(--sc)}
+  .node .check{position:absolute;top:.5rem;right:.5rem;width:20px;height:20px;border-radius:50%;
+    border:1.5px solid var(--rail);display:grid;place-items:center;font-size:.7rem;color:transparent;
+    transition:.2s;background:var(--card)}
+  .node .check:hover{border-color:var(--good)}
+  .node.done{border-left-color:var(--good)}
+  .node.done .check{background:var(--good);border-color:var(--good);color:#fff}
+  .node.done .lbl{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rail)}
+  .node.done .tk{background:var(--good)}
+  /* filter hiding */
+  body.f-concept .node[data-type="tool"],
+  body.f-tool .node[data-type="concept"],
+  body.f-essential .node:not([data-ess="1"]){display:none}
+
+  /* ---------- drawer ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(8,14,24,.5);opacity:0;pointer-events:none;
+    transition:.25s;z-index:40}
+  .scrim.show{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,92vw);background:var(--bg);
+    border-left:1px solid var(--line);box-shadow:var(--shadow);z-index:50;
+    transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column;overflow:hidden}
+  .drawer.show{transform:none}
+  .dr-head{padding:1.3rem 1.4rem 1rem;border-bottom:1px solid var(--line);position:relative}
+  .dr-close{position:absolute;top:1rem;right:1rem;background:none;border:1px solid var(--line);
+    color:var(--muted);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:1rem}
+  .dr-close:hover{color:var(--ink);border-color:var(--accent)}
+  .dr-kicker{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:700}
+  .dr-head h3{margin:.35rem 0 .5rem;font-size:1.35rem;letter-spacing:-.01em;max-width:16ch}
+  .dr-badges{display:flex;gap:.4rem;flex-wrap:wrap;font-family:var(--mono);font-size:.66rem}
+  .badge{border:1px solid var(--line);border-radius:100px;padding:.2rem .55rem;color:var(--ink-soft);
+    text-transform:uppercase;letter-spacing:.05em}
+  .dr-body{padding:1.2rem 1.4rem 2rem;overflow-y:auto;flex:1}
+  .dr-body h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin:1.3rem 0 .35rem}
+  .dr-body h4:first-child{margin-top:0}
+  .dr-body p{margin:.2rem 0;font-size:.94rem;color:var(--ink-soft)}
+  .dr-body .use{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:.8rem .9rem;font-size:.9rem}
+  .dr-body .use b{color:var(--ink)}
+  .chips{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.3rem}
+  .chips button{font-family:var(--mono);font-size:.72rem;background:var(--card);border:1px solid var(--line);
+    color:var(--ink-soft);padding:.25rem .55rem;border-radius:7px;cursor:pointer}
+  .chips button:hover{border-color:var(--accent);color:var(--ink)}
+  .chips.empty::after{content:"—";color:var(--muted);font-family:var(--mono)}
+  .dr-foot{padding:1rem 1.4rem;border-top:1px solid var(--line)}
+  .mark{width:100%;padding:.7rem;border-radius:10px;border:1px solid var(--good);cursor:pointer;
+    background:transparent;color:var(--good);font-weight:700;font-family:var(--sans);font-size:.92rem;
+    transition:.18s}
+  .mark:hover{background:var(--good);color:#fff}
+  .mark.is-done{background:var(--good);color:#fff}
+
+  /* ---------- use cases ---------- */
+  .usecases{max-width:1180px;margin:0 auto 5rem;padding:0 clamp(1rem,3vw,2rem)}
+  .usecases h2{font-size:1.5rem;letter-spacing:-.01em}
+  .usecases>p{color:var(--muted);max-width:60ch;margin-top:.2rem}
+  .uc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin-top:1.4rem}
+  .uc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;
+    box-shadow:var(--shadow);transition:transform .16s}
+  .uc:hover{transform:translateY(-3px)}
+  .uc .h{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);font-weight:700}
+  .uc h3{font-size:1.05rem;margin:.3rem 0 .4rem}
+  .uc p{font-size:.88rem;color:var(--ink-soft);margin:.2rem 0 .7rem}
+  .uc .stack{display:flex;gap:.3rem;flex-wrap:wrap}
+  .uc .stack button{font-family:var(--mono);font-size:.68rem;background:transparent;
+    border:1px solid var(--line);color:var(--ink-soft);padding:.2rem .5rem;border-radius:6px;cursor:pointer}
+  .uc .stack button:hover{border-color:var(--accent);color:var(--ink)}
+
+  footer{max-width:1180px;margin:0 auto;padding:1.6rem clamp(1rem,3vw,2rem) 3rem;
+    border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
+  .toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%) translateY(30px);
+    background:var(--ink);color:var(--bg);font-size:.85rem;padding:.6rem 1rem;border-radius:100px;
+    opacity:0;transition:.3s;z-index:60;font-family:var(--mono)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo">Roadmap<b>SWE → Applied GenAI Engineer</b></div>
+    <div class="spacer"></div>
+    <div class="filters" id="filters">
+      <button data-f="all" class="on">All</button>
+      <button data-f="concept">Concepts</button>
+      <button data-f="tool">Tools</button>
+      <button data-f="essential">★ Essentials</button>
+    </div>
+    <div class="prog">
+      <svg class="ring" viewBox="0 0 46 46" id="ring">
+        <circle class="track" cx="23" cy="23" r="19" fill="none" stroke-width="4"/>
+        <circle class="fill" cx="23" cy="23" r="19" fill="none" stroke-width="4"
+          transform="rotate(-90 23 23)" stroke-dasharray="119.4" stroke-dashoffset="119.4"/>
+      </svg>
+      <div class="txt"><b id="pctTxt">0%</b><span id="cntTxt">0 / 0 done</span></div>
+    </div>
+    <button class="minibtn" id="resetBtn" title="Reset progress">reset</button>
+    <button class="minibtn" id="themeBtn" title="Toggle theme">◐</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Your path · click any node to explore</div>
+  <h1>Everything you need to solve what companies actually pay for.</h1>
+  <p>A dependency-ordered path from your first LLM API call to a portfolio that gets you hired. Each node is a real skill or tool tied to a business problem. Click to see <em>why it matters</em>, the <em>real use case</em>, and <em>how to learn it</em>. Tick nodes off — your progress is saved in this browser.</p>
+  <div class="legend">
+    <span><i class="swatch"></i> Concept</span>
+    <span><i class="swatch tool"></i> Tool</span>
+    <span><i class="star">★</i> Must-have for interviews</span>
+    <span><i class="diff"><i class="on" style="background:var(--muted)"></i><i class="on" style="background:var(--muted)"></i><i></i></i> Difficulty</span>
+  </div>
+</div>
+
+<div class="road" id="road"></div>
+
+<div class="usecases">
+  <h2>What this maps to in the real job</h2>
+  <p>Companies don't hire "someone who knows AI." They hire someone who can ship one of these. Each card links to the exact nodes that build it.</p>
+  <div class="uc-grid" id="ucGrid"></div>
+</div>
+
+<footer>
+  <p>Interactive roadmap · tailored for a software engineer moving into applied Gen AI. Progress is stored locally in your browser only. Pair this with the <a href="/prep">study guide →</a> · <a href="/">home</a></p>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="dr-head">
+    <button class="dr-close" id="drClose" aria-label="Close">✕</button>
+    <div class="dr-kicker" id="drKicker"></div>
+    <h3 id="drTitle"></h3>
+    <div class="dr-badges" id="drBadges"></div>
+  </div>
+  <div class="dr-body" id="drBody"></div>
+  <div class="dr-foot"><button class="mark" id="drMark">Mark as complete</button></div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const STAGES = [
+  { id:0, name:"Foundations", color:"var(--s0)",
+    tag:"Get fluent with the raw materials. As a SWE you'll fly through most of this.",
+    nodes:[
+      {id:"py", label:"Python for AI", type:"tool", ess:1, diff:1,
+        blurb:"The lingua franca of AI. You need comfort with Python, virtualenvs, requests, async, and reading library docs.",
+        why:"Every LLM SDK, RAG framework, and eval tool is Python-first. Job postings assume it.",
+        use:"Writing the glue that calls a model, parses its output, and wires it into an API.",
+        learn:"You already code — spend a weekend on Python idioms, type hints, and async. Build the habit of reading source.", deps:[]},
+      {id:"llm-basics", label:"How LLMs work", type:"concept", ess:1, diff:1,
+        blurb:"A mental model: a transformer predicting the next token, with no built-in truth or memory. Not magic, not a database.",
+        why:"You can't design around a component you think is magic. Interviewers test whether you understand its limits.",
+        use:"Explaining to a PM why the model 'lied' — and designing grounding so it doesn't.",
+        learn:"Read 'The Illustrated Transformer'. Aim to explain attention and next-token prediction out loud.", deps:["py"]},
+      {id:"tokens", label:"Tokens & context", type:"concept", ess:1, diff:1,
+        blurb:"Models see subword tokens, not words. Cost and context limits are counted in tokens (~4 chars each).",
+        why:"Token math drives cost, latency, and 'context too long' errors — daily engineering concerns.",
+        use:"Estimating cost-per-request and deciding how much context you can afford to send.",
+        learn:"Play with a tokenizer playground. Learn the ~0.75 words/token rule of thumb.", deps:["llm-basics"]},
+      {id:"apis", label:"LLM APIs", type:"tool", ess:1, diff:1,
+        blurb:"Calling OpenAI / Anthropic / open models: messages, system prompts, params, streaming, errors, rate limits.",
+        why:"This is the actual interface you build on. Handling errors and rate limits well is pure SWE value.",
+        use:"Every feature starts here — a reliable, retrying, streaming call to a model.",
+        learn:"Read the OpenAI & Anthropic API docs end-to-end. Make 20 calls with different params.", deps:["py","tokens"]},
+      {id:"ml-lit", label:"ML literacy", type:"concept", ess:0, diff:2,
+        blurb:"Enough to be dangerous: what training/inference means, overfitting, embeddings vs generation, precision/recall.",
+        why:"You don't need a PhD, but you must follow the vocabulary in design discussions and papers.",
+        use:"Understanding an eval report or a fine-tuning proposal without getting lost.",
+        learn:"A short ML crash course (e.g. a survey article). Don't over-invest for applied roles.", deps:["llm-basics"]},
+    ]},
+  { id:1, name:"Core LLM skills", color:"var(--s1)",
+    tag:"Get the model to do what you want, reliably. This is 80% of applied work.",
+    nodes:[
+      {id:"prompt", label:"Prompt engineering", type:"concept", ess:1, diff:1,
+        blurb:"System vs user roles, clear instructions, few-shot examples, role prompting, and iterating with a purpose.",
+        why:"The cheapest, fastest lever. Companies want people who treat prompts as versioned, tested code — not vibes.",
+        use:"Turning a vague 'summarize this' into a reliable, formatted, on-brand summary at scale.",
+        learn:"Read a provider prompting guide. Rewrite one weak prompt 5 ways and compare outputs.", deps:["apis"]},
+      {id:"structured", label:"Structured outputs", type:"concept", ess:1, diff:2,
+        blurb:"Forcing valid JSON via schema / function-calling, then validating it. No regex-scraping prose in production.",
+        why:"Any feature that feeds model output into code needs reliable structure. Extremely common in JDs.",
+        use:"Extracting fields from an invoice into a guaranteed schema your backend can trust.",
+        learn:"Use structured-output / tool-calling mode with a JSON schema; add validation + a repair retry.", deps:["prompt"]},
+      {id:"decoding", label:"Decoding params", type:"concept", ess:0, diff:1,
+        blurb:"Temperature, top_p, max_tokens, stop sequences — tuning randomness vs determinism per task.",
+        why:"Wrong temperature quietly ruins reliability. Shows you understand the model's behavior.",
+        use:"Temp 0 for extraction, higher for brainstorming — and knowing temp 0 isn't fully deterministic.",
+        learn:"Run the same prompt at temp 0, 0.7, 1.0 and observe. Read the sampling section of the docs.", deps:["apis"]},
+      {id:"embeddings", label:"Embeddings", type:"concept", ess:1, diff:2,
+        blurb:"Vectors where semantic similarity ≈ closeness. Compared with cosine similarity. A separate model from the LLM.",
+        why:"The foundation of search, RAG, clustering, and recommendation — huge share of real use cases.",
+        use:"Semantic search: find the 5 most relevant support docs for a question.",
+        learn:"Embed 50 sentences, compute cosine similarity, cluster them. Feel how meaning maps to geometry.", deps:["apis"]},
+      {id:"reasoning", label:"CoT & reasoning", type:"concept", ess:0, diff:2,
+        blurb:"Chain-of-thought prompting and when reasoning models help — for multi-step logic, less for simple tasks.",
+        why:"Knowing when NOT to pay for reasoning is as valuable as knowing when to use it.",
+        use:"A multi-constraint scheduling task where step-by-step reasoning beats a one-shot answer.",
+        learn:"Compare a hard task with and without 'think step by step'. Note cost/latency trade-offs.", deps:["prompt"]},
+    ]},
+  { id:2, name:"RAG — the #1 use case", color:"var(--s2)",
+    tag:"Ground models in real data. If you master one system cold, make it this one.",
+    nodes:[
+      {id:"chunking", label:"Chunking", type:"concept", ess:1, diff:2,
+        blurb:"Splitting documents into retrievable pieces: size, overlap, and structure-aware strategies. Makes or breaks RAG.",
+        why:"Most RAG bugs are chunking bugs. Companies feel this pain directly.",
+        use:"Splitting a 200-page policy PDF so the right paragraph is retrievable for a question.",
+        learn:"Chunk one doc 3 ways (fixed / overlap / by-heading) and compare retrieval quality.", deps:["embeddings"]},
+      {id:"vectordb", label:"Vector databases", type:"tool", ess:1, diff:2,
+        blurb:"Storing & searching embeddings: pgvector, Pinecone, Qdrant, Weaviate, FAISS. HNSW index, recall vs speed.",
+        why:"The storage layer of every RAG system. Knowing trade-offs (managed vs pgvector) is real design signal.",
+        use:"Serving millions of doc chunks with sub-100ms similarity search.",
+        learn:"Stand up pgvector or Qdrant locally, insert embeddings, run a top-k query.", deps:["embeddings"]},
+      {id:"retrieval", label:"Retrieval + hybrid search", type:"concept", ess:1, diff:2,
+        blurb:"Top-k similarity search, plus hybrid (dense + keyword/BM25) fusion to catch exact matches semantics miss.",
+        why:"Pure vector search misses names, codes, and exact terms. Hybrid is a big real-world win.",
+        use:"A support bot that finds both 'error 402' (keyword) and 'payment failed' (semantic).",
+        learn:"Add BM25 alongside vector search and fuse results (reciprocal rank fusion).", deps:["vectordb","chunking"]},
+      {id:"rerank", label:"Re-ranking", type:"concept", ess:0, diff:3,
+        blurb:"Retrieve top-50 cheaply, then a cross-encoder re-ranks to the best 5 for precision before generation.",
+        why:"Cuts noise and 'lost in the middle' failures — a common quality upgrade companies ask about.",
+        use:"Sending the model 5 truly-relevant chunks instead of 20 mediocre ones.",
+        learn:"Add a re-ranker model to your RAG pipeline and measure the quality lift.", deps:["retrieval"]},
+      {id:"rag-frameworks", label:"LangChain / LlamaIndex", type:"tool", ess:0, diff:2,
+        blurb:"Frameworks that wire ingestion → retrieval → generation. Great for speed; understand what they hide.",
+        why:"Common in JDs, but interviewers respect people who can also build RAG by hand.",
+        use:"Shipping a RAG prototype in a day, then optimizing the parts the framework abstracts.",
+        learn:"Build one RAG app with a framework AND one from scratch. Compare what you learned.", deps:["retrieval"]},
+      {id:"rag-eval", label:"RAG evaluation", type:"concept", ess:1, diff:3,
+        blurb:"Measure retrieval (recall@k, MRR) separately from generation (faithfulness, relevance). RAGAS-style.",
+        why:"Separating retrieval from generation bugs is the senior instinct that gets you the offer.",
+        use:"Proving a chunking change improved answers instead of guessing.",
+        learn:"Build a 30-question eval set; score retrieval hit-rate and answer faithfulness.", deps:["retrieval","evals"]},
+    ]},
+  { id:3, name:"Agents & tool use", color:"var(--s3)",
+    tag:"Let models take actions — carefully. The frontier, and where reliability gets hard.",
+    nodes:[
+      {id:"toolcall", label:"Function / tool calling", type:"concept", ess:1, diff:2,
+        blurb:"The model emits a structured request to call your function; you run it and feed the result back.",
+        why:"The foundation of everything agentic and of connecting models to real systems.",
+        use:"Letting a bot check live order status by calling your API instead of guessing.",
+        learn:"Give a model 2 tools (a calculator + a fake API) and let it choose and call them.", deps:["structured"]},
+      {id:"agent-loop", label:"Agent loops (ReAct)", type:"concept", ess:0, diff:3,
+        blurb:"An LLM in a loop: reason → act → observe → repeat, with a stopping condition. Errors compound across steps.",
+        why:"Knowing WHEN NOT to use an agent (and using a fixed workflow instead) signals maturity.",
+        use:"An assistant that reads a ticket, looks up data, and drafts a reply in several steps.",
+        learn:"Build a bounded agent loop (max steps, error handling) by hand — see §12 of the study guide.", deps:["toolcall"]},
+      {id:"orchestration", label:"Orchestration (LangGraph)", type:"tool", ess:0, diff:3,
+        blurb:"Frameworks for multi-step / multi-agent flows: routers, planners, workers, state machines.",
+        why:"Complex automations need structure. Increasingly requested for 'agentic' roles.",
+        use:"A pipeline that routes a request to the right specialist agent, with retries and state.",
+        learn:"Model a 3-step workflow as a graph with explicit state and failure paths.", deps:["agent-loop"]},
+      {id:"mcp", label:"MCP", type:"tool", ess:0, diff:2,
+        blurb:"Model Context Protocol — an open standard to connect models to tools/data through one interface.",
+        why:"Rapidly becoming standard; showing up in JDs. Worth knowing by name and shape.",
+        use:"Plugging a model into many tools without hand-wiring each integration.",
+        learn:"Read the MCP spec overview; connect a model to one MCP server.", deps:["toolcall"]},
+      {id:"guardrails", label:"Guardrails & safety", type:"concept", ess:1, diff:2,
+        blurb:"Prompt-injection defense, PII redaction, output validation, content moderation, least-privilege tools.",
+        why:"Any agent that takes actions or reads untrusted data is an attack surface. Companies worry about this.",
+        use:"Stopping a malicious document from making your agent leak data or take a bad action.",
+        learn:"Try to prompt-inject your own bot, then add layered defenses. See study guide §10.", deps:["toolcall"]},
+    ]},
+  { id:4, name:"Production & evaluation", color:"var(--s4)",
+    tag:"The part demos skip and companies desperately need — your SWE edge lives here.",
+    nodes:[
+      {id:"evals", label:"Evals & LLM-as-judge", type:"concept", ess:1, diff:3,
+        blurb:"Systematically measuring quality: deterministic checks, LLM-as-judge with rubrics, regression suites.",
+        why:"The single most senior-signaling skill. 'How do you know it works?' is a guaranteed question.",
+        use:"Catching a 12% quality drop before a prompt change ships — instead of a user finding it.",
+        learn:"Build a tiny eval harness that scores outputs against a dataset. Make it your portfolio piece.", deps:["prompt"]},
+      {id:"observability", label:"Observability & tracing", type:"tool", ess:1, diff:2,
+        blurb:"Logging prompts, responses, tokens, latency, cost per call. Tools: LangSmith, Langfuse, or your own.",
+        why:"You can't fix what you can't see. Pure engineering value you already understand.",
+        use:"Debugging why one user's query cost $2 and took 30s by inspecting the full trace.",
+        learn:"Wire tracing into your RAG app; build a cost + latency dashboard.", deps:["apis"]},
+      {id:"cost", label:"Cost & caching", type:"concept", ess:1, diff:2,
+        blurb:"Semantic + exact caching, model routing (small model for easy queries), context trimming, batching.",
+        why:"LLM bills explode fast. Optimizing cost/latency is exactly the SWE skill companies undervalue in others.",
+        use:"Cutting spend 60% by caching repeats and routing FAQs to a cheaper model.",
+        learn:"Add a cache layer and a small/large model router; measure cost-per-request before/after.", deps:["apis"]},
+      {id:"streaming", label:"Latency & streaming", type:"concept", ess:0, diff:2,
+        blurb:"Streaming tokens for perceived speed, p95 latency budgets, timeouts and graceful degradation.",
+        why:"UX and reliability. Users abandon slow assistants; fallbacks keep features alive.",
+        use:"Streaming a chatbot reply so it feels instant, with a fallback model on timeout.",
+        learn:"Implement server-sent streaming end-to-end; add a timeout → fallback path.", deps:["apis"]},
+      {id:"deploy", label:"Deployment", type:"tool", ess:1, diff:2,
+        blurb:"Serving it: FastAPI, Docker, serverless functions, secrets, env config, background jobs.",
+        why:"This is literally your existing job applied to a new component. Strong differentiator.",
+        use:"Shipping the RAG service as a real API behind auth, with an ingestion background job.",
+        learn:"Deploy your project as an API (FastAPI + a serverless host). You mostly know this already.", deps:["apis"]},
+      {id:"finetune", label:"Fine-tuning / LoRA", type:"concept", ess:0, diff:3,
+        blurb:"Parameter-efficient tuning (LoRA/QLoRA) to lock in a format/style/domain when prompting can't. Advanced.",
+        why:"Nice-to-have. Knowing WHEN to fine-tune (rarely) matters more than doing it.",
+        use:"Forcing a consistent output schema or brand voice a prompt couldn't reliably enforce.",
+        learn:"Run one LoRA fine-tune on a small dataset to understand the workflow. Don't over-invest.", deps:["evals"]},
+    ]},
+  { id:5, name:"Portfolio & proof", color:"var(--s5)",
+    tag:"Convert skills into evidence. One documented project beats a stack of certificates.",
+    nodes:[
+      {id:"proj-rag", label:"Ship a RAG project", type:"tool", ess:1, diff:2,
+        blurb:"A grounded assistant over a real corpus you know, with citations, an eval set, and a clean writeup.",
+        why:"Direct proof you can do the #1 job. Your best interview-steering material.",
+        use:"'Chat with X's docs' — the exact thing thousands of companies are building right now.",
+        learn:"Combine chunking + vectordb + retrieval + rag-eval into one deployed app. Write the README.", deps:["rag-eval","deploy"]},
+      {id:"proj-agent", label:"Build a small agent", type:"tool", ess:0, diff:3,
+        blurb:"An agent that uses 2–3 real tools with error handling, loop limits, and a stopping policy.",
+        why:"Shows you can do 'agentic' work responsibly — the buzzword companies chase.",
+        use:"Automating a multi-step internal task that needs reasoning plus tool calls.",
+        learn:"Use agent-loop + guardrails + toolcall. Document what you'd NOT trust it to do.", deps:["agent-loop","guardrails"]},
+      {id:"proj-eval", label:"Publish an eval harness", type:"tool", ess:1, diff:3,
+        blurb:"A small framework that scores prompts against a dataset and catches regressions. The underrated flex.",
+        why:"Almost no junior candidate has this. It screams 'production engineer', not 'prompt tinkerer'.",
+        use:"The quality gate every serious GenAI team needs and few candidates can build.",
+        learn:"Turn your evals work into a reusable, documented tool with a real regression example.", deps:["evals"]},
+      {id:"writeup", label:"Writeups & storytelling", type:"concept", ess:1, diff:1,
+        blurb:"READMEs / blog posts explaining the problem, architecture, one hard trade-off, and how you measured success.",
+        why:"Interviewers read your writeups. Clear reasoning about trade-offs is what they're actually buying.",
+        use:"A 3-minute project walkthrough that steers half the interview onto ground you own.",
+        learn:"Write one honest post-mortem per project: what worked, what didn't, what you'd change.", deps:["proj-rag"]},
+    ]},
+];
+
+const USECASES = [
+  {h:"Most common", t:"Knowledge assistant (RAG)", d:"Chat with our docs, KB, contracts, or codebase. The #1 enterprise ask.",
+    stack:["chunking","vectordb","retrieval","rag-eval","guardrails"]},
+  {h:"In-product", t:"Copilot / assistant", d:"Draft, summarize, or automate a workflow inside your product.",
+    stack:["prompt","structured","streaming","evals"]},
+  {h:"Automation", t:"Workflow agent", d:"Read a request, look up data, take an action across steps.",
+    stack:["toolcall","agent-loop","guardrails","observability"]},
+  {h:"Data", t:"Extraction & classification", d:"Turn unstructured text (invoices, tickets, reviews) into structured data.",
+    stack:["structured","prompt","evals"]},
+  {h:"Discovery", t:"Semantic search & reco", d:"Search and recommend by meaning, not just keywords.",
+    stack:["embeddings","vectordb","retrieval","rerank"]},
+  {h:"Reliability", t:"Make it production-grade", d:"The layer that turns a demo into a trustworthy feature.",
+    stack:["evals","observability","cost","deploy"]},
+];
+
+/* ---------------- RENDER ---------------- */
+const NODE_INDEX = {};
+STAGES.forEach(s => s.nodes.forEach(n => NODE_INDEX[n.id] = {...n, stage:s}));
+const ALL_IDS = Object.keys(NODE_INDEX);
+const UNLOCKS = {};
+ALL_IDS.forEach(id => UNLOCKS[id] = []);
+ALL_IDS.forEach(id => (NODE_INDEX[id].deps||[]).forEach(d => { if(UNLOCKS[d]) UNLOCKS[d].push(id); }));
+
+let done = new Set();
+try { done = new Set(JSON.parse(localStorage.getItem("genai_roadmap_done")||"[]")); } catch(e){}
+function save(){ localStorage.setItem("genai_roadmap_done", JSON.stringify([...done])); }
+
+const road = document.getElementById("road");
+STAGES.forEach(stage => {
+  const sec = document.createElement("section");
+  sec.className = "stage";
+  sec.style.setProperty("--sc", stage.color);
+  sec.dataset.stage = stage.id;
+  sec.innerHTML = `
+    <div class="dot"></div>
+    <div class="st-head">
+      <span class="st-num">STAGE ${stage.id}</span>
+      <h2>${stage.name}</h2>
+      <span class="st-prog" data-stageprog></span>
+    </div>
+    <p class="st-tag">${stage.tag}</p>
+    <div class="nodes"></div>`;
+  const grid = sec.querySelector(".nodes");
+  stage.nodes.forEach(n => {
+    const b = document.createElement("button");
+    b.className = "node";
+    b.dataset.id = n.id;
+    b.dataset.type = n.type;
+    b.dataset.ess = n.ess;
+    b.innerHTML = `
+      <span class="check" data-check aria-label="toggle complete"></span>
+      <div class="top">
+        <span class="tk"></span>
+        <span class="lbl">${n.label}</span>
+        ${n.ess?'<span class="star">★</span>':''}
+      </div>
+      <div class="meta">
+        <span>${n.type}</span>
+        <span class="diff">${[1,2,3].map(i=>`<i class="${i<=n.diff?'on':''}"></i>`).join('')}</span>
+      </div>`;
+    b.addEventListener("click", e => {
+      if(e.target.closest("[data-check]")){ toggle(n.id); return; }
+      openDrawer(n.id);
+    });
+    grid.appendChild(b);
+  });
+  road.appendChild(sec);
+});
+
+/* use cases */
+const ucGrid = document.getElementById("ucGrid");
+USECASES.forEach(uc => {
+  const d = document.createElement("div");
+  d.className = "uc";
+  d.innerHTML = `<div class="h">${uc.h}</div><h3>${uc.t}</h3><p>${uc.d}</p>
+    <div class="stack">${uc.stack.map(id=>`<button data-goto="${id}">${NODE_INDEX[id].label}</button>`).join('')}</div>`;
+  ucGrid.appendChild(d);
+});
+
+/* ---------------- STATE + UI ---------------- */
+function refresh(){
+  document.querySelectorAll(".node").forEach(n=>{
+    n.classList.toggle("done", done.has(n.dataset.id));
+  });
+  // per-stage progress + dot
+  STAGES.forEach(s=>{
+    const total = s.nodes.length, d = s.nodes.filter(n=>done.has(n.id)).length;
+    const sec = road.querySelector(`.stage[data-stage="${s.id}"]`);
+    sec.querySelector("[data-stageprog]").textContent = `${d}/${total}`;
+    sec.classList.toggle("done", d===total);
+  });
+  // overall ring
+  const total = ALL_IDS.length, d = done.size;
+  const pct = Math.round(d/total*100);
+  const C = 2*Math.PI*19;
+  const fill = document.querySelector("#ring .fill");
+  fill.setAttribute("stroke-dasharray", C.toFixed(1));
+  fill.setAttribute("stroke-dashoffset", (C*(1-d/total)).toFixed(1));
+  document.getElementById("pctTxt").textContent = pct+"%";
+  document.getElementById("cntTxt").textContent = `${d} / ${total} done`;
+  // drawer mark button
+  if(currentId){
+    const mk = document.getElementById("drMark");
+    const isDone = done.has(currentId);
+    mk.classList.toggle("is-done", isDone);
+    mk.textContent = isDone ? "✓ Completed — click to undo" : "Mark as complete";
+  }
+}
+function toggle(id){
+  if(done.has(id)){ done.delete(id); } else { done.add(id); toast(pickToast(id)); }
+  save(); refresh();
+}
+function pickToast(id){
+  if(done.size === ALL_IDS.length) return "🎉 Roadmap complete — go get that offer.";
+  const s = NODE_INDEX[id].stage;
+  const stageDone = s.nodes.every(n=>done.has(n.id));
+  if(stageDone) return `✓ Stage ${s.id} · ${s.name} cleared`;
+  return `✓ ${NODE_INDEX[id].label}`;
+}
+
+/* ---------------- DRAWER ---------------- */
+let currentId = null;
+const drawer = document.getElementById("drawer");
+const scrim = document.getElementById("scrim");
+function openDrawer(id){
+  currentId = id;
+  const n = NODE_INDEX[id];
+  document.getElementById("drKicker").textContent = `Stage ${n.stage.id} · ${n.stage.name}`;
+  document.getElementById("drKicker").style.color = n.stage.color;
+  document.getElementById("drTitle").textContent = n.label;
+  document.getElementById("drBadges").innerHTML =
+    `<span class="badge">${n.type}</span>
+     <span class="badge">${["","beginner","intermediate","advanced"][n.diff]}</span>
+     ${n.ess?'<span class="badge" style="color:var(--accent);border-color:var(--accent)">★ essential</span>':''}`;
+  const deps = (n.deps||[]).map(d=>`<button data-goto="${d}">${NODE_INDEX[d].label}</button>`).join('');
+  const unlocks = (UNLOCKS[id]||[]).map(u=>`<button data-goto="${u}">${NODE_INDEX[u].label}</button>`).join('');
+  document.getElementById("drBody").innerHTML = `
+    <p>${n.blurb}</p>
+    <h4>Why companies want it</h4><p>${n.why}</p>
+    <h4>Real use case</h4><div class="use"><b>▸</b> ${n.use}</div>
+    <h4>How to learn it</h4><p>${n.learn}</p>
+    <h4>Needs first</h4><div class="chips ${deps?'':'empty'}">${deps}</div>
+    <h4>Unlocks</h4><div class="chips ${unlocks?'':'empty'}">${unlocks}</div>`;
+  drawer.classList.add("show"); scrim.classList.add("show");
+  drawer.setAttribute("aria-hidden","false");
+  refresh();
+}
+function closeDrawer(){
+  drawer.classList.remove("show"); scrim.classList.remove("show");
+  drawer.setAttribute("aria-hidden","true"); currentId=null;
+}
+document.getElementById("drClose").onclick = closeDrawer;
+scrim.onclick = closeDrawer;
+document.getElementById("drMark").onclick = ()=>{ if(currentId) toggle(currentId); };
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeDrawer(); });
+document.body.addEventListener("click", e=>{
+  const g = e.target.closest("[data-goto]");
+  if(g){ openDrawer(g.dataset.goto); const node=road.querySelector(`.node[data-id="${g.dataset.goto}"]`);
+    node?.scrollIntoView({behavior:"smooth",block:"center"}); }
+});
+
+/* ---------------- FILTERS ---------------- */
+document.getElementById("filters").addEventListener("click", e=>{
+  const btn = e.target.closest("button"); if(!btn) return;
+  document.querySelectorAll("#filters button").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+  document.body.className = document.body.className.replace(/\bf-\w+/g,"").trim();
+  const f = btn.dataset.f;
+  if(f!=="all") document.body.classList.add("f-"+f);
+});
+
+/* ---------------- MISC ---------------- */
+document.getElementById("resetBtn").onclick = ()=>{
+  if(confirm("Clear all your progress?")){ done.clear(); save(); refresh(); toast("Progress reset"); }
+};
+document.getElementById("themeBtn").onclick = ()=>{
+  const r=document.documentElement;
+  const cur=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  r.setAttribute("data-theme", cur==="dark"?"light":"dark");
+};
+let toastT;
+function toast(msg){
+  const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),2200);
+}
+/* scroll reveal */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+},{threshold:.12});
+document.querySelectorAll(".stage").forEach(s=>io.observe(s));
+
+refresh();
+</script>
+</body>
+</html>
