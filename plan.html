@@ -6,8 +6,8 @@
 <title>8-Week Gen AI Study Plan & Tracker</title>
 <meta name="description" content="Your dated 8-week Gen AI study plan with daily tasks, weekly quizzes, and progress tracking.">
 <link rel="manifest" href="/manifest.webmanifest">
-<meta name="theme-color" content="#eef1f5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0c1524" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0d12" media="(prefers-color-scheme: dark)">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,41 +16,37 @@
 <link rel="apple-touch-icon" href="/icon-180.png">
 <style>
   :root{
-    --bg:#eef1f5; --grid:rgba(27,58,92,.05);
-    --ink:#132133; --ink-soft:#3f5470; --muted:#6b7b90;
-    --card:#ffffff; --line:#dfe4ec; --rail:#c3ccd8;
-    --accent:#e0952a; --accent-ink:#7a4d08;
-    --s0:#5b6b82; --s1:#2f6fb0; --s2:#0f8b86; --s3:#7a5cc4; --s4:#d97b2f; --s5:#d6516a;
-    --good:#1f8a54; --warn:#c98a1a;
-    --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);
+    --bg:#f7f8fa;
+    --ink:#17191f; --ink-soft:#40444d; --muted:#868c96;
+    --card:#ffffff; --line:#ececef; --rail:#dcdde2;
+    --accent:#5b5fd6; --accent-ink:#ffffff;
+    --s0:#7c828e; --s1:#5b7fb0; --s2:#4a9d8e; --s3:#8a7fc4; --s4:#c0895c; --s5:#c47084;
+    --good:#2e9e5b; --warn:#c98a1a;
+    --shadow:0 1px 2px rgba(20,22,30,.04),0 1px 3px rgba(20,22,30,.05);
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   @media (prefers-color-scheme:dark){
-    :root{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;
-      --muted:#7f8ea3;--card:#12203a;--line:#22375a;--rail:#2a4162;
-      --accent:#f2b134;--accent-ink:#f2b134;
-      --s0:#8797ad;--s1:#5aa0e0;--s2:#2fc0b8;--s3:#a98cf0;--s4:#f0a052;--s5:#f0788e;
+    :root{--bg:#0c0d12;--ink:#e7e8ea;--ink-soft:#b0b3bb;
+      --muted:#7c818c;--card:#16181e;--line:#24262e;--rail:#2c2f38;
+      --accent:#7c82f0;--accent-ink:#0c0d12;
+      --s0:#9aa1ad;--s1:#7aa0d0;--s2:#5ec0b0;--s3:#a99fe0;--s4:#e0a978;--s5:#e090a2;
       --good:#4bbf82;--warn:#e0a83a;
-      --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);}
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.28);}
   }
-  :root[data-theme="dark"]{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;
-    --muted:#7f8ea3;--card:#12203a;--line:#22375a;--rail:#2a4162;--accent:#f2b134;--accent-ink:#f2b134;
-    --s0:#8797ad;--s1:#5aa0e0;--s2:#2fc0b8;--s3:#a98cf0;--s4:#f0a052;--s5:#f0788e;
-    --good:#4bbf82;--warn:#e0a83a;--shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);}
-  :root[data-theme="light"]{--bg:#eef1f5;--grid:rgba(27,58,92,.05);--ink:#132133;--ink-soft:#3f5470;
-    --muted:#6b7b90;--card:#ffffff;--line:#dfe4ec;--rail:#c3ccd8;--accent:#e0952a;--accent-ink:#7a4d08;
-    --s0:#5b6b82;--s1:#2f6fb0;--s2:#0f8b86;--s3:#7a5cc4;--s4:#d97b2f;--s5:#d6516a;
-    --good:#1f8a54;--warn:#c98a1a;--shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);}
+  :root[data-theme="dark"]{--bg:#0c0d12;--ink:#e7e8ea;--ink-soft:#b0b3bb;
+    --muted:#7c818c;--card:#16181e;--line:#24262e;--rail:#2c2f38;--accent:#7c82f0;--accent-ink:#0c0d12;
+    --s0:#9aa1ad;--s1:#7aa0d0;--s2:#5ec0b0;--s3:#a99fe0;--s4:#e0a978;--s5:#e090a2;
+    --good:#4bbf82;--warn:#e0a83a;--shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.28);}
+  :root[data-theme="light"]{--bg:#f7f8fa;--ink:#17191f;--ink-soft:#40444d;
+    --muted:#868c96;--card:#ffffff;--line:#ececef;--rail:#dcdde2;--accent:#5b5fd6;--accent-ink:#ffffff;
+    --s0:#7c828e;--s1:#5b7fb0;--s2:#4a9d8e;--s3:#8a7fc4;--s4:#c0895c;--s5:#c47084;
+    --good:#2e9e5b;--warn:#c98a1a;--shadow:0 1px 2px rgba(20,22,30,.04),0 1px 3px rgba(20,22,30,.05);}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   a,button,summary{touch-action:manipulation}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:5.5rem}
-  body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.55;
-    background:
-      linear-gradient(var(--grid) 1px,transparent 1px) 0 0/26px 26px,
-      linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/26px 26px,
-      var(--bg);
-    -webkit-font-smoothing:antialiased}
+  body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.5;background:var(--bg);
+    font-size:15px;letter-spacing:-.006em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
   /* header */
@@ -90,27 +86,34 @@
   .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;
     box-shadow:var(--shadow)}
   .stat .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-  .stat .v{font-size:1.7rem;font-weight:800;font-family:var(--mono);letter-spacing:-.02em;line-height:1.3;
-    font-variant-numeric:tabular-nums}
-  .stat .v small{font-size:.9rem;color:var(--muted);font-weight:600}
-  .stat.fire .v{color:var(--accent)} .stat.win .v{color:var(--good)}
+  .stat .v{font-size:1.55rem;font-weight:700;font-family:var(--mono);letter-spacing:-.02em;line-height:1.3;
+    font-variant-numeric:tabular-nums;color:var(--ink)}
+  .stat .v small{font-size:.85rem;color:var(--muted);font-weight:500}
 
   /* week strip */
   .strip{display:flex;gap:.4rem;margin:.4rem 0 1.4rem;flex-wrap:wrap}
   .strip .w{flex:1;min-width:60px;height:8px;border-radius:100px;background:var(--line);position:relative;overflow:hidden}
   .strip .w i{position:absolute;inset:0;width:0;background:var(--sc);transition:width .5s}
 
-  /* today card */
-  .today{background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:1.1rem 1.2rem;
-    box-shadow:var(--shadow);margin-bottom:1.8rem;position:relative;overflow:hidden}
-  .today::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
-  .today .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--accent);font-weight:700}
-  .today h3{margin:.25rem 0 .2rem;font-size:1.2rem}
-  .today p{color:var(--muted);font-size:.88rem;margin:.1rem 0 .8rem}
-  .today a.jump{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.8rem;
-    background:var(--accent);color:#1a1205;text-decoration:none;padding:.5rem .9rem;border-radius:8px;
-    font-weight:700;min-height:40px}
+  /* today card — daily goal ring */
+  .today{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.3rem;
+    box-shadow:var(--shadow);margin-bottom:1.6rem;display:flex;align-items:center;gap:1.3rem;flex-wrap:wrap}
+  .today .ringbox{position:relative;width:96px;height:96px;flex:none}
+  .today .ringbox svg{width:96px;height:96px;transform:rotate(-90deg)}
+  .today .ringbox .trk{stroke:var(--rail)}
+  .today .ringbox .fl{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)}
+  .today .ringbox .rcx{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .today .ringbox .rcx b{font-size:1.25rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+  .today .ringbox .rcx span{font-family:var(--mono);font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+  .today .info{flex:1;min-width:200px}
+  .today .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--muted);font-weight:600}
+  .today h3{margin:.28rem 0 .28rem;font-size:1.15rem;font-weight:650;letter-spacing:-.015em}
+  .today p{color:var(--muted);font-size:.86rem;margin:.1rem 0 .9rem}
+  .today a.jump{display:inline-flex;align-items:center;gap:.4rem;font-size:.88rem;
+    background:var(--accent);color:var(--accent-ink);text-decoration:none;padding:.55rem 1.05rem;border-radius:9px;
+    font-weight:600;min-height:42px}
+  .today a.jump:hover{opacity:.92}
 
   /* revisit panel */
   .revisit{background:color-mix(in srgb,var(--warn) 10%,var(--card));border:1px solid var(--warn);
@@ -497,7 +500,11 @@ function refresh(){
   renderToday();
   renderRevisit();
   renderDates();
-  try{localStorage.setItem('genai_plan_summary',JSON.stringify({done:doneDays,total:TOTAL_DAYS,streak:currentStreak()}));}catch(e){}
+  try{
+    const t=firstIncomplete();
+    const ts=t?{tDone:dayTaskIds(t.w,t.d).filter(id=>S.done[id]).length,tTotal:t.d.tasks.length,dayN:t.d.n,focus:t.d.f}:{tDone:0,tTotal:0,dayN:0,focus:""};
+    localStorage.setItem('genai_plan_summary',JSON.stringify(Object.assign({done:doneDays,total:TOTAL_DAYS,streak:currentStreak()},ts)));
+  }catch(e){}
 }
 
 function currentStreak(){
@@ -517,30 +524,40 @@ function revisitCount(){return Object.values(S.quiz).filter(v=>v==="revisit").le
 function renderDash(doneDays){
   const dash=document.getElementById("dash");
   const stats=[
-    {k:"Days complete",v:doneDays+"<small>/"+TOTAL_DAYS+"</small>",c:""},
-    {k:"Current streak",v:currentStreak()+"<small> days</small>",c:"fire"},
-    {k:"Weeks quiz-cleared",v:quizzesCleared()+"<small>/8</small>",c:"win"},
-    {k:"To revisit",v:revisitCount()+"",c:revisitCount()?"":"win"},
+    {k:"Days complete",v:doneDays+"<small>/"+TOTAL_DAYS+"</small>"},
+    {k:"Day streak",v:currentStreak()+"<small> d</small>"},
+    {k:"Quizzes cleared",v:quizzesCleared()+"<small>/8</small>"},
+    {k:"To revisit",v:revisitCount()+""},
   ];
-  dash.innerHTML=stats.map(s=>`<div class="stat ${s.c}"><div class="k">${s.k}</div><div class="v">${s.v}</div></div>`).join("");
+  dash.innerHTML=stats.map(s=>`<div class="stat"><div class="k">${s.k}</div><div class="v">${s.v}</div></div>`).join("");
 }
 
+function firstIncomplete(){
+  for(const w of WEEKS){for(const d of w.days){if(!isDayDone(w,d))return {w,d};}}
+  return null;
+}
 function renderToday(){
-  // first day (lowest n) not complete
-  let target=null;
-  for(const w of WEEKS){for(const d of w.days){if(!isDayDone(w,d)){target={w,d};break;}}if(target)break;}
   const el=document.getElementById("todayCard");
+  const C=2*Math.PI*42;
+  const target=firstIncomplete();
   if(!target){
-    el.innerHTML=`<div class="k">🎉 Program complete</div><h3>You finished all 56 days.</h3>
-      <p>Three shipped projects, eight quizzes, and a rehearsed pitch. Go interview with confidence.</p>`;
+    el.innerHTML=`
+      <div class="ringbox"><svg viewBox="0 0 96 96"><circle class="trk" cx="48" cy="48" r="42" fill="none" stroke-width="8"/><circle class="fl" cx="48" cy="48" r="42" fill="none" stroke-width="8" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="0"/></svg><div class="rcx"><b>100%</b><span>done</span></div></div>
+      <div class="info"><div class="k">Program complete</div><h3>All 56 days finished.</h3>
+      <p>Three shipped projects, eight quizzes, a rehearsed pitch. Go interview with confidence.</p></div>`;
     return;
   }
   const {w,d}=target;
-  const doneCount=dayTaskIds(w,d).filter(id=>S.done[id]).length;
-  el.innerHTML=`<div class="k">Your mission today · Week ${w.n}</div>
-    <h3>Day ${d.n} — ${d.f}</h3>
-    <p>${w.goal} · ${doneCount}/${d.tasks.length} tasks done · ${d.light?"~1.5":"~3.5"} hrs</p>
-    <a class="jump" data-jump="${d.n}" href="#">Open today's tasks →</a>`;
+  const total=d.tasks.length, done=dayTaskIds(w,d).filter(id=>S.done[id]).length;
+  const frac=total?done/total:0, pct=Math.round(frac*100), off=(C*(1-frac)).toFixed(1);
+  el.innerHTML=`
+    <div class="ringbox"><svg viewBox="0 0 96 96"><circle class="trk" cx="48" cy="48" r="42" fill="none" stroke-width="8"/><circle class="fl" cx="48" cy="48" r="42" fill="none" stroke-width="8" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off}"/></svg><div class="rcx"><b>${pct}%</b><span>today</span></div></div>
+    <div class="info">
+      <div class="k">Today · Day ${d.n} · Week ${w.n}</div>
+      <h3>${d.f}</h3>
+      <p>${done}/${total} tasks done · ${d.light?"~1.5":"~3.5"} hrs · ${w.goal}</p>
+      <a class="jump" data-jump="${d.n}" href="#">${done?"Continue today":"Start today"} →</a>
+    </div>`;
 }
 
 function renderRevisit(){
@@ -626,15 +643,12 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
 <style>
   :root{--nav-h:56px}
   body{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 10px)!important}
-  .appnav{--nav-accent:#e0952a;--nav-muted:#6b7b90;--nav-line:#dfe4ec;
+  .appnav{--nav-accent:var(--accent);--nav-muted:var(--muted);--nav-line:var(--line);
     position:fixed;left:0;right:0;bottom:0;z-index:38;display:flex;
     padding-bottom:env(safe-area-inset-bottom);
-    background:var(--card,#fff);background:color-mix(in srgb,var(--card,#fff) 90%,transparent);
-    -webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);
-    border-top:1px solid var(--nav-line);box-shadow:0 -6px 22px rgba(10,18,32,.10)}
-  @media (prefers-color-scheme:dark){.appnav{--nav-accent:#f2b134;--nav-muted:#8092a6;--nav-line:#22375a}}
-  :root[data-theme="dark"] .appnav{--nav-accent:#f2b134;--nav-muted:#8092a6;--nav-line:#22375a}
-  :root[data-theme="light"] .appnav{--nav-accent:#e0952a;--nav-muted:#6b7b90;--nav-line:#dfe4ec}
+    background:var(--card,#fff);background:color-mix(in srgb,var(--card,#fff) 92%,transparent);
+    -webkit-backdrop-filter:saturate(1.2) blur(14px);backdrop-filter:saturate(1.2) blur(14px);
+    border-top:1px solid var(--nav-line);box-shadow:0 -8px 24px rgba(0,0,0,.05)}
   .appnav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
     min-height:var(--nav-h);text-decoration:none;color:var(--nav-muted);
     font:600 10px/1 var(--sans,-apple-system,sans-serif);letter-spacing:.02em;position:relative;

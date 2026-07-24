@@ -758,15 +758,12 @@ def call_with_retry(fn, *, retries=3, base=1.0):
 <style>
   :root{--nav-h:56px}
   body{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 10px)!important}
-  .appnav{--nav-accent:#e0952a;--nav-muted:#6b7b90;--nav-line:#dfe4ec;
+  .appnav{--nav-accent:var(--accent);--nav-muted:var(--muted);--nav-line:var(--line);
     position:fixed;left:0;right:0;bottom:0;z-index:38;display:flex;
     padding-bottom:env(safe-area-inset-bottom);
-    background:var(--card,#fff);background:color-mix(in srgb,var(--card,#fff) 90%,transparent);
-    -webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);
-    border-top:1px solid var(--nav-line);box-shadow:0 -6px 22px rgba(10,18,32,.10)}
-  @media (prefers-color-scheme:dark){.appnav{--nav-accent:#f2b134;--nav-muted:#8092a6;--nav-line:#22375a}}
-  :root[data-theme="dark"] .appnav{--nav-accent:#f2b134;--nav-muted:#8092a6;--nav-line:#22375a}
-  :root[data-theme="light"] .appnav{--nav-accent:#e0952a;--nav-muted:#6b7b90;--nav-line:#dfe4ec}
+    background:var(--card,#fff);background:color-mix(in srgb,var(--card,#fff) 92%,transparent);
+    -webkit-backdrop-filter:saturate(1.2) blur(14px);backdrop-filter:saturate(1.2) blur(14px);
+    border-top:1px solid var(--nav-line);box-shadow:0 -8px 24px rgba(0,0,0,.05)}
   .appnav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
     min-height:var(--nav-h);text-decoration:none;color:var(--nav-muted);
     font:600 10px/1 var(--sans,-apple-system,sans-serif);letter-spacing:.02em;position:relative;
