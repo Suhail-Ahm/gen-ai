@@ -1,0 +1,22 @@
+{
+  "name": "GenAI Prep — SWE to Applied Gen AI",
+  "short_name": "GenAI Prep",
+  "description": "Your 8-week study plan, interactive roadmap, and interview guide for switching from software engineering into an applied Gen AI role.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0c1524",
+  "theme_color": "#0c1524",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Study Plan & Tracker", "short_name": "Plan", "url": "/plan" },
+    { "name": "Interactive Roadmap", "short_name": "Roadmap", "url": "/roadmap" },
+    { "name": "Study Guide", "short_name": "Guide", "url": "/prep" }
+  ]
+}

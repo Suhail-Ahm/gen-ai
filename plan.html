@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>8-Week Gen AI Study Plan & Tracker</title>
+<meta name="description" content="Your dated 8-week Gen AI study plan with daily tasks, weekly quizzes, and progress tracking.">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c1524" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GenAI Prep">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<style>
+  :root{
+    --bg:#eef1f5; --grid:rgba(27,58,92,.05);
+    --ink:#132133; --ink-soft:#3f5470; --muted:#6b7b90;
+    --card:#ffffff; --line:#dfe4ec; --rail:#c3ccd8;
+    --accent:#e0952a; --accent-ink:#7a4d08;
+    --s0:#5b6b82; --s1:#2f6fb0; --s2:#0f8b86; --s3:#7a5cc4; --s4:#d97b2f; --s5:#d6516a;
+    --good:#1f8a54; --warn:#c98a1a;
+    --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;
+      --muted:#7f8ea3;--card:#12203a;--line:#22375a;--rail:#2a4162;
+      --accent:#f2b134;--accent-ink:#f2b134;
+      --s0:#8797ad;--s1:#5aa0e0;--s2:#2fc0b8;--s3:#a98cf0;--s4:#f0a052;--s5:#f0788e;
+      --good:#4bbf82;--warn:#e0a83a;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);}
+  }
+  :root[data-theme="dark"]{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;
+    --muted:#7f8ea3;--card:#12203a;--line:#22375a;--rail:#2a4162;--accent:#f2b134;--accent-ink:#f2b134;
+    --s0:#8797ad;--s1:#5aa0e0;--s2:#2fc0b8;--s3:#a98cf0;--s4:#f0a052;--s5:#f0788e;
+    --good:#4bbf82;--warn:#e0a83a;--shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);}
+  :root[data-theme="light"]{--bg:#eef1f5;--grid:rgba(27,58,92,.05);--ink:#132133;--ink-soft:#3f5470;
+    --muted:#6b7b90;--card:#ffffff;--line:#dfe4ec;--rail:#c3ccd8;--accent:#e0952a;--accent-ink:#7a4d08;
+    --s0:#5b6b82;--s1:#2f6fb0;--s2:#0f8b86;--s3:#7a5cc4;--s4:#d97b2f;--s5:#d6516a;
+    --good:#1f8a54;--warn:#c98a1a;--shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  a,button,summary{touch-action:manipulation}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:5.5rem}
+  body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.55;
+    background:
+      linear-gradient(var(--grid) 1px,transparent 1px) 0 0/26px 26px,
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/26px 26px,
+      var(--bg);
+    -webkit-font-smoothing:antialiased}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* header */
+  header{position:sticky;top:0;z-index:30;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line);
+    padding-top:env(safe-area-inset-top)}
+  .bar{max-width:1080px;margin:0 auto;
+    padding:.6rem max(1rem,env(safe-area-inset-right)) .6rem max(1rem,env(safe-area-inset-left));
+    display:flex;align-items:center;gap:.6rem 1rem;flex-wrap:wrap}
+  .logo{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;line-height:1.25}
+  .logo b{display:block;color:var(--ink);font-size:.92rem;letter-spacing:-.01em;text-transform:none}
+  .spacer{flex:1}
+  .hbtn{font-family:var(--mono);font-size:.7rem;background:var(--card);border:1px solid var(--line);
+    color:var(--ink-soft);min-height:38px;padding:.4rem .65rem;border-radius:8px;cursor:pointer;text-decoration:none;
+    display:inline-flex;align-items:center;gap:.35rem}
+  .hbtn:hover{border-color:var(--accent);color:var(--ink)}
+  .ring{width:44px;height:44px;flex:none}
+  .ring .track{stroke:var(--line)} .ring .fill{stroke:var(--accent);stroke-linecap:round;
+    transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1)}
+  .ringwrap{display:flex;align-items:center;gap:.5rem}
+  .ringwrap .t{font-family:var(--mono);font-size:.7rem;color:var(--muted);line-height:1.2}
+  .ringwrap .t b{display:block;color:var(--ink);font-size:.92rem}
+  @media(max-width:560px){.logo{display:none}.ringwrap .t{display:none}}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:1.6rem clamp(1rem,3vw,2rem) 4rem}
+
+  /* hero */
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:700}
+  h1{font-size:clamp(1.7rem,4.5vw,2.5rem);letter-spacing:-.02em;margin:.3rem 0 .5rem;font-weight:800;
+    text-wrap:balance;max-width:20ch}
+  .lede{color:var(--ink-soft);max-width:64ch;font-size:1.02rem}
+
+  /* dashboard */
+  .dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin:1.6rem 0 1rem}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;
+    box-shadow:var(--shadow)}
+  .stat .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .stat .v{font-size:1.7rem;font-weight:800;font-family:var(--mono);letter-spacing:-.02em;line-height:1.3;
+    font-variant-numeric:tabular-nums}
+  .stat .v small{font-size:.9rem;color:var(--muted);font-weight:600}
+  .stat.fire .v{color:var(--accent)} .stat.win .v{color:var(--good)}
+
+  /* week strip */
+  .strip{display:flex;gap:.4rem;margin:.4rem 0 1.4rem;flex-wrap:wrap}
+  .strip .w{flex:1;min-width:60px;height:8px;border-radius:100px;background:var(--line);position:relative;overflow:hidden}
+  .strip .w i{position:absolute;inset:0;width:0;background:var(--sc);transition:width .5s}
+
+  /* today card */
+  .today{background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:1.1rem 1.2rem;
+    box-shadow:var(--shadow);margin-bottom:1.8rem;position:relative;overflow:hidden}
+  .today::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+  .today .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);font-weight:700}
+  .today h3{margin:.25rem 0 .2rem;font-size:1.2rem}
+  .today p{color:var(--muted);font-size:.88rem;margin:.1rem 0 .8rem}
+  .today a.jump{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.8rem;
+    background:var(--accent);color:#1a1205;text-decoration:none;padding:.5rem .9rem;border-radius:8px;
+    font-weight:700;min-height:40px}
+
+  /* revisit panel */
+  .revisit{background:color-mix(in srgb,var(--warn) 10%,var(--card));border:1px solid var(--warn);
+    border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.8rem}
+  .revisit h4{margin:0 0 .5rem;font-size:.95rem;display:flex;align-items:center;gap:.4rem}
+  .revisit ul{margin:0;padding-left:1.1rem;font-size:.88rem;color:var(--ink-soft)}
+  .revisit li{margin:.2rem 0}
+  .revisit.empty{display:none}
+
+  /* weeks */
+  .week{border:1px solid var(--line);border-radius:14px;margin:.9rem 0;background:var(--card);
+    box-shadow:var(--shadow);overflow:hidden;border-left:4px solid var(--sc)}
+  .wk-head{display:flex;align-items:center;gap:.8rem;padding:1rem 1.1rem;cursor:pointer;user-select:none;
+    background:none;border:none;width:100%;text-align:left;font-family:var(--sans);color:var(--ink)}
+  .wk-badge{font-family:var(--mono);font-size:.7rem;font-weight:700;color:var(--sc);border:1px solid var(--sc);
+    border-radius:6px;padding:.15rem .45rem;flex:none}
+  .wk-head .info{flex:1;min-width:0}
+  .wk-head h2{margin:0;font-size:1.08rem;letter-spacing:-.01em}
+  .wk-head .goal{color:var(--muted);font-size:.82rem;margin-top:.1rem}
+  .wk-head .prog{font-family:var(--mono);font-size:.7rem;color:var(--muted);flex:none;text-align:right}
+  .wk-head .prog b{color:var(--sc);font-size:.9rem;display:block}
+  .wk-head .chev{transition:transform .2s;color:var(--muted);flex:none}
+  .week.open .chev{transform:rotate(90deg)}
+  .wk-body{display:none;padding:0 1.1rem 1.1rem}
+  .week.open .wk-body{display:block}
+  .deliver{background:color-mix(in srgb,var(--sc) 9%,transparent);border:1px dashed var(--sc);
+    border-radius:9px;padding:.6rem .8rem;font-size:.85rem;margin:.2rem 0 1rem;color:var(--ink-soft)}
+  .deliver b{color:var(--ink)}
+
+  /* day */
+  .day{border:1px solid var(--line);border-radius:10px;margin:.5rem 0;overflow:hidden}
+  .day.done{border-color:var(--good)}
+  .day-head{display:flex;align-items:center;gap:.7rem;padding:.65rem .8rem;cursor:pointer;
+    background:none;border:none;width:100%;text-align:left;font-family:var(--sans);color:var(--ink)}
+  .day-n{font-family:var(--mono);font-size:.66rem;font-weight:700;color:var(--muted);
+    border:1px solid var(--line);border-radius:6px;padding:.2rem .4rem;flex:none;min-width:52px;text-align:center}
+  .day.done .day-n{color:var(--good);border-color:var(--good)}
+  .day-head .df{flex:1;min-width:0;font-weight:650;font-size:.92rem}
+  .day-head .date{font-family:var(--mono);font-size:.64rem;color:var(--muted);display:block;font-weight:400;margin-top:.1rem}
+  .day-head .hrs{font-family:var(--mono);font-size:.64rem;color:var(--muted);flex:none}
+  .day-head .dcheck{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--rail);flex:none;
+    display:grid;place-items:center;font-size:.7rem;color:transparent}
+  .day.done .dcheck{background:var(--good);border-color:var(--good);color:#fff}
+  .day-tasks{display:none;padding:.2rem .8rem .8rem;flex-direction:column;gap:.1rem}
+  .day.open .day-tasks{display:flex}
+  .task{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem .3rem;cursor:pointer;
+    border-radius:8px;font-size:.9rem;color:var(--ink-soft);line-height:1.4}
+  .task:hover{background:color-mix(in srgb,var(--sc) 6%,transparent)}
+  .task .box{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--rail);flex:none;margin-top:1px;
+    display:grid;place-items:center;font-size:.7rem;color:transparent;transition:.15s;position:relative}
+  .task .box::after{content:"";position:absolute;inset:-10px}
+  .task.done .box{background:var(--sc);border-color:var(--sc);color:#fff}
+  .task.done .tx{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rail)}
+  .tag{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;
+    padding:.05rem .3rem;border-radius:4px;margin-right:.35rem;font-weight:700;white-space:nowrap}
+  .tag.learn{background:color-mix(in srgb,var(--s1) 18%,transparent);color:var(--s1)}
+  .tag.build{background:color-mix(in srgb,var(--s2) 18%,transparent);color:var(--s2)}
+  .tag.drill{background:color-mix(in srgb,var(--s4) 18%,transparent);color:var(--s4)}
+  .tag.rest{background:color-mix(in srgb,var(--s5) 18%,transparent);color:var(--s5)}
+
+  /* quiz */
+  .quiz{margin-top:1rem;border-top:1px dashed var(--line);padding-top:.9rem}
+  .quiz h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--sc);margin:0 0 .6rem;display:flex;align-items:center;gap:.4rem}
+  .q{border:1px solid var(--line);border-radius:9px;margin:.4rem 0;overflow:hidden}
+  .q.got{border-color:var(--good)} .q.revisit{border-color:var(--warn)}
+  .q-q{background:none;border:none;width:100%;text-align:left;padding:.6rem .75rem;cursor:pointer;
+    font-family:var(--sans);color:var(--ink);font-size:.9rem;font-weight:600;display:flex;gap:.5rem;align-items:flex-start}
+  .q-q .qi{font-family:var(--mono);color:var(--muted);flex:none}
+  .q-a{display:none;padding:0 .75rem .7rem;font-size:.88rem;color:var(--ink-soft)}
+  .q.open .q-a{display:block}
+  .q-a .ans{background:color-mix(in srgb,var(--sc) 7%,transparent);border-radius:8px;padding:.55rem .7rem;margin:.2rem 0 .6rem}
+  .q-btns{display:flex;gap:.4rem}
+  .q-btns button{font-family:var(--mono);font-size:.72rem;border:1px solid var(--line);background:var(--card);
+    color:var(--ink-soft);padding:.4rem .7rem;border-radius:7px;cursor:pointer;min-height:36px}
+  .q-btns .got.on{background:var(--good);border-color:var(--good);color:#fff}
+  .q-btns .rev.on{background:var(--warn);border-color:var(--warn);color:#1a1205}
+
+  footer{max-width:1080px;margin:0 auto;padding:2rem clamp(1rem,3vw,2rem) 3rem;border-top:1px solid var(--line);
+    color:var(--muted);font-size:.82rem}
+  footer a{color:var(--accent)}
+  .toast{position:fixed;bottom:calc(1.2rem + env(safe-area-inset-bottom));left:50%;
+    transform:translateX(-50%) translateY(30px);background:var(--ink);color:var(--bg);font-size:.85rem;
+    padding:.6rem 1rem;border-radius:100px;opacity:0;transition:.3s;z-index:60;font-family:var(--mono);
+    max-width:90vw;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo">Coach<b>8-Week Gen AI Plan</b></div>
+    <div class="spacer"></div>
+    <label class="hbtn" title="Set your Day 1 date">📅 <input id="startDate" type="date" style="background:none;border:none;color:var(--ink);font-family:var(--mono);font-size:.7rem;width:118px"></label>
+    <a class="hbtn" href="/roadmap">🗺️ roadmap</a>
+    <a class="hbtn" href="/prep">📖 guide</a>
+    <div class="ringwrap">
+      <svg class="ring" viewBox="0 0 44 44"><circle class="track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
+        <circle class="fill" cx="22" cy="22" r="18" fill="none" stroke-width="4" transform="rotate(-90 22 22)"
+          stroke-dasharray="113" stroke-dashoffset="113"/></svg>
+      <div class="t"><b id="pct">0%</b><span id="dd">0/56 days</span></div>
+    </div>
+    <button class="hbtn" id="reset" title="Reset">reset</button>
+    <button class="hbtn" id="theme" title="Theme">◐</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Your training program · coach mode</div>
+  <h1>8 weeks. 3 shipped projects. Interview-ready.</h1>
+  <p class="lede">This is your plan, not a syllabus to admire. Do the day, tick the tasks, take the Friday quiz. Each week you <em>ship something real</em> — because that's what gets you hired, and what you'll talk about in interviews. Set your start date and let's go.</p>
+
+  <div class="dash" id="dash"></div>
+  <div class="strip" id="strip"></div>
+
+  <div class="today" id="todayCard"></div>
+  <div class="revisit empty" id="revisitPanel"><h4>🔁 Your revisit list — hit these before you move on</h4><ul id="revisitList"></ul></div>
+
+  <div id="weeks"></div>
+</div>
+
+<footer id="foot"></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ CURRICULUM ============ */
+const L="learn",B="build",D="drill",R="rest";
+const WEEKS=[
+{n:1,color:"var(--s0)",title:"Foundations & your first LLM app",
+ goal:"Call LLMs reliably, understand tokens & params, ship a small text tool.",
+ deliver:"<b>Ship:</b> a script that turns any text into a validated structured summary — with retries, streaming & token/cost logging. Push it to a fresh GitHub repo.",
+ days:[
+  {f:"Setup & first call",tasks:[[L,"Read roadmap Stage 0. Skim 'The Illustrated Transformer' (first half)."],[B,"Python 3.12 + venv/uv; install an LLM SDK; put your API key in .env (never commit)."],[B,"Make 5 API calls with different prompts; print the raw response object."],[D,"Start a learning journal: write 3 things that surprised you."]]},
+  {f:"Tokens, params & cost",tasks:[[L,"Play with a tokenizer; learn the ~0.75 words/token rule. Read the params docs."],[B,"Run the same prompt at temperature 0 / 0.7 / 1.0 (×3 each). Observe determinism."],[B,"Add token + cost logging to your script."],[D,"Write your own one-page cheat-sheet: temperature, top_p, max_tokens, stop."]]},
+  {f:"Messages, roles & a solid call() wrapper",tasks:[[L,"Read guide §3 (prompting). Learn system vs user vs assistant roles."],[B,"Build a reusable call() function with retry-with-backoff, timeout, error handling."],[B,"Make call() stream tokens to the console."],[D,"Explain out loud: what a 429 is and how you handle it."]]},
+  {f:"Prompt engineering basics",tasks:[[L,"Read a provider prompting guide end-to-end."],[B,"Take one weak prompt; rewrite it 5 ways (zero-shot, few-shot, role, structured, CoT)."],[B,"Write a tiny A/B script: run N prompts over M inputs, print results side by side."],[D,"Journal: which prompt style won, and your theory why."]]},
+  {f:"Structured output",tasks:[[L,"Read guide §4. Learn JSON / tool-calling structured output + schemas."],[B,"Extract {title, sentiment, key_points[]} from any text; validate with pydantic."],[B,"Add a 'repair retry' that re-asks when JSON is invalid."],[D,"Break it: feed weird input, see how it fails, note the failure modes."]]},
+  {f:"Ship the Day-0 app",tasks:[[B,"Combine everything: text → structured summary, with retries, streaming, cost log."],[B,"Write a README: the problem, how it works, one trade-off you made."],[B,"Push to GitHub — this is portfolio repo #1."],[D,"Post your repo link in your journal; you shipped in week 1."]]},
+  {f:"Review · Quiz · Rest",light:1,tasks:[[R,"Rebuild the hardest piece from memory (active recall). Then take the Week 1 quiz below."],[R,"Mark weak answers 'Revisit'. Skim next week. Rest — you earned it."]]},
+ ],
+ quiz:[
+  {q:"What is a token, and roughly how many characters/words is one?",a:"A sub-word unit the model actually processes. Rule of thumb: ~4 characters or ~0.75 words per token. Cost, context limits, and latency are all measured in tokens."},
+  {q:"What does temperature control, and is temperature 0 fully deterministic?",a:"It controls randomness of sampling — low = focused/repeatable, high = creative/varied. Temp 0 is near-deterministic but NOT guaranteed identical (floating-point, backend batching, model updates can vary output)."},
+  {q:"Difference between a system message and a user message?",a:"System sets persistent behavior/role/rules for the whole conversation; user is the actual turn-by-turn request. System steers, user asks."},
+  {q:"Why validate structured output instead of trusting the model's JSON?",a:"Models occasionally emit invalid or schema-violating JSON. In production you must parse+validate (e.g. pydantic) and repair/retry, or downstream code breaks."},
+  {q:"Your API call hits a 429 rate limit — what do you do?",a:"Retry with exponential backoff + jitter, respect Retry-After, cap total attempts, and fail gracefully. Classic SWE reliability — your edge."},
+ ]},
+{n:2,color:"var(--s1)",title:"Core LLM skills: embeddings & semantic search",
+ goal:"Understand embeddings; build semantic search; make prompting systematic.",
+ deliver:"<b>Ship:</b> a semantic search tool over ~30 docs you care about (top-5 by cosine), plus a tiny classifier with a 20-example eval set. Repo #2.",
+ days:[
+  {f:"Embeddings, really understood",tasks:[[L,"Read guide §5 + roadmap 'embeddings' node. Vectors + cosine similarity."],[B,"Embed 50 sentences; compute the cosine-similarity matrix; find nearest neighbors."],[D,"Explain out loud: why is the embedding model separate from the chat model?"]]},
+  {f:"Semantic search mini-project",tasks:[[B,"Grab ~30 text snippets (your notes / a docs page). Embed + store as an array."],[B,"Build search(query) → top-5 by cosine similarity."],[D,"Compare vs plain keyword search on 5 queries; note where each wins."]]},
+  {f:"Advanced prompting",tasks:[[L,"Few-shot, chain-of-thought, role prompting. When reasoning helps vs wastes money."],[B,"Add few-shot examples to your Week-1 extractor; measure the improvement."],[D,"Journal: a task where CoT clearly helped and one where it didn't."]]},
+  {f:"Prompt robustness & injection",tasks:[[L,"Read about prompt injection (defensive mindset)."],[B,"Try to break your own prompt with adversarial input."],[B,"Add output validation + defensive instructions; re-test the attack."]]},
+  {f:"Classification & extraction patterns",tasks:[[B,"Build a classifier (e.g. tickets → category) with structured output + few-shot."],[B,"Make a 20-example labelled eval set; measure accuracy. (Your first eval!)"],[D,"Which examples fail? Adjust the prompt, re-measure."]]},
+  {f:"Polish & ship semantic search",tasks:[[B,"Clean up code, add a README with a demo example."],[B,"Push repo #2."],[D,"Write 3 bullets on what you'd improve with more time."]]},
+  {f:"Review · Quiz · Rest",light:1,tasks:[[R,"Rebuild the cosine-search from a blank file, no copy-paste. Take the quiz."],[R,"Mark revisit topics. Rest."]]},
+ ],
+ quiz:[
+  {q:"What does an embedding represent, and how do you compare two?",a:"A vector where semantic meaning maps to geometric position. Compare with cosine similarity (angle between vectors); closer = more similar in meaning."},
+  {q:"Why is the embedding model different from the generation model?",a:"Different jobs: embeddings encode meaning into a fixed vector for search/clustering; generation predicts next tokens. Different architectures/outputs, often different models entirely."},
+  {q:"Why add keyword (BM25) search alongside vector search?",a:"Pure semantic search misses exact tokens — names, IDs, error codes, rare terms. Hybrid (dense + keyword) catches both; fuse with reciprocal rank fusion."},
+  {q:"Name one defense against prompt injection.",a:"Any of: separate/quote untrusted content, validate outputs, least-privilege tools, instruction hierarchy, or a moderation/guard pass. Never let untrusted text silently become instructions."},
+  {q:"How do you measure whether a classifier prompt is any good?",a:"Build a labelled eval set, run the prompt, compute accuracy (or precision/recall per class). Iterate against the numbers, not vibes."},
+ ]},
+{n:3,color:"var(--s2)",title:"RAG, part 1 — build your first retrieval system",
+ goal:"Stand up a working RAG assistant over a real corpus, with citations.",
+ deliver:"<b>Ship (Project A kickoff):</b> 'Chat with X' — a RAG assistant over docs you pick, that answers with sources and says 'I don't know' when unsure.",
+ days:[
+  {f:"RAG architecture",tasks:[[L,"Read the guide's RAG section + roadmap Stage 2."],[B,"Draw the pipeline: ingest → chunk → embed → store → retrieve → generate."],[D,"Pick your corpus — docs you actually know (a library's docs, a KB, a book)."]]},
+  {f:"Ingestion & chunking",tasks:[[L,"Why chunking makes or breaks RAG (size, overlap, structure)."],[B,"Load + clean your docs; implement fixed-size + overlap chunking."],[D,"Print a few chunks; sanity-check they're coherent."]]},
+  {f:"Vector database",tasks:[[L,"Read roadmap 'vector databases' node; HNSW index, recall vs speed."],[B,"Run pgvector or Qdrant locally (Docker). Insert chunks + embeddings."],[B,"Run a top-k similarity query from code."]]},
+  {f:"Retrieval → generation",tasks:[[B,"Wire retrieve → stuff context → generate, citing which chunks were used."],[B,"Handle the no-good-context case: return 'I don't know' instead of hallucinating."],[D,"Ask 5 questions; inspect what got retrieved for each."]]},
+  {f:"Make it a chat",tasks:[[B,"Add multi-turn memory; retrieve per turn."],[B,"Minimal interface: CLI or a tiny web page."],[D,"Try a follow-up question that depends on the previous turn."]]},
+  {f:"Polish & README v1",tasks:[[B,"End-to-end demo working start to finish."],[B,"Write the architecture section of the README."],[D,"Record a 60-sec screen capture of it working."]]},
+  {f:"Review · Quiz · Rest",light:1,tasks:[[R,"Explain your whole RAG pipeline out loud, as if to an interviewer. Take the quiz."],[R,"Mark revisit topics. Rest."]]},
+ ],
+ quiz:[
+  {q:"Walk through the RAG pipeline end to end.",a:"Ingest docs → chunk them → embed chunks → store in a vector DB → embed the query → retrieve top-k similar chunks → put them in the prompt as context → generate a grounded, cited answer."},
+  {q:"Why use overlap between chunks?",a:"So a fact that straddles a chunk boundary isn't split and lost. Overlap keeps context continuous and improves retrieval recall."},
+  {q:"What is top-k retrieval?",a:"Return the k most similar chunks to the query vector. k trades off recall (more context) vs noise/cost (too much irrelevant text)."},
+  {q:"How do you stop a RAG bot hallucinating when nothing relevant is found?",a:"Check retrieval scores/threshold; if weak, instruct the model to say it doesn't know rather than answer. Grounding + explicit 'no answer' path."},
+  {q:"What does an HNSW index trade off?",a:"Approximate nearest-neighbor search: speed/memory vs recall. Faster, lower-memory search at the cost of occasionally missing the exact nearest neighbor."},
+ ]},
+{n:4,color:"var(--s2)",title:"RAG, part 2 — quality, hybrid & evaluation",
+ goal:"Measure and improve RAG quality — the skill that gets you the offer.",
+ deliver:"<b>Ship:</b> Project A v2 with hybrid search + a 25–30 question eval set and before/after metrics in the README.",
+ days:[
+  {f:"Chunking experiments",tasks:[[B,"Try 3 chunking strategies (fixed / overlap / by-heading)."],[D,"Eyeball retrieval quality for each on 5 queries; pick a winner + note why."]]},
+  {f:"Hybrid search",tasks:[[L,"Reciprocal rank fusion (RRF)."],[B,"Add BM25/keyword search alongside vectors; fuse the results."],[D,"Test on exact-term queries (codes, names) — confirm hybrid wins."]]},
+  {f:"Retrieval evaluation",tasks:[[B,"Write a 25–30 question eval set with expected answers/sources."],[B,"Measure retrieval hit-rate (recall@k)."],[D,"Find the worst-performing questions; hypothesize why."]]},
+  {f:"Generation evaluation",tasks:[[L,"Read the guide's evals section. LLM-as-judge + its risks."],[B,"Score answers for faithfulness & relevance with an LLM judge."],[D,"Spot-check the judge against your own opinion on 5 answers."]]},
+  {f:"Re-ranking (level-up)",tasks:[[L,"How a cross-encoder re-ranker sharpens the top results."],[B,"Add a re-ranker; measure the quality lift vs cost."],[D,"Decide: is the lift worth the latency? Justify it."]]},
+  {f:"Improve & document with numbers",tasks:[[B,"Apply your best chunking + hybrid + rerank config."],[B,"README v2: show before/after metrics. This is interview gold."],[D,"Draft 3 sentences: 'I improved faithfulness from X to Y by…'"]]},
+  {f:"Review · Quiz · Rest",light:1,tasks:[[R,"Explain how you'd debug 'the answer is wrong' (retrieval vs generation). Take the quiz."],[R,"Mark revisit topics. Rest."]]},
+ ],
+ quiz:[
+  {q:"Why evaluate retrieval separately from generation?",a:"To localize the bug. A wrong answer is either 'we retrieved the wrong context' (retrieval) or 'we had the right context but answered badly' (generation). Fixing them differs; measuring separately tells you which."},
+  {q:"What is recall@k?",a:"Of the questions where a correct source exists, the fraction where it appears in the top-k retrieved chunks. Core retrieval-quality metric."},
+  {q:"What is LLM-as-judge and what's the risk?",a:"Using an LLM to score outputs against a rubric. Risks: bias (length/position/self-preference), inconsistency, and cost. Mitigate with clear rubrics, spot-checks vs humans, and pairwise comparisons."},
+  {q:"What does reciprocal rank fusion do?",a:"Combines multiple ranked lists (e.g. vector + keyword) into one by summing 1/(rank+constant). Simple, robust way to blend hybrid search results."},
+  {q:"When is re-ranking worth it?",a:"When top-k retrieval returns relevant-but-noisy results and precision matters. Retrieve many cheaply, re-rank to the best few — at the cost of extra latency/compute."},
+ ]},
+{n:5,color:"var(--s4)",title:"Production: evals harness, observability, cost & deploy",
+ goal:"Turn a demo into a deployed, observable, cost-aware service with a regression suite.",
+ deliver:"<b>Ship (Project B):</b> a reusable eval harness (the rare flex) + Project A deployed as a live API with tracing and caching.",
+ days:[
+  {f:"Eval harness design",tasks:[[L,"What a reusable eval framework needs: dataset + metrics + runner + report."],[B,"Build it as a small standalone tool, not glued into one app."],[D,"Run it on your RAG; produce a readable report."]]},
+  {f:"Regression testing",tasks:[[B,"Turn your RAG evals into a regression suite."],[B,"Deliberately make a prompt change that drops quality; confirm the suite catches it."],[D,"Journal why this is the 'senior' habit interviewers look for."]]},
+  {f:"Observability",tasks:[[L,"What to log: prompt, response, tokens, latency, cost per call."],[B,"Add tracing (Langfuse/LangSmith or your own) to every call."],[D,"Inspect one slow/expensive trace end to end."]]},
+  {f:"Cost & caching",tasks:[[B,"Add exact (and optionally semantic) caching for repeat queries."],[B,"Add small→large model routing for easy vs hard queries."],[D,"Measure cost/latency before vs after; write the numbers down."]]},
+  {f:"Deploy",tasks:[[L,"Package pattern: FastAPI + Docker + a host."],[B,"Wrap RAG as a FastAPI service; containerize; deploy (Vercel/Render/Fly)."],[B,"Handle secrets via env vars; add an ingestion background job."]]},
+  {f:"Streaming, latency & README",tasks:[[B,"Stream responses end to end; add a timeout → fallback path."],[B,"README: architecture, metrics, cost, live link."],[D,"Get a friend to hit the live URL and give feedback."]]},
+  {f:"Review · Quiz · Rest",light:1,tasks:[[R,"Explain your cost-reduction results and your regression suite out loud. Take the quiz."],[R,"Mark revisit topics. Rest."]]},
+ ],
+ quiz:[
+  {q:"Why build an eval harness at all?",a:"You can't improve or ship safely what you can't measure. A harness turns 'seems better' into a number, and makes changes reproducible and comparable."},
+  {q:"What is a regression suite for an LLM app?",a:"A fixed set of inputs + quality checks you re-run on every change, so a prompt/model tweak that quietly degrades quality is caught before it ships."},
+  {q:"What should you log for observability?",a:"Prompt, response, model, token counts, latency, cost, and a trace/span id per request — ideally the full chain (retrieval + generation) so you can debug any single call."},
+  {q:"Name two ways to cut LLM cost.",a:"Caching (exact/semantic) repeats; model routing (cheap model for easy queries); trimming context; batching; shorter outputs. Big real-world wins."},
+  {q:"Why stream responses, and how do you handle a timeout?",a:"Streaming improves perceived latency — users see tokens immediately. On timeout, degrade gracefully: fall back to a faster/cheaper model or a cached/partial answer rather than erroring."},
+ ]},
+{n:6,color:"var(--s3)",title:"Agents, tools & guardrails",
+ goal:"Build a small, safe agent that uses real tools with limits — and know when NOT to.",
+ deliver:"<b>Ship (Project C):</b> a bounded workflow agent using 2–3 tools with error handling, guardrails, and a documented 'what I would not trust it to do'.",
+ days:[
+  {f:"Function / tool calling",tasks:[[L,"How tool calling works: model requests a call → you run it → feed the result back."],[B,"Give the model 2 tools (calculator + a fake API); let it choose and call them."],[D,"Trace one full tool-call round-trip in your logs."]]},
+  {f:"Agent loop (ReAct)",tasks:[[L,"Read guide §12. Reason → act → observe → repeat, with a stop condition."],[B,"Build a bounded loop by hand: max steps, stop condition, error handling."],[D,"Journal: how do errors compound across steps?"]]},
+  {f:"Multi-tool agent",tasks:[[B,"Add a 3rd tool — e.g. query your own RAG from Week 3."],[B,"Handle tool failures gracefully (retry / skip / report)."],[D,"Give it a task needing 2+ tools; watch it plan."]]},
+  {f:"Guardrails & safety",tasks:[[L,"Prompt-injection defense, PII redaction, output validation, least-privilege tools."],[B,"Try to prompt-inject your agent through a tool's data; add layered defenses."],[D,"List every action your agent can take, and its blast radius."]]},
+  {f:"Orchestration & MCP",tasks:[[L,"Skim LangGraph + MCP overviews. Know when a fixed workflow beats an agent."],[D,"Journal: for your Project C, would a plain workflow be safer/cheaper? Argue it."]]},
+  {f:"Polish the agent",tasks:[[B,"Clean up; add loop limits + logging; README."],[B,"Write the honest 'what I would NOT trust this agent to do' section."],[D,"Record a demo of a successful multi-step run."]]},
+  {f:"Review · Quiz · Rest",light:1,tasks:[[R,"Explain when you'd choose a workflow over an agent. Take the quiz."],[R,"Mark revisit topics. Rest."]]},
+ ],
+ quiz:[
+  {q:"Describe the function-calling flow.",a:"You describe tools (name, params schema). The model returns a structured request to call one. YOU execute it, return the result, and the model continues with that observation. The model never runs code itself."},
+  {q:"Why bound an agent loop?",a:"Errors compound across steps and cost/latency grow unbounded. Max-steps, stop conditions, and per-step validation prevent runaway loops and infinite spend."},
+  {q:"One defense for a tool-using agent against prompt injection?",a:"Treat tool/data outputs as untrusted; validate/sandbox them, use least-privilege tools, require confirmation for high-impact actions, and don't let retrieved text override system instructions."},
+  {q:"When should you use a fixed workflow instead of an agent?",a:"When the steps are known and deterministic. Hard-coded workflows are cheaper, faster, and more reliable; reserve agents for genuinely open-ended, branching tasks."},
+  {q:"What is MCP?",a:"Model Context Protocol — an open standard that lets models connect to tools/data through one common interface, instead of hand-wiring each integration."},
+ ]},
+{n:7,color:"var(--s5)",title:"System design, portfolio polish & storytelling",
+ goal:"Be fluent in GenAI system design; make your 3 projects shine; teach what you built.",
+ deliver:"<b>Ship:</b> 3 polished READMEs (problem → architecture → trade-off → metrics → demo) + one blog post / walkthrough of your best project.",
+ days:[
+  {f:"System design — RAG at scale",tasks:[[L,"Design drill: 'knowledge assistant over 10M docs'."],[B,"Whiteboard: ingestion, index choice, retrieval, caching, evals, cost, freshness."],[D,"Write your answer as bullet notes you can deliver in 5 min."]]},
+  {f:"System design — agent & copilot",tasks:[[B,"Design an automation agent and an in-product copilot feature."],[D,"For each: name the failure modes and how you'd guard them."]]},
+  {f:"Cost / latency / scale drills",tasks:[[D,"Answer crisply: how to cut cost 60%? hit p95 < 2s? serve 100 rps?"],[D,"Rehearse each answer out loud in under 2 minutes."]]},
+  {f:"Portfolio polish 1",tasks:[[B,"Project A README: problem, architecture diagram, one hard trade-off, metrics, demo."],[D,"Add a 'What I learned / would do next' section."]]},
+  {f:"Portfolio polish 2",tasks:[[B,"Do the same for the eval harness (B) and the agent (C)."],[D,"Pin the 3 repos on your GitHub profile; write a profile bio line."]]},
+  {f:"Teach it (mastery)",tasks:[[B,"Write a short blog post / LinkedIn walkthrough of your best project."],[D,"Explaining it publicly cements it — and recruiters read it."]]},
+  {f:"Review · Quiz · Rest",light:1,tasks:[[R,"Deliver your best project walkthrough in 3 minutes, timed. Take the quiz."],[R,"Mark revisit topics. Rest."]]},
+ ],
+ quiz:[
+  {q:"Design a RAG system for millions of documents — name the key components.",a:"Ingestion pipeline (with incremental updates), chunking, embedding service, a scalable vector index (sharded/HNSW), hybrid retrieval + re-rank, generation with caching, an eval/monitoring loop, and cost controls (routing, caching)."},
+  {q:"How would you cut a GenAI feature's cost by ~60%?",a:"Cache repeats (exact+semantic), route easy queries to a small model, trim/compress context, shorten outputs, batch where possible, and cut unnecessary re-embeddings. Measure each."},
+  {q:"How do you keep the retrieval index fresh?",a:"Incremental ingestion on document change (event/webhook or scheduled job), upsert by id, delete stale chunks, and version your index. Avoid full re-index where possible."},
+  {q:"How do you evaluate quality in production (not just offline)?",a:"Log traces, sample and score with an LLM judge, collect user feedback (thumbs/edits), track faithfulness/latency/cost dashboards, and alert on regressions."},
+  {q:"What's the biggest failure mode of your main project, and your fix?",a:"(Your real answer.) Have a crisp, honest one — e.g. 'retrieval missed exact codes → added hybrid search → recall@5 went from 0.7 to 0.9.' Specific + measured = credible."},
+ ]},
+{n:8,color:"var(--accent)",title:"Interview preparation & mock loops",
+ goal:"Answer concept, coding, design & behavioral questions with confidence, and pitch your projects.",
+ deliver:"<b>Outcome:</b> a rehearsed 2-min pitch, project deep-dives, and a passed full mock loop. You're interview-ready.",
+ days:[
+  {f:"Concept drilling",tasks:[[D,"Work the guide's question bank; answer every one OUT LOUD."],[D,"Mark shaky ones 'Revisit'; re-answer them tomorrow (spaced repetition)."]]},
+  {f:"Coding from scratch",tasks:[[B,"Implement without copy-paste: cosine-similarity search, a chunker, a retry wrapper."],[B,"Implement a tiny eval loop, and attention with numpy (per the guide's coding section)."],[D,"Time yourself; note which felt slow."]]},
+  {f:"System design mock",tasks:[[D,"Do 2 timed design questions (RAG + agent). Record yourself."],[D,"Watch it back; critique structure, trade-offs, and clarity."]]},
+  {f:"Behavioral & your pitch",tasks:[[B,"Write your 2-minute 'why I'm switching SWE → GenAI' story."],[B,"Prep 3 STAR stories (a hard bug, a shipped project, a disagreement)."],[D,"Deliver the pitch to a friend or camera; tighten it."]]},
+  {f:"Project deep-dive prep",tasks:[[D,"For each project, rehearse: walk me through it / hardest bug / what you'd change / how you evaluated it."],[D,"Anticipate 3 follow-up questions per project."]]},
+  {f:"Full mock interview",tasks:[[D,"Simulate a loop: 30 min concepts+coding, 30 min design, 15 min behavioral."],[D,"Self-score each section 1–5; log the gaps."]]},
+  {f:"Final review · Rest",light:1,tasks:[[R,"Hit every 'Revisit' item from all 8 weeks. Light review only."],[R,"Rest before interviews. You built 3 real projects and can prove it. Go get it."]]},
+ ],
+ quiz:[
+  {q:"Give your 2-minute pitch: why should we hire a SWE moving into GenAI?",a:"(Rehearse aloud.) Lead with production instincts SWEs have and GenAI teams need — evals, reliability, cost, deployment — backed by your 3 shipped projects with metrics. Concrete > generic enthusiasm."},
+  {q:"Implement cosine similarity between two vectors from memory.",a:"dot(a,b) / (norm(a)*norm(b)). In numpy: a@b / (np.linalg.norm(a)*np.linalg.norm(b)). Be ready to do top-k over a matrix too."},
+  {q:"An interviewer says 'our RAG bot gives wrong answers.' How do you debug it?",a:"Separate retrieval from generation: check whether the right chunks were retrieved (recall@k). If not → chunking/embedding/hybrid/index. If yes but answer's wrong → prompt/grounding/model. Measure, don't guess."},
+  {q:"When would you fine-tune instead of prompt or RAG?",a:"Rarely — after prompting + RAG fall short. Fine-tune to lock in format/style/domain behavior or cut prompt length, when you have good data and stable requirements. Knowing it's usually NOT the answer is the point."},
+  {q:"What's your single strongest project and its headline result?",a:"(Your real answer, one sentence, with a number.) This is the line that steers the interview onto your turf."},
+ ]},
+];
+
+/* ============ STATE ============ */
+const KEY="genai_plan_v1";
+let S={done:{},quiz:{},start:""};
+try{const raw=localStorage.getItem(KEY); if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
+function save(){localStorage.setItem(KEY,JSON.stringify(S));}
+
+const TAGLABEL={learn:"Learn",build:"Build",drill:"Drill",rest:"Reset"};
+let dayNum=0; // running day counter 1..56
+const DAYMAP=[]; // dayNum -> {week, idx, el}
+
+/* build day numbers */
+WEEKS.forEach(w=>{w.days.forEach((d,i)=>{d.n=++dayNum;});});
+const TOTAL_DAYS=dayNum;
+
+/* ============ RENDER ============ */
+const weeksEl=document.getElementById("weeks");
+WEEKS.forEach(w=>{
+  const sec=document.createElement("section");
+  sec.className="week"; sec.style.setProperty("--sc",w.color); sec.dataset.week=w.n;
+  const daysHTML=w.days.map(d=>{
+    const tasks=d.tasks.map((t,ti)=>{
+      const id="w"+w.n+"d"+d.n+"t"+ti;
+      const done=S.done[id]?"done":"";
+      return `<div class="task ${done}" data-task="${id}">
+        <span class="box">✓</span>
+        <span class="tx"><span class="tag ${t[0]}">${TAGLABEL[t[0]]}</span>${t[1]}</span></div>`;
+    }).join("");
+    return `<div class="day" data-day="${d.n}">
+      <button class="day-head" data-dayhead="${d.n}">
+        <span class="day-n">Day ${d.n}</span>
+        <span class="df">${d.f}<span class="date" data-date="${d.n}"></span></span>
+        <span class="hrs">${d.light?"~1.5h":"~3.5h"}</span>
+        <span class="dcheck">✓</span>
+      </button>
+      <div class="day-tasks">${tasks}</div>
+    </div>`;
+  }).join("");
+  const quizHTML=w.quiz.map((q,qi)=>{
+    const id="q"+w.n+"_"+qi; const st=S.quiz[id]||"";
+    return `<div class="q ${st}" data-q="${id}" id="rq_${id}">
+      <button class="q-q" data-qtoggle="${id}"><span class="qi">Q${qi+1}</span><span>${q.q}</span></button>
+      <div class="q-a"><div class="ans">${q.a}</div>
+        <div class="q-btns">
+          <button class="got ${st==='got'?'on':''}" data-qmark="${id}" data-v="got">✓ Got it</button>
+          <button class="rev ${st==='revisit'?'on':''}" data-qmark="${id}" data-v="revisit">🔁 Revisit</button>
+        </div></div></div>`;
+  }).join("");
+  sec.innerHTML=`
+    <button class="wk-head" data-wkhead="${w.n}">
+      <span class="wk-badge">WK ${w.n}</span>
+      <span class="info"><h2>${w.title}</h2><span class="goal">${w.goal}</span></span>
+      <span class="prog"><b data-wkprog="${w.n}">0/${w.days.length}</b>days</span>
+      <span class="chev">▶</span>
+    </button>
+    <div class="wk-body">
+      <div class="deliver">${w.deliver}</div>
+      ${daysHTML}
+      <div class="quiz"><h4>✅ Week ${w.n} quiz — answer out loud, then mark each</h4>${quizHTML}</div>
+    </div>`;
+  weeksEl.appendChild(sec);
+});
+
+/* ============ HELPERS ============ */
+function dayTaskIds(w,d){return d.tasks.map((t,ti)=>"w"+w.n+"d"+d.n+"t"+ti);}
+function isDayDone(w,d){return dayTaskIds(w,d).every(id=>S.done[id]);}
+function dayObj(n){for(const w of WEEKS)for(const d of w.days)if(d.n===n)return {w,d};return null;}
+
+function refresh(){
+  let doneDays=0;
+  WEEKS.forEach(w=>{
+    let wd=0;
+    w.days.forEach(d=>{
+      const dn=isDayDone(w,d);
+      const el=weeksEl.querySelector(`.day[data-day="${d.n}"]`);
+      el.classList.toggle("done",dn);
+      // task states
+      dayTaskIds(w,d).forEach(id=>{
+        const t=weeksEl.querySelector(`.task[data-task="${id}"]`);
+        if(t)t.classList.toggle("done",!!S.done[id]);
+      });
+      if(dn){wd++;doneDays++;}
+    });
+    weeksEl.querySelector(`[data-wkprog="${w.n}"]`).textContent=wd+"/"+w.days.length;
+    // strip
+    const strip=document.querySelector(`.strip .w[data-w="${w.n}"] i`);
+    if(strip)strip.style.width=(wd/w.days.length*100)+"%";
+  });
+  // ring
+  const pct=Math.round(doneDays/TOTAL_DAYS*100);
+  const C=2*Math.PI*18;
+  const fill=document.querySelector(".ring .fill");
+  fill.setAttribute("stroke-dashoffset",(C*(1-doneDays/TOTAL_DAYS)).toFixed(1));
+  document.getElementById("pct").textContent=pct+"%";
+  document.getElementById("dd").textContent=doneDays+"/"+TOTAL_DAYS+" days";
+  // quiz states
+  Object.keys(S.quiz).forEach(id=>{
+    const q=weeksEl.querySelector(`.q[data-q="${id}"]`);
+    if(q){q.classList.toggle("got",S.quiz[id]==="got");q.classList.toggle("revisit",S.quiz[id]==="revisit");}
+  });
+  renderDash(doneDays);
+  renderToday();
+  renderRevisit();
+  renderDates();
+  try{localStorage.setItem('genai_plan_summary',JSON.stringify({done:doneDays,total:TOTAL_DAYS,streak:currentStreak()}));}catch(e){}
+}
+
+function currentStreak(){
+  // trailing consecutive completed days ending at the highest completed day
+  let maxDone=0;
+  WEEKS.forEach(w=>w.days.forEach(d=>{if(isDayDone(w,d)&&d.n>maxDone)maxDone=d.n;}));
+  if(!maxDone)return 0;
+  let streak=0;
+  for(let n=maxDone;n>=1;n--){const {w,d}=dayObj(n);if(isDayDone(w,d))streak++;else break;}
+  return streak;
+}
+function quizzesCleared(){
+  let c=0; WEEKS.forEach(w=>{if(w.quiz.every((q,qi)=>S.quiz["q"+w.n+"_"+qi]==="got"))c++;});return c;
+}
+function revisitCount(){return Object.values(S.quiz).filter(v=>v==="revisit").length;}
+
+function renderDash(doneDays){
+  const dash=document.getElementById("dash");
+  const stats=[
+    {k:"Days complete",v:doneDays+"<small>/"+TOTAL_DAYS+"</small>",c:""},
+    {k:"Current streak",v:currentStreak()+"<small> days</small>",c:"fire"},
+    {k:"Weeks quiz-cleared",v:quizzesCleared()+"<small>/8</small>",c:"win"},
+    {k:"To revisit",v:revisitCount()+"",c:revisitCount()?"":"win"},
+  ];
+  dash.innerHTML=stats.map(s=>`<div class="stat ${s.c}"><div class="k">${s.k}</div><div class="v">${s.v}</div></div>`).join("");
+}
+
+function renderToday(){
+  // first day (lowest n) not complete
+  let target=null;
+  for(const w of WEEKS){for(const d of w.days){if(!isDayDone(w,d)){target={w,d};break;}}if(target)break;}
+  const el=document.getElementById("todayCard");
+  if(!target){
+    el.innerHTML=`<div class="k">🎉 Program complete</div><h3>You finished all 56 days.</h3>
+      <p>Three shipped projects, eight quizzes, and a rehearsed pitch. Go interview with confidence.</p>`;
+    return;
+  }
+  const {w,d}=target;
+  const doneCount=dayTaskIds(w,d).filter(id=>S.done[id]).length;
+  el.innerHTML=`<div class="k">Your mission today · Week ${w.n}</div>
+    <h3>Day ${d.n} — ${d.f}</h3>
+    <p>${w.goal} · ${doneCount}/${d.tasks.length} tasks done · ${d.light?"~1.5":"~3.5"} hrs</p>
+    <a class="jump" data-jump="${d.n}" href="#">Open today's tasks →</a>`;
+}
+
+function renderRevisit(){
+  const panel=document.getElementById("revisitPanel");
+  const list=document.getElementById("revisitList");
+  const items=[];
+  WEEKS.forEach(w=>w.quiz.forEach((q,qi)=>{
+    const id="q"+w.n+"_"+qi;
+    if(S.quiz[id]==="revisit")items.push({id,w:w.n,q:q.q});
+  }));
+  if(!items.length){panel.classList.add("empty");return;}
+  panel.classList.remove("empty");
+  list.innerHTML=items.map(it=>`<li><a href="#rq_${it.id}" data-revjump="${it.id}">W${it.w}: ${it.q}</a></li>`).join("");
+}
+
+function renderDates(){
+  const start=S.start?new Date(S.start+"T00:00:00"):null;
+  document.querySelectorAll("[data-date]").forEach(el=>{
+    const n=+el.dataset.date;
+    if(!start){el.textContent="";return;}
+    const dt=new Date(start.getTime()); dt.setDate(dt.getDate()+(n-1));
+    el.textContent=" · "+dt.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
+  });
+}
+
+/* ============ EVENTS ============ */
+weeksEl.addEventListener("click",e=>{
+  const wk=e.target.closest("[data-wkhead]");
+  if(wk){wk.closest(".week").classList.toggle("open");return;}
+  const dh=e.target.closest("[data-dayhead]");
+  if(dh){dh.closest(".day").classList.toggle("open");return;}
+  const tk=e.target.closest("[data-task]");
+  if(tk){const id=tk.dataset.task; if(S.done[id])delete S.done[id];else S.done[id]=1; save(); const before=document.querySelectorAll(".day.done").length; refresh(); maybeCelebrate(before); return;}
+  const qt=e.target.closest("[data-qtoggle]");
+  if(qt){qt.closest(".q").classList.toggle("open");return;}
+  const qm=e.target.closest("[data-qmark]");
+  if(qm){const id=qm.dataset.qmark,v=qm.dataset.v; S.quiz[id]=(S.quiz[id]===v?"":v); save(); refresh(); return;}
+});
+function maybeCelebrate(beforeCount){
+  const after=document.querySelectorAll(".day.done").length;
+  if(after>beforeCount){
+    const s=currentStreak();
+    toast(s>1?("🔥 Day complete — "+s+" in a row!"):"✓ Day complete!");
+  }
+}
+
+document.body.addEventListener("click",e=>{
+  const j=e.target.closest("[data-jump]");
+  if(j){e.preventDefault();const n=+j.dataset.jump;const day=weeksEl.querySelector(`.day[data-day="${n}"]`);
+    day.closest(".week").classList.add("open");day.classList.add("open");
+    day.scrollIntoView({behavior:"smooth",block:"center"});return;}
+  const rj=e.target.closest("[data-revjump]");
+  if(rj){const q=document.getElementById("rq_"+rj.dataset.revjump);q?.closest(".week").classList.add("open");q?.classList.add("open");}
+});
+
+/* start date */
+const sd=document.getElementById("startDate");
+sd.value=S.start||"";
+sd.addEventListener("change",()=>{S.start=sd.value;save();renderDates();toast(S.start?"Start date set — dates added to each day":"Dates cleared");});
+
+/* reset / theme */
+document.getElementById("reset").onclick=()=>{if(confirm("Reset ALL progress, quizzes and start date?")){S={done:{},quiz:{},start:""};save();sd.value="";document.querySelectorAll(".week.open,.day.open,.q.open").forEach(x=>x.classList.remove("open"));refresh();toast("Progress reset");}};
+document.getElementById("theme").onclick=()=>{const r=document.documentElement;const c=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");r.setAttribute("data-theme",c==="dark"?"light":"dark");};
+
+/* strip */
+document.getElementById("strip").innerHTML=WEEKS.map(w=>`<div class="w" data-w="${w.n}" title="Week ${w.n}" style="--sc:${w.color}"><i></i></div>`).join("");
+
+/* footer */
+document.getElementById("foot").innerHTML=`Your 8-week coach · progress saved in this browser only · pair with the <a href="/roadmap">roadmap</a> &amp; <a href="/prep">study guide</a> · <a href="/">home</a>`;
+
+/* toast */
+let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2400);}
+
+/* open week 1 by default, and today */
+document.querySelector('.week[data-week="1"]').classList.add("open");
+refresh();
+
+/* service worker */
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
+</script>
+</body>
+</html>

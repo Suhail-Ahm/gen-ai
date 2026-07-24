@@ -3,31 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>GenAI Prep · SWE → Applied Gen AI Engineer</title>
+<title>GenAI Prep · Your 8-week path into applied Gen AI</title>
+<meta name="description" content="An 8-week study plan, interactive roadmap, and interview guide for switching from software engineering into an applied Gen AI role.">
+<!-- PWA -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c1524" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GenAI Prep">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-180.png">
 <style>
   :root{
     --bg:#eef1f5; --grid:rgba(27,58,92,.05);
     --ink:#132133; --ink-soft:#3f5470; --muted:#6b7b90;
-    --card:#ffffff; --line:#dfe4ec;
-    --accent:#e0952a; --accent2:#0f8b86;
-    --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);
+    --card:#ffffff; --line:#dfe4ec; --rail:#c3ccd8;
+    --accent:#e0952a; --accent-ink:#7a4d08;
+    --plan:#d97b2f; --map:#0f8b86; --guide:#2f6fb0;
+    --good:#1f8a54;
+    --shadow:0 1px 2px rgba(19,33,51,.06),0 12px 38px rgba(19,33,51,.10);
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   @media (prefers-color-scheme:dark){
-    :root{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;
-      --muted:#7f8ea3;--card:#12203a;--line:#22375a;--accent:#f2b134;--accent2:#2fc0b8;
-      --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);}
+    :root{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;--muted:#7f8ea3;
+      --card:#12203a;--line:#22375a;--rail:#2a4162;--accent:#f2b134;--accent-ink:#f2b134;
+      --plan:#f0a052;--map:#2fc0b8;--guide:#5aa0e0;--good:#4bbf82;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 44px rgba(0,0,0,.55);}
   }
-  :root[data-theme="dark"]{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;
-    --muted:#7f8ea3;--card:#12203a;--line:#22375a;--accent:#f2b134;--accent2:#2fc0b8;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 40px rgba(0,0,0,.5);}
-  :root[data-theme="light"]{--bg:#eef1f5;--grid:rgba(27,58,92,.05);--ink:#132133;--ink-soft:#3f5470;
-    --muted:#6b7b90;--card:#ffffff;--line:#dfe4ec;--accent:#e0952a;--accent2:#0f8b86;
-    --shadow:0 1px 2px rgba(19,33,51,.06),0 10px 34px rgba(19,33,51,.09);}
+  :root[data-theme="dark"]{--bg:#0c1524;--grid:rgba(120,170,220,.06);--ink:#e8eef6;--ink-soft:#b6c2d2;--muted:#7f8ea3;
+    --card:#12203a;--line:#22375a;--rail:#2a4162;--accent:#f2b134;--accent-ink:#f2b134;
+    --plan:#f0a052;--map:#2fc0b8;--guide:#5aa0e0;--good:#4bbf82;--shadow:0 1px 2px rgba(0,0,0,.4),0 16px 44px rgba(0,0,0,.55);}
+  :root[data-theme="light"]{--bg:#eef1f5;--grid:rgba(27,58,92,.05);--ink:#132133;--ink-soft:#3f5470;--muted:#6b7b90;
+    --card:#ffffff;--line:#dfe4ec;--rail:#c3ccd8;--accent:#e0952a;--accent-ink:#7a4d08;
+    --plan:#d97b2f;--map:#0f8b86;--guide:#2f6fb0;--good:#1f8a54;--shadow:0 1px 2px rgba(19,33,51,.06),0 12px 38px rgba(19,33,51,.10);}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   a,button{touch-action:manipulation}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
   body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.55;min-height:100vh;min-height:100dvh;
     display:flex;flex-direction:column;
     background:
@@ -35,86 +49,216 @@
       linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/26px 26px,
       var(--bg);
     -webkit-font-smoothing:antialiased}
-  .theme{position:fixed;top:max(1rem,env(safe-area-inset-top));right:max(1rem,env(safe-area-inset-right));
-    background:var(--card);border:1px solid var(--line);
-    color:var(--ink);font-family:var(--mono);font-size:.72rem;min-height:40px;padding:.5rem .75rem;border-radius:100px;
-    cursor:pointer;box-shadow:var(--shadow)}
-  .wrap{max-width:980px;margin:0 auto;padding:clamp(2.5rem,7vw,5rem) clamp(1.1rem,4vw,2rem);flex:1}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  .topbar{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    background:color-mix(in srgb,var(--bg) 80%,transparent);border-bottom:1px solid var(--line);
+    padding-top:env(safe-area-inset-top)}
+  .topbar .in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:.6rem;
+    padding:.55rem max(1rem,env(safe-area-inset-right)) .55rem max(1rem,env(safe-area-inset-left))}
+  .brand{display:flex;align-items:center;gap:.5rem;font-weight:800;letter-spacing:-.01em;font-size:.98rem}
+  .brand svg{width:26px;height:26px;flex:none}
+  .spacer{flex:1}
+  .tb-btn{font-family:var(--mono);font-size:.72rem;background:var(--card);border:1px solid var(--line);
+    color:var(--ink-soft);min-height:38px;padding:.4rem .7rem;border-radius:100px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:.35rem}
+  .tb-btn:hover{border-color:var(--accent);color:var(--ink)}
+  #installBtn{display:none;background:var(--accent);border-color:var(--accent);color:#1a1205;font-weight:700}
+
+  .wrap{max-width:1000px;margin:0 auto;width:100%;padding:clamp(2rem,6vw,4rem) clamp(1.1rem,4vw,2rem) 1rem;flex:1}
   .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
     color:var(--accent);font-weight:700}
-  h1{font-size:clamp(2rem,6vw,3.2rem);letter-spacing:-.025em;margin:.6rem 0 .6rem;font-weight:800;
-    text-wrap:balance;max-width:16ch;line-height:1.05}
-  .lede{font-size:1.1rem;color:var(--ink-soft);max-width:60ch}
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:2.8rem 0 2rem}
-  @media(max-width:680px){.cards{grid-template-columns:1fr}}
-  a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--card);
-    border:1px solid var(--line);border-radius:16px;padding:1.5rem 1.6rem;box-shadow:var(--shadow);
-    transition:transform .18s,border-color .18s;position:relative;overflow:hidden}
-  a.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+  h1{font-size:clamp(2rem,6.5vw,3.4rem);letter-spacing:-.025em;margin:.6rem 0 .5rem;font-weight:800;
+    text-wrap:balance;max-width:18ch;line-height:1.04}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lede{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--ink-soft);max-width:58ch}
+  .cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.5rem}
+  .cta a{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;font-weight:700;
+    min-height:48px;padding:.7rem 1.2rem;border-radius:12px;font-size:1rem}
+  .cta .primary{background:var(--accent);color:#1a1205;box-shadow:var(--shadow)}
+  .cta .primary:hover{transform:translateY(-2px)}
+  .cta .ghost{background:var(--card);border:1px solid var(--line);color:var(--ink)}
+  .cta .ghost:hover{border-color:var(--accent)}
+  .cta a{transition:transform .16s,border-color .16s}
+
+  /* live progress */
+  .resume{margin-top:1.6rem;background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:1rem 1.2rem;box-shadow:var(--shadow);display:none}
+  .resume.show{display:block}
+  .resume .row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  .resume .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .resume .big{font-size:1.15rem;font-weight:800}
+  .resume .big b{color:var(--accent)}
+  .resume .barwrap{flex:1;min-width:140px;height:9px;background:var(--line);border-radius:100px;overflow:hidden}
+  .resume .bar{height:100%;width:0;background:var(--accent);border-radius:100px;transition:width .6s}
+  .resume .flame{font-family:var(--mono);font-size:.8rem;color:var(--good)}
+  .resume a.cont{margin-left:auto;text-decoration:none;font-family:var(--mono);font-size:.8rem;font-weight:700;
+    background:var(--accent);color:#1a1205;padding:.5rem .9rem;border-radius:9px;min-height:40px;display:inline-flex;align-items:center}
+
+  /* cards */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:2.4rem 0 2rem}
+  a.card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.4rem 1.5rem;
+    box-shadow:var(--shadow);transition:transform .18s,border-color .18s;overflow:hidden}
   a.card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--bar)}
-  .card .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--bar);font-weight:700}
-  .card h2{font-size:1.4rem;margin:.5rem 0 .4rem;letter-spacing:-.01em}
-  .card p{color:var(--ink-soft);font-size:.94rem;margin:0 0 1.1rem;flex:1}
-  .card .go{font-family:var(--mono);font-size:.8rem;color:var(--accent);font-weight:600}
-  .card ul{margin:.3rem 0 1.1rem;padding-left:1.1rem;color:var(--muted);font-size:.85rem}
+  a.card:hover{transform:translateY(-4px);border-color:var(--bar)}
+  a.card.feat{grid-column:1 / -1;flex-direction:row;align-items:center;gap:1.4rem;flex-wrap:wrap}
+  a.card.feat .body{flex:1;min-width:220px}
+  .card .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--bar);font-weight:700;display:flex;align-items:center;gap:.5rem}
+  .card h2{font-size:1.35rem;margin:.5rem 0 .4rem;letter-spacing:-.01em}
+  .card.feat h2{font-size:1.6rem}
+  .card p{color:var(--ink-soft);font-size:.94rem;margin:0 0 1rem;flex:1}
+  .card .go{font-family:var(--mono);font-size:.82rem;color:var(--bar);font-weight:700}
+  .card ul{margin:.2rem 0 1rem;padding-left:1.1rem;color:var(--muted);font-size:.85rem}
   .card li{margin:.15rem 0}
-  .path{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.3rem 1.5rem;
-    box-shadow:var(--shadow)}
-  .path h3{margin:0 0 .3rem;font-size:1.05rem}
-  .path p{margin:.2rem 0 .9rem;color:var(--muted);font-size:.9rem}
-  .steps{display:flex;flex-wrap:wrap;gap:.5rem;font-family:var(--mono);font-size:.76rem}
-  .steps span{background:transparent;border:1px solid var(--line);border-radius:100px;padding:.3rem .7rem;
-    color:var(--ink-soft)}
-  .steps span b{color:var(--accent)}
-  footer{max-width:980px;margin:0 auto;width:100%;padding:1.4rem clamp(1.1rem,4vw,2rem) 2.5rem;
+  .feat .badge{font-family:var(--mono);font-size:.62rem;background:var(--bar);color:#1a1205;font-weight:700;
+    padding:.15rem .5rem;border-radius:100px;letter-spacing:.04em}
+  .feat .ring{width:96px;height:96px;flex:none}
+  .feat .ring .tk{stroke:var(--line)} .feat .ring .fl{stroke:var(--bar);stroke-linecap:round;transition:stroke-dashoffset .6s}
+  .feat .ring text{fill:var(--ink);font-family:var(--mono);font-weight:800}
+  .feat .ring #featSub{fill:var(--muted);font-weight:600}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}.feat .ring{display:none}}
+
+  /* how it works */
+  .how{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.4rem 1.5rem;box-shadow:var(--shadow)}
+  .how h3{margin:0 0 .2rem;font-size:1.15rem}
+  .how>p{color:var(--muted);font-size:.9rem;margin:.1rem 0 1.1rem}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+  .step{display:flex;gap:.7rem;align-items:flex-start}
+  .step .n{font-family:var(--mono);font-weight:800;font-size:.9rem;color:var(--accent);border:1px solid var(--accent);
+    border-radius:8px;width:28px;height:28px;display:grid;place-items:center;flex:none}
+  .step .t b{display:block;font-size:.92rem;margin-bottom:.1rem}
+  .step .t span{color:var(--muted);font-size:.82rem}
+
+  .iostip{margin-top:1.2rem;font-family:var(--mono);font-size:.76rem;color:var(--muted);
+    background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:.7rem .9rem;display:none}
+  .iostip.show{display:block}
+
+  footer{max-width:1000px;margin:0 auto;width:100%;padding:2rem clamp(1.1rem,4vw,2rem) calc(2rem + env(safe-area-inset-bottom));
     color:var(--muted);font-size:.8rem;font-family:var(--mono)}
-  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 </style>
 </head>
 <body>
-<button class="theme" onclick="var r=document.documentElement,c=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',c==='dark'?'light':'dark')">◐ theme</button>
+<div class="topbar">
+  <div class="in">
+    <span class="brand">
+      <svg viewBox="0 0 64 64"><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e1b30"/><stop offset="1" stop-color="#091120"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#bg)"/><path d="M20.3 47 A19 19 0 1 1 43.7 47" fill="none" stroke="#f2b134" stroke-width="5.6" stroke-linecap="round"/><circle cx="32" cy="32" r="6" fill="#f2b134"/></svg>
+      GenAI&nbsp;Prep
+    </span>
+    <span class="spacer"></span>
+    <button class="tb-btn" id="installBtn">⤓ Install</button>
+    <button class="tb-btn" id="themeBtn" aria-label="Toggle theme">◐</button>
+  </div>
+</div>
+
 <div class="wrap">
-  <div class="eyebrow">Interview preparation</div>
-  <h1>Software Engineer → Applied Gen AI Engineer.</h1>
-  <p class="lede">Two companion resources for making the switch: a deep study guide with interview-ready answers, and an interactive roadmap that shows exactly what to learn, in what order, and why companies pay for it.</p>
+  <div class="eyebrow">Software engineer → applied Gen AI engineer</div>
+  <h1>Get hired in Gen AI in <em>8 focused weeks.</em></h1>
+  <p class="lede">You already ship software. This turns that into an applied-GenAI offer: a dated day-by-day plan, an interactive skill map, and an interview guide — built around <strong>building three real projects</strong>, because that's what actually gets you hired.</p>
+
+  <div class="cta">
+    <a class="primary" href="/plan">▶ Start the 8-week plan</a>
+    <a class="ghost" href="/roadmap">🗺️ Explore the roadmap</a>
+  </div>
+
+  <div class="resume" id="resume">
+    <div class="row">
+      <div>
+        <div class="lbl">Your progress</div>
+        <div class="big"><b id="rDone">0</b> / 56 days · <span id="rStreak" class="flame"></span></div>
+      </div>
+      <div class="barwrap"><div class="bar" id="rBar"></div></div>
+      <a class="cont" href="/plan" id="rCont">Continue →</a>
+    </div>
+  </div>
+
+  <div class="iostip" id="iostip">📲 Install this app: tap the <strong>Share</strong> button, then <strong>Add to Home Screen</strong>.</div>
 
   <div class="cards">
-    <a class="card" href="/roadmap" style="--bar:var(--accent2)">
-      <span class="k">Start here · interactive</span>
+    <a class="card feat" href="/plan" style="--bar:var(--plan)">
+      <div class="body">
+        <div class="k"><span class="badge">Start here</span> Your daily program</div>
+        <h2>8-Week Study Plan &amp; Tracker</h2>
+        <p>56 dated day-cards (~3.5 hrs each), split into Learn → Build → Drill. Check off tasks, keep a streak, take the weekly quiz, and ship a project every week. Progress saves on your device.</p>
+        <span class="go">Open your plan →</span>
+      </div>
+      <svg class="ring" viewBox="0 0 100 100" id="featRing">
+        <circle class="tk" cx="50" cy="50" r="42" fill="none" stroke-width="7"/>
+        <circle class="fl" cx="50" cy="50" r="42" fill="none" stroke-width="7" transform="rotate(-90 50 50)" stroke-dasharray="264" stroke-dashoffset="264"/>
+        <text x="50" y="49" text-anchor="middle" font-size="20" id="featPct">0%</text>
+        <text x="50" y="65" text-anchor="middle" font-size="8" id="featSub">not started</text>
+      </svg>
+    </a>
+
+    <a class="card" href="/roadmap" style="--bar:var(--map)">
+      <div class="k">Interactive map</div>
       <h2>The Roadmap</h2>
-      <p>A clickable, dependency-ordered skill tree. Track your progress, filter by essentials, and see how each skill maps to a real job.</p>
-      <ul>
-        <li>6 stages · Foundations → Portfolio</li>
-        <li>Click any node for the real use case</li>
-        <li>Progress saved in your browser</li>
-      </ul>
+      <p>A clickable skill tree of everything to learn — and why companies pay for each piece.</p>
+      <ul><li>6 stages, dependency-ordered</li><li>Real use case per skill</li><li>Filter by ★ essentials</li></ul>
       <span class="go">Open the roadmap →</span>
     </a>
-    <a class="card" href="/prep" style="--bar:var(--accent)">
-      <span class="k">Deep dive · reference</span>
+
+    <a class="card" href="/prep" style="--bar:var(--guide)">
+      <div class="k">Deep reference</div>
       <h2>The Study Guide</h2>
-      <p>15 sections of concept deep-dives, system design, coding problems, a Q&amp;A bank with model answers, and your pitch.</p>
-      <ul>
-        <li>Transformers, RAG, agents, evals</li>
-        <li>System design + coding problems</li>
-        <li>12-question bank with answers</li>
-      </ul>
+      <p>Concept deep-dives, system design, coding problems, and a question bank with model answers.</p>
+      <ul><li>Transformers, RAG, agents, evals</li><li>System design + coding</li><li>Your SWE→GenAI pitch</li></ul>
       <span class="go">Open the guide →</span>
     </a>
   </div>
 
-  <div class="path">
-    <h3>How to use them together</h3>
-    <p>The roadmap tells you <em>what</em> to learn and in what order. The guide gives you the <em>depth</em> and the interview answers.</p>
+  <div class="how">
+    <h3>How to actually use this</h3>
+    <p>The three pieces work as one system. Follow the loop:</p>
     <div class="steps">
-      <span><b>1</b> · Skim the roadmap, follow the ★ essentials</span>
-      <span><b>2</b> · Read the matching guide section</span>
-      <span><b>3</b> · Build one RAG project with evals</span>
-      <span><b>4</b> · Drill the question bank out loud</span>
+      <div class="step"><span class="n">1</span><span class="t"><b>Open the plan</b><span>Set your start date. Do today's day-card.</span></span></div>
+      <div class="step"><span class="n">2</span><span class="t"><b>Learn on demand</b><span>Hit the guide &amp; roadmap when a task points there.</span></span></div>
+      <div class="step"><span class="n">3</span><span class="t"><b>Ship weekly</b><span>Each week ends with a real project in your GitHub.</span></span></div>
+      <div class="step"><span class="n">4</span><span class="t"><b>Quiz &amp; revisit</b><span>Friday self-test; the tracker surfaces weak spots.</span></span></div>
     </div>
   </div>
 </div>
-<footer>gen-ai · a study project · pair the roadmap with the guide</footer>
+
+<footer>gen-ai · installable PWA · works offline · progress stored on your device · <span id="fo">build. ship. get hired.</span></footer>
+
+<script>
+  /* theme */
+  document.getElementById('themeBtn').onclick=()=>{const r=document.documentElement;
+    const c=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    r.setAttribute('data-theme',c==='dark'?'light':'dark');};
+
+  /* live progress from the plan tracker */
+  (function(){
+    let s=null; try{s=JSON.parse(localStorage.getItem('genai_plan_summary'));}catch(e){}
+    if(s&&s.total){
+      const pct=Math.round(s.done/s.total*100);
+      document.getElementById('resume').classList.add('show');
+      document.getElementById('rDone').textContent=s.done;
+      document.getElementById('rBar').style.width=pct+'%';
+      document.getElementById('rStreak').textContent=s.streak>0?('🔥 '+s.streak+'-day streak'):'let’s begin';
+      document.getElementById('rCont').textContent=s.done>0?'Continue →':'Start →';
+      // feature ring
+      const C=2*Math.PI*42;
+      document.querySelector('#featRing .fl').setAttribute('stroke-dashoffset',(C*(1-s.done/s.total)).toFixed(1));
+      document.getElementById('featPct').textContent=pct+'%';
+      document.getElementById('featSub').textContent=s.done+'/'+s.total+' days';
+    }
+  })();
+
+  /* PWA install */
+  let deferred=null;
+  const installBtn=document.getElementById('installBtn');
+  window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferred=e;installBtn.style.display='inline-flex';});
+  installBtn.onclick=async()=>{if(!deferred)return;deferred.prompt();await deferred.userChoice;deferred=null;installBtn.style.display='none';};
+  window.addEventListener('appinstalled',()=>{installBtn.style.display='none';});
+  // iOS Safari has no beforeinstallprompt — show a tip when not already installed
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
+  if(isIOS&&!standalone){document.getElementById('iostip').classList.add('show');}
+
+  /* service worker */
+  if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
+</script>
 </body>
 </html>

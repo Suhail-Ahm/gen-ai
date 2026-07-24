@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gen AI Interview Prep — SWE → GenAI</title>
+<meta name="description" content="A deep study guide for switching from software engineering into an applied Gen AI role — concepts, system design, coding, and a question bank.">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c1524" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GenAI Prep">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-180.png">
 <style>
   :root{
     --paper:#f7f6f3;
@@ -740,6 +750,8 @@ def call_with_retry(fn, *, retries=3, base=1.0):
   document.querySelectorAll('aside nav a').forEach(a=>{
     a.addEventListener('click',()=>document.querySelector('aside').classList.remove('show'));
   });
+  // service worker
+  if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
 </script>
 </body>
 </html>
