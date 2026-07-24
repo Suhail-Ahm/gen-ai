@@ -6,8 +6,8 @@
 <title>Gen AI Interview Prep — SWE → GenAI</title>
 <meta name="description" content="A deep study guide for switching from software engineering into an applied Gen AI role — concepts, system design, coding, and a question bank.">
 <link rel="manifest" href="/manifest.webmanifest">
-<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0c1524" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0d12" media="(prefers-color-scheme: dark)">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,42 +16,42 @@
 <link rel="apple-touch-icon" href="/icon-180.png">
 <style>
   :root{
-    --paper:#eef1f5;
-    --ink:#132133;
-    --ink-soft:#3f5470;
-    --muted:#6b7b90;
-    --line:#dfe4ec;
+    --paper:#f7f8fa;
+    --ink:#17191f;
+    --ink-soft:#40444d;
+    --muted:#868c96;
+    --line:#ececef;
     --card:#ffffff;
-    --accent:#e0952a;      /* signal amber (shared) */
-    --accent-soft:#f6e8cf;
-    --accent2:#0f8b86;     /* teal counter */
-    --code-bg:#0f1c30;
-    --code-fg:#e8eef6;
-    --good:#1f8a54;
+    --accent:#5b5fd6;      /* indigo (shared) */
+    --accent-soft:#eeeefb;
+    --accent2:#4a9d8e;     /* teal counter */
+    --code-bg:#16181e;
+    --code-fg:#e7e8ea;
+    --good:#2e9e5b;
     --warn:#c98a1a;
-    --shadow:0 1px 2px rgba(19,33,51,.06),0 8px 24px rgba(19,33,51,.07);
+    --shadow:0 1px 2px rgba(20,22,30,.04),0 1px 3px rgba(20,22,30,.05);
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   @media (prefers-color-scheme:dark){
     :root{
-      --paper:#0c1524;--ink:#e8eef6;--ink-soft:#b6c2d2;--muted:#7f8ea3;
-      --line:#22375a;--card:#12203a;--accent:#f2b134;--accent-soft:#2e2410;
-      --accent2:#2fc0b8;--code-bg:#0a1120;--code-fg:#e8eef6;--good:#4bbf82;--warn:#e0a83a;
-      --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.5);
+      --paper:#0c0d12;--ink:#e7e8ea;--ink-soft:#b0b3bb;--muted:#7c818c;
+      --line:#24262e;--card:#16181e;--accent:#7c82f0;--accent-soft:#1b1d2e;
+      --accent2:#5ec0b0;--code-bg:#0a0b0f;--code-fg:#e7e8ea;--good:#4bbf82;--warn:#e0a83a;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.28);
     }
   }
   :root[data-theme="dark"]{
-    --paper:#0c1524;--ink:#e8eef6;--ink-soft:#b6c2d2;--muted:#7f8ea3;
-    --line:#22375a;--card:#12203a;--accent:#f2b134;--accent-soft:#2e2410;
-    --accent2:#2fc0b8;--code-bg:#0a1120;--code-fg:#e8eef6;--good:#4bbf82;--warn:#e0a83a;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.5);
+    --paper:#0c0d12;--ink:#e7e8ea;--ink-soft:#b0b3bb;--muted:#7c818c;
+    --line:#24262e;--card:#16181e;--accent:#7c82f0;--accent-soft:#1b1d2e;
+    --accent2:#5ec0b0;--code-bg:#0a0b0f;--code-fg:#e7e8ea;--good:#4bbf82;--warn:#e0a83a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.28);
   }
   :root[data-theme="light"]{
-    --paper:#eef1f5;--ink:#132133;--ink-soft:#3f5470;--muted:#6b7b90;--line:#dfe4ec;
-    --card:#ffffff;--accent:#e0952a;--accent-soft:#f6e8cf;--accent2:#0f8b86;
-    --code-bg:#0f1c30;--code-fg:#e8eef6;--good:#1f8a54;--warn:#c98a1a;
-    --shadow:0 1px 2px rgba(19,33,51,.06),0 8px 24px rgba(19,33,51,.07);
+    --paper:#f7f8fa;--ink:#17191f;--ink-soft:#40444d;--muted:#868c96;--line:#ececef;
+    --card:#ffffff;--accent:#5b5fd6;--accent-soft:#eeeefb;--accent2:#4a9d8e;
+    --code-bg:#16181e;--code-fg:#e7e8ea;--good:#2e9e5b;--warn:#c98a1a;
+    --shadow:0 1px 2px rgba(20,22,30,.04),0 1px 3px rgba(20,22,30,.05);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   a,button,summary{touch-action:manipulation}
