@@ -17,10 +17,10 @@
 <style>
   :root{
     --bg:#f7f8fa;
-    --ink:#17191f; --ink-soft:#40444d; --muted:#868c96;
+    --ink:#17191f; --ink-soft:#40444d; --muted:#6b7280;
     --card:#ffffff; --line:#ececef; --rail:#dcdde2;
     --accent:#5b5fd6; --accent-ink:#ffffff;
-    --s0:#7c828e; --s1:#5b7fb0; --s2:#4a9d8e; --s3:#8a7fc4; --s4:#c0895c; --s5:#c47084;
+    --s0:#64748b; --s1:#3f74c0; --s2:#12907f; --s3:#7b5bd6; --s4:#c47a2f; --s5:#cb4f6e;
     --good:#2e9e5b; --warn:#c98a1a;
     --shadow:0 1px 2px rgba(20,22,30,.04),0 1px 3px rgba(20,22,30,.05);
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
@@ -28,19 +28,19 @@
   }
   @media (prefers-color-scheme:dark){
     :root{--bg:#0c0d12;--ink:#e7e8ea;--ink-soft:#b0b3bb;
-      --muted:#7c818c;--card:#16181e;--line:#24262e;--rail:#2c2f38;
+      --muted:#9096a1;--card:#16181e;--line:#24262e;--rail:#2c2f38;
       --accent:#7c82f0;--accent-ink:#0c0d12;
       --s0:#9aa1ad;--s1:#7aa0d0;--s2:#5ec0b0;--s3:#a99fe0;--s4:#e0a978;--s5:#e090a2;
       --good:#4bbf82;--warn:#e0a83a;
       --shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.28);}
   }
   :root[data-theme="dark"]{--bg:#0c0d12;--ink:#e7e8ea;--ink-soft:#b0b3bb;
-    --muted:#7c818c;--card:#16181e;--line:#24262e;--rail:#2c2f38;--accent:#7c82f0;--accent-ink:#0c0d12;
+    --muted:#9096a1;--card:#16181e;--line:#24262e;--rail:#2c2f38;--accent:#7c82f0;--accent-ink:#0c0d12;
     --s0:#9aa1ad;--s1:#7aa0d0;--s2:#5ec0b0;--s3:#a99fe0;--s4:#e0a978;--s5:#e090a2;
     --good:#4bbf82;--warn:#e0a83a;--shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.28);}
   :root[data-theme="light"]{--bg:#f7f8fa;--ink:#17191f;--ink-soft:#40444d;
-    --muted:#868c96;--card:#ffffff;--line:#ececef;--rail:#dcdde2;--accent:#5b5fd6;--accent-ink:#ffffff;
-    --s0:#7c828e;--s1:#5b7fb0;--s2:#4a9d8e;--s3:#8a7fc4;--s4:#c0895c;--s5:#c47084;
+    --muted:#6b7280;--card:#ffffff;--line:#ececef;--rail:#dcdde2;--accent:#5b5fd6;--accent-ink:#ffffff;
+    --s0:#64748b;--s1:#3f74c0;--s2:#12907f;--s3:#7b5bd6;--s4:#c47a2f;--s5:#cb4f6e;
     --good:#2e9e5b;--warn:#c98a1a;--shadow:0 1px 2px rgba(20,22,30,.04),0 1px 3px rgba(20,22,30,.05);}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   a,button,summary{touch-action:manipulation}
@@ -76,9 +76,9 @@
 
   /* hero */
   .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--accent);font-weight:700}
-  h1{font-size:clamp(1.7rem,4.5vw,2.5rem);letter-spacing:-.02em;margin:.3rem 0 .5rem;font-weight:800;
-    text-wrap:balance;max-width:20ch}
+    color:var(--accent);font-weight:600}
+  h1{font-size:clamp(1.6rem,4.2vw,2.2rem);letter-spacing:-.025em;margin:.3rem 0 .5rem;font-weight:650;
+    text-wrap:balance;max-width:22ch}
   .lede{color:var(--ink-soft);max-width:64ch;font-size:1.02rem}
 
   /* dashboard */
@@ -139,7 +139,7 @@
   .week.open .chev{transform:rotate(90deg)}
   .wk-body{display:none;padding:0 1.1rem 1.1rem}
   .week.open .wk-body{display:block}
-  .deliver{background:color-mix(in srgb,var(--sc) 9%,transparent);border:1px dashed var(--sc);
+  .deliver{background:color-mix(in srgb,var(--sc) 8%,transparent);border:1px solid color-mix(in srgb,var(--sc) 35%,var(--line));
     border-radius:9px;padding:.6rem .8rem;font-size:.85rem;margin:.2rem 0 1rem;color:var(--ink-soft)}
   .deliver b{color:var(--ink)}
 
@@ -159,7 +159,8 @@
   .day.done .dcheck{background:var(--good);border-color:var(--good);color:#fff}
   .day-tasks{display:none;padding:.2rem .8rem .8rem;flex-direction:column;gap:.1rem}
   .day.open .day-tasks{display:flex}
-  .task{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem .3rem;cursor:pointer;
+  .task{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem .3rem;cursor:pointer;width:100%;
+    text-align:left;background:none;border:none;font-family:var(--sans);
     border-radius:8px;font-size:.9rem;color:var(--ink-soft);line-height:1.4}
   .task:hover{background:color-mix(in srgb,var(--sc) 6%,transparent)}
   .task .box{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--rail);flex:none;margin-top:1px;
@@ -169,13 +170,13 @@
   .task.done .tx{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rail)}
   .tag{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;
     padding:.05rem .3rem;border-radius:4px;margin-right:.35rem;font-weight:700;white-space:nowrap}
-  .tag.learn{background:color-mix(in srgb,var(--s1) 18%,transparent);color:var(--s1)}
-  .tag.build{background:color-mix(in srgb,var(--s2) 18%,transparent);color:var(--s2)}
-  .tag.drill{background:color-mix(in srgb,var(--s4) 18%,transparent);color:var(--s4)}
-  .tag.rest{background:color-mix(in srgb,var(--s5) 18%,transparent);color:var(--s5)}
+  .tag.learn{background:color-mix(in srgb,var(--s1) 16%,transparent);color:var(--s1)}
+  .tag.build{background:color-mix(in srgb,var(--s2) 16%,transparent);color:var(--s2)}
+  .tag.drill{background:color-mix(in srgb,var(--s4) 16%,transparent);color:var(--s4)}
+  .tag.rest{background:color-mix(in srgb,var(--s5) 16%,transparent);color:var(--s5)}
 
   /* quiz */
-  .quiz{margin-top:1rem;border-top:1px dashed var(--line);padding-top:.9rem}
+  .quiz{margin-top:1rem;border-top:1px solid var(--line);padding-top:.9rem}
   .quiz h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
     color:var(--sc);margin:0 0 .6rem;display:flex;align-items:center;gap:.4rem}
   .q{border:1px solid var(--line);border-radius:9px;margin:.4rem 0;overflow:hidden}
@@ -206,11 +207,9 @@
 <body>
 <header>
   <div class="bar">
-    <div class="logo">Coach<b>8-Week Gen AI Plan</b></div>
+    <div class="logo">8-Week Plan<b>Gen AI · coach mode</b></div>
     <div class="spacer"></div>
-    <label class="hbtn" title="Set your Day 1 date">📅 <input id="startDate" type="date" style="background:none;border:none;color:var(--ink);font-family:var(--mono);font-size:.7rem;width:118px"></label>
-    <a class="hbtn" href="/roadmap">🗺️ roadmap</a>
-    <a class="hbtn" href="/prep">📖 guide</a>
+    <label class="hbtn" title="Set your Day 1 date"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg><input id="startDate" type="date" style="background:none;border:none;color:var(--ink);font-family:var(--mono);font-size:.72rem;width:110px"></label>
     <div class="ringwrap">
       <svg class="ring" viewBox="0 0 44 44"><circle class="track" cx="22" cy="22" r="18" fill="none" stroke-width="4"/>
         <circle class="fill" cx="22" cy="22" r="18" fill="none" stroke-width="4" transform="rotate(-90 22 22)"
@@ -231,7 +230,7 @@
   <div class="strip" id="strip"></div>
 
   <div class="today" id="todayCard"></div>
-  <div class="revisit empty" id="revisitPanel"><h4>🔁 Your revisit list — hit these before you move on</h4><ul id="revisitList"></ul></div>
+  <div class="revisit empty" id="revisitPanel"><h4>Revisit list — clear these before you move on</h4><ul id="revisitList"></ul></div>
 
   <div id="weeks"></div>
 </div>
@@ -249,9 +248,9 @@ const WEEKS=[
  days:[
   {f:"Setup & first call",tasks:[[L,"Read roadmap Stage 0. Skim 'The Illustrated Transformer' (first half)."],[B,"Python 3.12 + venv/uv; install an LLM SDK; put your API key in .env (never commit)."],[B,"Make 5 API calls with different prompts; print the raw response object."],[D,"Start a learning journal: write 3 things that surprised you."]]},
   {f:"Tokens, params & cost",tasks:[[L,"Play with a tokenizer; learn the ~0.75 words/token rule. Read the params docs."],[B,"Run the same prompt at temperature 0 / 0.7 / 1.0 (×3 each). Observe determinism."],[B,"Add token + cost logging to your script."],[D,"Write your own one-page cheat-sheet: temperature, top_p, max_tokens, stop."]]},
-  {f:"Messages, roles & a solid call() wrapper",tasks:[[L,"Read guide §3 (prompting). Learn system vs user vs assistant roles."],[B,"Build a reusable call() function with retry-with-backoff, timeout, error handling."],[B,"Make call() stream tokens to the console."],[D,"Explain out loud: what a 429 is and how you handle it."]]},
+  {f:"Messages, roles & a solid call() wrapper",tasks:[[L,"Learn system/user/assistant roles from the provider docs; skim guide §09 (prompting)."],[B,"Build a reusable call() function with retry-with-backoff, timeout, error handling."],[B,"Make call() stream tokens to the console."],[D,"Explain out loud: what a 429 is and how you handle it."]]},
   {f:"Prompt engineering basics",tasks:[[L,"Read a provider prompting guide end-to-end."],[B,"Take one weak prompt; rewrite it 5 ways (zero-shot, few-shot, role, structured, CoT)."],[B,"Write a tiny A/B script: run N prompts over M inputs, print results side by side."],[D,"Journal: which prompt style won, and your theory why."]]},
-  {f:"Structured output",tasks:[[L,"Read guide §4. Learn JSON / tool-calling structured output + schemas."],[B,"Extract {title, sentiment, key_points[]} from any text; validate with pydantic."],[B,"Add a 'repair retry' that re-asks when JSON is invalid."],[D,"Break it: feed weird input, see how it fails, note the failure modes."]]},
+  {f:"Structured output",tasks:[[L,"Read guide §08 (tool use). Learn JSON / tool-calling structured output + schemas."],[B,"Extract {title, sentiment, key_points[]} from any text; validate with pydantic."],[B,"Add a 'repair retry' that re-asks when JSON is invalid."],[D,"Break it: feed weird input, see how it fails, note the failure modes."]]},
   {f:"Ship the Day-0 app",tasks:[[B,"Combine everything: text → structured summary, with retries, streaming, cost log."],[B,"Write a README: the problem, how it works, one trade-off you made."],[B,"Push to GitHub — this is portfolio repo #1."],[D,"Post your repo link in your journal; you shipped in week 1."]]},
   {f:"Review · Quiz · Rest",light:1,tasks:[[R,"Rebuild the hardest piece from memory (active recall). Then take the Week 1 quiz below."],[R,"Mark weak answers 'Revisit'. Skim next week. Rest — you earned it."]]},
  ],
@@ -266,7 +265,7 @@ const WEEKS=[
  goal:"Understand embeddings; build semantic search; make prompting systematic.",
  deliver:"<b>Ship:</b> a semantic search tool over ~30 docs you care about (top-5 by cosine), plus a tiny classifier with a 20-example eval set. Repo #2.",
  days:[
-  {f:"Embeddings, really understood",tasks:[[L,"Read guide §5 + roadmap 'embeddings' node. Vectors + cosine similarity."],[B,"Embed 50 sentences; compute the cosine-similarity matrix; find nearest neighbors."],[D,"Explain out loud: why is the embedding model separate from the chat model?"]]},
+  {f:"Embeddings, really understood",tasks:[[L,"Read guide §06 (embeddings) + roadmap 'embeddings' node. Vectors + cosine similarity."],[B,"Embed 50 sentences; compute the cosine-similarity matrix; find nearest neighbors."],[D,"Explain out loud: why is the embedding model separate from the chat model?"]]},
   {f:"Semantic search mini-project",tasks:[[B,"Grab ~30 text snippets (your notes / a docs page). Embed + store as an array."],[B,"Build search(query) → top-5 by cosine similarity."],[D,"Compare vs plain keyword search on 5 queries; note where each wins."]]},
   {f:"Advanced prompting",tasks:[[L,"Few-shot, chain-of-thought, role prompting. When reasoning helps vs wastes money."],[B,"Add few-shot examples to your Week-1 extractor; measure the improvement."],[D,"Journal: a task where CoT clearly helped and one where it didn't."]]},
   {f:"Prompt robustness & injection",tasks:[[L,"Read about prompt injection (defensive mindset)."],[B,"Try to break your own prompt with adversarial input."],[B,"Add output validation + defensive instructions; re-test the attack."]]},
@@ -420,9 +419,9 @@ WEEKS.forEach(w=>{
     const tasks=d.tasks.map((t,ti)=>{
       const id="w"+w.n+"d"+d.n+"t"+ti;
       const done=S.done[id]?"done":"";
-      return `<div class="task ${done}" data-task="${id}">
+      return `<button type="button" class="task ${done}" data-task="${id}" aria-pressed="${done?'true':'false'}">
         <span class="box">✓</span>
-        <span class="tx"><span class="tag ${t[0]}">${TAGLABEL[t[0]]}</span>${t[1]}</span></div>`;
+        <span class="tx"><span class="tag ${t[0]}">${TAGLABEL[t[0]]}</span>${t[1]}</span></button>`;
     }).join("");
     return `<div class="day" data-day="${d.n}">
       <button class="day-head" data-dayhead="${d.n}">
@@ -441,7 +440,7 @@ WEEKS.forEach(w=>{
       <div class="q-a"><div class="ans">${q.a}</div>
         <div class="q-btns">
           <button class="got ${st==='got'?'on':''}" data-qmark="${id}" data-v="got">✓ Got it</button>
-          <button class="rev ${st==='revisit'?'on':''}" data-qmark="${id}" data-v="revisit">🔁 Revisit</button>
+          <button class="rev ${st==='revisit'?'on':''}" data-qmark="${id}" data-v="revisit">Revisit</button>
         </div></div></div>`;
   }).join("");
   sec.innerHTML=`
@@ -454,7 +453,7 @@ WEEKS.forEach(w=>{
     <div class="wk-body">
       <div class="deliver">${w.deliver}</div>
       ${daysHTML}
-      <div class="quiz"><h4>✅ Week ${w.n} quiz — answer out loud, then mark each</h4>${quizHTML}</div>
+      <div class="quiz"><h4>Week ${w.n} quiz — answer out loud, then mark each</h4>${quizHTML}</div>
     </div>`;
   weeksEl.appendChild(sec);
 });
@@ -475,7 +474,7 @@ function refresh(){
       // task states
       dayTaskIds(w,d).forEach(id=>{
         const t=weeksEl.querySelector(`.task[data-task="${id}"]`);
-        if(t)t.classList.toggle("done",!!S.done[id]);
+        if(t){t.classList.toggle("done",!!S.done[id]);t.setAttribute("aria-pressed",S.done[id]?"true":"false");}
       });
       if(dn){wd++;doneDays++;}
     });
@@ -600,7 +599,7 @@ function maybeCelebrate(beforeCount){
   const after=document.querySelectorAll(".day.done").length;
   if(after>beforeCount){
     const s=currentStreak();
-    toast(s>1?("🔥 Day complete — "+s+" in a row!"):"✓ Day complete!");
+    toast(s>1?("Day complete · "+s+" days in a row"):"Day complete");
   }
 }
 
