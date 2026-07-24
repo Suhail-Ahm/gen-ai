@@ -678,5 +678,45 @@ refresh();
 /* service worker */
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
 </script>
+
+<!-- ===== shared bottom tab bar (app navigation) ===== -->
+<style>
+  :root{--nav-h:56px}
+  body{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 10px)!important}
+  .appnav{--nav-accent:#e0952a;--nav-muted:#6b7b90;--nav-line:#dfe4ec;
+    position:fixed;left:0;right:0;bottom:0;z-index:38;display:flex;
+    padding-bottom:env(safe-area-inset-bottom);
+    background:var(--card,#fff);background:color-mix(in srgb,var(--card,#fff) 90%,transparent);
+    -webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);
+    border-top:1px solid var(--nav-line);box-shadow:0 -6px 22px rgba(10,18,32,.10)}
+  @media (prefers-color-scheme:dark){.appnav{--nav-accent:#f2b134;--nav-muted:#8092a6;--nav-line:#22375a}}
+  :root[data-theme="dark"] .appnav{--nav-accent:#f2b134;--nav-muted:#8092a6;--nav-line:#22375a}
+  :root[data-theme="light"] .appnav{--nav-accent:#e0952a;--nav-muted:#6b7b90;--nav-line:#dfe4ec}
+  .appnav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    min-height:var(--nav-h);text-decoration:none;color:var(--nav-muted);
+    font:600 10px/1 var(--sans,-apple-system,sans-serif);letter-spacing:.02em;position:relative;
+    -webkit-tap-highlight-color:transparent;padding:.3rem 0}
+  .appnav svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.9;
+    stroke-linecap:round;stroke-linejoin:round;transition:transform .16s}
+  .appnav .fillable{fill:none}
+  .appnav a:active svg{transform:scale(.88)}
+  .appnav a.on{color:var(--nav-accent)}
+  .appnav a.on .fillable{fill:color-mix(in srgb,var(--nav-accent) 20%,transparent)}
+  .appnav a.on::before{content:"";position:absolute;top:0;width:24px;height:3px;border-radius:0 0 4px 4px;background:var(--nav-accent)}
+  @media (prefers-reduced-motion:reduce){.appnav svg{transition:none}}
+  .toast{bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px)!important}
+</style>
+<nav class="appnav" aria-label="Primary">
+  <a href="/" data-nav="home" aria-label="Home"><svg viewBox="0 0 24 24"><path class="fillable" d="M4 10.8 12 4l8 6.8V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M10 20v-4h4v4"/></svg><span>Home</span></a>
+  <a href="/plan" data-nav="plan" aria-label="Plan"><svg viewBox="0 0 24 24"><rect class="fillable" x="4" y="5" width="16" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8.5 15.4l2.2 2.2 4.3-4.3"/></svg><span>Plan</span></a>
+  <a href="/roadmap" data-nav="map" aria-label="Roadmap"><svg viewBox="0 0 24 24"><path class="fillable" d="M9 4 4 6v14l5-2 6 2 5-2V4l-5 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Map</span></a>
+  <a href="/prep" data-nav="guide" aria-label="Guide"><svg viewBox="0 0 24 24"><path class="fillable" d="M12 6c-1.6-1.2-3.6-2-6-2v13c2.4 0 4.4.8 6 2"/><path class="fillable" d="M12 6c1.6-1.2 3.6-2 6-2v13c-2.4 0-4.4.8-6 2"/></svg><span>Guide</span></a>
+</nav>
+<script>
+(function(){var p=(location.pathname||'/').replace(/\.html$/,'').replace(/\/+$/,'')||'/';
+  var k=p==='/'?'home':/plan/.test(p)?'plan':/roadmap/.test(p)?'map':/(prep|guide)/.test(p)?'guide':'home';
+  var el=document.querySelector('.appnav a[data-nav="'+k+'"]');if(el){el.classList.add('on');el.setAttribute('aria-current','page');}
+})();
+</script>
 </body>
 </html>

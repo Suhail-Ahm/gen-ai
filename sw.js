@@ -1,5 +1,5 @@
 /* GenAI Prep — service worker. App-shell caching for offline, mobile-first PWA. */
-const CACHE = 'genai-prep-v1';
+const CACHE = 'genai-prep-v2';
 const ASSETS = [
   '/', '/index.html',
   '/plan', '/plan.html',
