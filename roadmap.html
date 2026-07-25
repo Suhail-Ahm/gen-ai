@@ -113,7 +113,7 @@
   /* ---------- roadmap ---------- */
   .road{max-width:1180px;margin:1rem auto 4rem;padding:0 clamp(1rem,3vw,2rem);
     position:relative}
-  .stage{position:relative;padding:1.6rem 0 1.6rem 3.4rem;
+  .stage{position:relative;padding:1.6rem 0 1.6rem 3.4rem;scroll-margin-top:5rem;
     opacity:0;transform:translateY(22px);transition:opacity .5s,transform .5s}
   .stage.in{opacity:1;transform:none}
   /* spine */
@@ -131,8 +131,11 @@
   .st-num{font-family:var(--mono);font-size:.74rem;font-weight:700;color:var(--sc);
     border:1px solid var(--sc);border-radius:5px;padding:.05rem .4rem}
   .st-head h2{font-size:1.25rem;margin:0;letter-spacing:-.015em;font-weight:650}
-  .st-tag{color:var(--muted);font-size:.9rem;margin:.1rem 0 1rem;max-width:58ch}
+  .st-tag{color:var(--muted);font-size:.9rem;margin:.1rem 0 .4rem;max-width:58ch}
   .st-prog{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-left:auto}
+  .st-link{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.72rem;
+    color:var(--accent);text-decoration:none;font-weight:600;margin:0 0 1rem}
+  .st-link:hover{text-decoration:underline}
 
   .nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:.65rem}
   .node{position:relative;text-align:left;background:var(--card);border:1px solid var(--line);
@@ -504,6 +507,7 @@ try { done = new Set(JSON.parse(localStorage.getItem("genai_roadmap_done")||"[]"
 function save(){ localStorage.setItem("genai_roadmap_done", JSON.stringify([...done])); }
 
 const road = document.getElementById("road");
+const STAGE_TO_WEEK = {0:1, 1:2, 2:3, 3:6, 4:5, 5:8};
 STAGES.forEach(stage => {
   const sec = document.createElement("section");
   sec.className = "stage";
@@ -517,6 +521,7 @@ STAGES.forEach(stage => {
       <span class="st-prog" data-stageprog></span>
     </div>
     <p class="st-tag">${stage.tag}</p>
+    <a class="st-link" href="/plan#week-${STAGE_TO_WEEK[stage.id]}">↳ Practise this in Plan · Week ${STAGE_TO_WEEK[stage.id]}</a>
     <div class="nodes"></div>`;
   const grid = sec.querySelector(".nodes");
   stage.nodes.forEach(n => {
@@ -669,6 +674,30 @@ document.querySelectorAll(".stage").forEach(s=>io.observe(s));
 
 refresh();
 
+/* ---- cross-page context: deep links (#stage-N / #node-id) + scroll restore ---- */
+function revealAllStages(){document.querySelectorAll(".stage").forEach(s=>s.classList.add("in"));}
+function gotoRoadmapHash(){
+  const h=location.hash;
+  if(h.indexOf("#stage-")===0){
+    const sec=road.querySelector('.stage[data-stage="'+h.slice(7)+'"]');
+    if(sec){revealAllStages();sec.scrollIntoView({block:"start"});return true;}
+  }
+  if(h.indexOf("#node-")===0){
+    const id=h.slice(6), node=road.querySelector('.node[data-id="'+id+'"]');
+    if(node){revealAllStages();node.scrollIntoView({block:"center"});openDrawer(id);return true;}
+  }
+  return false;
+}
+const ROAD_SCROLL="road_scroll_v1";
+if(!gotoRoadmapHash()){
+  try{const y=sessionStorage.getItem(ROAD_SCROLL);
+    if(y){revealAllStages();requestAnimationFrame(()=>window.scrollTo(0,parseInt(y,10)));}}catch(e){}
+}
+window.addEventListener("hashchange",gotoRoadmapHash);
+function saveRoadScroll(){try{sessionStorage.setItem(ROAD_SCROLL,String(window.scrollY));}catch(e){}}
+window.addEventListener("pagehide",saveRoadScroll);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")saveRoadScroll();});
+
 /* service worker */
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
 </script>
@@ -700,7 +729,7 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
 <nav class="appnav" aria-label="Primary">
   <a href="/" data-nav="home" aria-label="Home"><svg viewBox="0 0 24 24"><path class="fillable" d="M4 10.8 12 4l8 6.8V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M10 20v-4h4v4"/></svg><span>Home</span></a>
   <a href="/plan" data-nav="plan" aria-label="Plan"><svg viewBox="0 0 24 24"><rect class="fillable" x="4" y="5" width="16" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8.5 15.4l2.2 2.2 4.3-4.3"/></svg><span>Plan</span></a>
-  <a href="/roadmap" data-nav="map" aria-label="Roadmap"><svg viewBox="0 0 24 24"><path class="fillable" d="M9 4 4 6v14l5-2 6 2 5-2V4l-5 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Map</span></a>
+  <a href="/roadmap" data-nav="map" aria-label="Roadmap"><svg viewBox="0 0 24 24"><path class="fillable" d="M9 4 4 6v14l5-2 6 2 5-2V4l-5 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Roadmap</span></a>
   <a href="/prep" data-nav="guide" aria-label="Guide"><svg viewBox="0 0 24 24"><path class="fillable" d="M12 6c-1.6-1.2-3.6-2-6-2v13c2.4 0 4.4.8 6 2"/><path class="fillable" d="M12 6c1.6-1.2 3.6-2 6-2v13c-2.4 0-4.4.8-6 2"/></svg><span>Guide</span></a>
 </nav>
 <script>

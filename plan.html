@@ -125,7 +125,7 @@
 
   /* weeks */
   .week{border:1px solid var(--line);border-radius:14px;margin:.9rem 0;background:var(--card);
-    box-shadow:var(--shadow);overflow:hidden;border-left:4px solid var(--sc)}
+    box-shadow:var(--shadow);overflow:hidden;border-left:4px solid var(--sc);scroll-margin-top:5rem}
   .wk-head{display:flex;align-items:center;gap:.8rem;padding:1rem 1.1rem;cursor:pointer;user-select:none;
     background:none;border:none;width:100%;text-align:left;font-family:var(--sans);color:var(--ink)}
   .wk-badge{font-family:var(--mono);font-size:.7rem;font-weight:700;color:var(--sc);border:1px solid var(--sc);
@@ -142,6 +142,9 @@
   .deliver{background:color-mix(in srgb,var(--sc) 8%,transparent);border:1px solid color-mix(in srgb,var(--sc) 35%,var(--line));
     border-radius:9px;padding:.6rem .8rem;font-size:.85rem;margin:.2rem 0 1rem;color:var(--ink-soft)}
   .deliver b{color:var(--ink)}
+  .rm-link{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.72rem;
+    color:var(--accent);text-decoration:none;font-weight:600;margin:0 0 1rem}
+  .rm-link:hover{text-decoration:underline}
 
   /* day */
   .day{border:1px solid var(--line);border-radius:10px;margin:.5rem 0;overflow:hidden}
@@ -412,6 +415,7 @@ const TOTAL_DAYS=dayNum;
 
 /* ============ RENDER ============ */
 const weeksEl=document.getElementById("weeks");
+const WEEK_TO_STAGE={1:0,2:1,3:2,4:2,5:4,6:3,7:4,8:5};
 WEEKS.forEach(w=>{
   const sec=document.createElement("section");
   sec.className="week"; sec.style.setProperty("--sc",w.color); sec.dataset.week=w.n;
@@ -452,6 +456,7 @@ WEEKS.forEach(w=>{
     </button>
     <div class="wk-body">
       <div class="deliver">${w.deliver}</div>
+      <a class="rm-link" href="/roadmap#stage-${WEEK_TO_STAGE[w.n]}">↳ See these concepts on the Roadmap · Stage ${WEEK_TO_STAGE[w.n]}</a>
       ${daysHTML}
       <div class="quiz"><h4>Week ${w.n} quiz — answer out loud, then mark each</h4>${quizHTML}</div>
     </div>`;
@@ -630,9 +635,33 @@ document.getElementById("foot").innerHTML=`Your 8-week coach · progress saved i
 /* toast */
 let tt;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2400);}
 
-/* open week 1 by default, and today */
-document.querySelector('.week[data-week="1"]').classList.add("open");
+/* ---- open-state + cross-page context ---- */
+const PLAN_UI="plan_ui_v1";
+function openWeek(n,scroll){const wk=weeksEl.querySelector('.week[data-week="'+n+'"]');
+  if(wk){wk.classList.add("open");if(scroll)requestAnimationFrame(()=>wk.scrollIntoView({block:"start"}));}}
+function saveUI(){try{
+  sessionStorage.setItem(PLAN_UI,JSON.stringify({
+    weeks:[...document.querySelectorAll(".week.open")].map(w=>w.dataset.week),
+    days:[...document.querySelectorAll(".day.open")].map(d=>d.dataset.day),
+    y:window.scrollY}));
+}catch(e){}}
+
+let restored=false;
+if(location.hash.indexOf("#week-")===0){ openWeek(location.hash.slice(6),true); restored=true; }
+if(!restored){ try{
+  const s=JSON.parse(sessionStorage.getItem(PLAN_UI)||"null");
+  if(s&&((s.weeks&&s.weeks.length)||(s.days&&s.days.length))){
+    (s.weeks||[]).forEach(n=>openWeek(n,false));
+    (s.days||[]).forEach(n=>{const d=weeksEl.querySelector('.day[data-day="'+n+'"]');if(d)d.classList.add("open");});
+    restored=true;
+    requestAnimationFrame(()=>window.scrollTo(0,s.y||0));
+  }
+}catch(e){} }
+if(!restored){ openWeek(1,false); }
 refresh();
+window.addEventListener("hashchange",()=>{if(location.hash.indexOf("#week-")===0)openWeek(location.hash.slice(6),true);});
+window.addEventListener("pagehide",saveUI);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")saveUI();});
 
 /* service worker */
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
@@ -665,7 +694,7 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
 <nav class="appnav" aria-label="Primary">
   <a href="/" data-nav="home" aria-label="Home"><svg viewBox="0 0 24 24"><path class="fillable" d="M4 10.8 12 4l8 6.8V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M10 20v-4h4v4"/></svg><span>Home</span></a>
   <a href="/plan" data-nav="plan" aria-label="Plan"><svg viewBox="0 0 24 24"><rect class="fillable" x="4" y="5" width="16" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8.5 15.4l2.2 2.2 4.3-4.3"/></svg><span>Plan</span></a>
-  <a href="/roadmap" data-nav="map" aria-label="Roadmap"><svg viewBox="0 0 24 24"><path class="fillable" d="M9 4 4 6v14l5-2 6 2 5-2V4l-5 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Map</span></a>
+  <a href="/roadmap" data-nav="map" aria-label="Roadmap"><svg viewBox="0 0 24 24"><path class="fillable" d="M9 4 4 6v14l5-2 6 2 5-2V4l-5 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Roadmap</span></a>
   <a href="/prep" data-nav="guide" aria-label="Guide"><svg viewBox="0 0 24 24"><path class="fillable" d="M12 6c-1.6-1.2-3.6-2-6-2v13c2.4 0 4.4.8 6 2"/><path class="fillable" d="M12 6c1.6-1.2 3.6-2 6-2v13c-2.4 0-4.4.8-6 2"/></svg><span>Guide</span></a>
 </nav>
 <script>
